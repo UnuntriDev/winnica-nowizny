@@ -3,7 +3,6 @@
     <div>
       <div class="historia-label reveal">
         <span class="section-label">{{ post.meta('historia_label') | default('Nasza historia') }}</span>
-        <div class="historia-label-line"></div>
       </div>
       <h2 class="reveal reveal-delay-1">{{ post.meta('historia_title') | default('Gdzie tradycja spotyka pasję') | raw }}</h2>
       {% if post.meta('historia_text_1') %}

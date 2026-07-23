@@ -88,13 +88,8 @@
   .section-dark { padding: var(--sp-7) var(--sp-3); }
   .section-title { font-size: var(--fs-3xl); }
   .section-label {
-    gap: 10px;
     font-size: var(--fs-sm);
     letter-spacing: 2.7px;
-  }
-  .section-label::before {
-    flex-basis: 24px;
-    width: 24px;
   }
   .section-heading { margin-bottom: var(--sp-5); }
   section[id] { scroll-margin-top: 70px; }
@@ -136,7 +131,6 @@
   .cellar-inner { grid-template-columns: 1fr; padding: var(--sp-6) var(--sp-3); gap: var(--sp-4); }
   .cellar-image { aspect-ratio: 16 / 10; }
   .cellar .cellar-year { font-size: var(--fs-4xl); }
-  .cellar .cellar-year::after { width: 40px; }
   .cellar h2 { font-size: var(--fs-2xl); }
   .cellar .btn-outline-light {
     width: 100%;
