@@ -87,7 +87,16 @@ add_filter('heartbeat_settings', function (array $settings): array {
 function winnica_page_cache_key(): string
 {
     $analytics_id = function_exists('winnica_analytics_id') ? winnica_analytics_id() : '';
-    return 'winnica_front_' . md5(home_url('/') . '|' . determine_locale() . '|' . WINNICA_VERSION . '|' . $analytics_id);
+    $manifest_path = WINNICA_DIR . '/assets/dist/.vite/manifest.json';
+    $asset_version = is_readable($manifest_path) ? md5_file($manifest_path) : 'development';
+
+    return 'winnica_front_' . md5(
+        home_url('/')
+        . '|' . determine_locale()
+        . '|' . WINNICA_VERSION
+        . '|' . $asset_version
+        . '|' . $analytics_id
+    );
 }
 
 function winnica_page_cache_allowed(): bool
