@@ -1,0 +1,80 @@
+<section class="section-light" id="galeria">
+  <div class="section-heading reveal">
+    <p class="section-label">{{ post.meta('galeria_label') | default('Galeria') }}</p>
+    <h2 class="section-title section-title-light">{{ post.meta('galeria_title') | default('Chwile w winnicy') | raw }}</h2>
+  </div>
+  <div class="gallery-grid reveal">
+    {% set img1 = post.meta('galeria_img_1') %}
+    {% set img1_full = img1 ? function('wp_get_attachment_image_url', img1.ID, 'full') : theme.link ~ '/assets/images/galeria-wnetrze.webp' %}
+    <div class="gallery-item gallery-tall" data-gallery-item data-gallery-src="{{ img1_full }}" data-gallery-alt="Gościnne wnętrze Winnicy Nowizny z widokiem na dolinę">
+      {% if img1 %}
+        {{ function('wp_get_attachment_image', img1.ID, 'gallery-tall', false, {'alt': 'Gościnne wnętrze Winnicy Nowizny z widokiem na dolinę', 'loading': 'lazy', 'decoding': 'async', 'sizes': '(max-width: 600px) calc(50vw - 32px), (max-width: 1024px) 33vw, 25vw'}) | raw }}
+      {% else %}
+        <picture><source srcset="{{ theme.link }}/assets/images/galeria-wnetrze.avif" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-wnetrze.webp" alt="Gościnne wnętrze Winnicy Nowizny z widokiem na dolinę" width="800" height="1200" loading="lazy" decoding="async"></picture>
+      {% endif %}
+    </div>
+
+    {% set img2 = post.meta('galeria_img_2') %}
+    {% set img2_full = img2 ? function('wp_get_attachment_image_url', img2.ID, 'full') : theme.link ~ '/assets/images/galeria-taras.webp' %}
+    <div class="gallery-item gallery-wide" data-gallery-item data-gallery-src="{{ img2_full }}" data-gallery-alt="Taras z widokiem na winnicę i Pogórze Rożnowskie">
+      {% if img2 %}
+        {{ function('wp_get_attachment_image', img2.ID, 'gallery-wide', false, {'alt': 'Taras z widokiem na winnicę i Pogórze Rożnowskie', 'loading': 'lazy', 'decoding': 'async', 'sizes': '(max-width: 600px) calc(100vw - 48px), (max-width: 1024px) 33vw, 50vw'}) | raw }}
+      {% else %}
+        <picture><source srcset="{{ theme.link }}/assets/images/galeria-taras.avif" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-taras.webp" alt="Taras z widokiem na winnicę i Pogórze Rożnowskie" width="1400" height="700" loading="lazy" decoding="async"></picture>
+      {% endif %}
+    </div>
+
+    {% set img3 = post.meta('galeria_img_3') %}
+    {% set img3_full = img3 ? function('wp_get_attachment_image_url', img3.ID, 'full') : theme.link ~ '/assets/images/galeria-pierogi.webp' %}
+    <div class="gallery-item gallery-square" data-gallery-item data-gallery-src="{{ img3_full }}" data-gallery-alt="Domowe pierogi z wędzoną śliwką">
+      {% if img3 %}
+        {{ function('wp_get_attachment_image', img3.ID, 'gallery-square', false, {'alt': 'Domowe pierogi z wędzoną śliwką', 'loading': 'lazy', 'decoding': 'async', 'sizes': '(max-width: 600px) calc(50vw - 32px), (max-width: 1024px) 33vw, 25vw'}) | raw }}
+      {% else %}
+        <picture><source srcset="{{ theme.link }}/assets/images/galeria-pierogi.avif" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-pierogi.webp" alt="Domowe pierogi z wędzoną śliwką" width="800" height="800" loading="lazy" decoding="async"></picture>
+      {% endif %}
+    </div>
+
+    {% set img4 = post.meta('galeria_img_4') %}
+    {% set img4_full = img4 ? function('wp_get_attachment_image_url', img4.ID, 'full') : theme.link ~ '/assets/images/galeria-daniele.webp' %}
+    <div class="gallery-item gallery-square gallery-alt" data-gallery-item data-gallery-src="{{ img4_full }}" data-gallery-alt="Daniele przy Winnicy Nowizny">
+      {% if img4 %}
+        {{ function('wp_get_attachment_image', img4.ID, 'gallery-square', false, {'alt': 'Daniele przy Winnicy Nowizny', 'loading': 'lazy', 'decoding': 'async', 'sizes': '(max-width: 600px) calc(50vw - 32px), (max-width: 1024px) 33vw, 25vw'}) | raw }}
+      {% else %}
+        <picture><source srcset="{{ theme.link }}/assets/images/galeria-daniele.avif" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-daniele.webp" alt="Daniele przy Winnicy Nowizny" width="800" height="800" loading="lazy" decoding="async"></picture>
+      {% endif %}
+    </div>
+
+    {% set img5 = post.meta('galeria_img_5') %}
+    {% set img5_full = img5 ? function('wp_get_attachment_image_url', img5.ID, 'full') : theme.link ~ '/assets/images/galeria-winogrona.webp' %}
+    <div class="gallery-item gallery-square gallery-alt2" data-gallery-item data-gallery-src="{{ img5_full }}" data-gallery-alt="Dojrzałe winogrona z Winnicy Nowizny">
+      {% if img5 %}
+        {{ function('wp_get_attachment_image', img5.ID, 'gallery-square', false, {'alt': 'Dojrzałe winogrona z Winnicy Nowizny', 'loading': 'lazy', 'decoding': 'async', 'sizes': '(max-width: 600px) calc(50vw - 32px), (max-width: 1024px) 33vw, 25vw'}) | raw }}
+      {% else %}
+        <picture><source srcset="{{ theme.link }}/assets/images/galeria-winogrona.avif" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-winogrona.webp" alt="Dojrzałe winogrona z Winnicy Nowizny" width="800" height="800" loading="lazy" decoding="async"></picture>
+      {% endif %}
+    </div>
+
+    {% set img6 = post.meta('galeria_img_6') %}
+    {% set img6_full = img6 ? function('wp_get_attachment_image_url', img6.ID, 'full') : theme.link ~ '/assets/images/galeria-biesiada.webp' %}
+    <div class="gallery-item gallery-wide gallery-alt3" data-gallery-item data-gallery-src="{{ img6_full }}" data-gallery-alt="Regionalna biesiada w Winnicy Nowizny">
+      {% if img6 %}
+        {{ function('wp_get_attachment_image', img6.ID, 'gallery-wide', false, {'alt': 'Regionalna biesiada w Winnicy Nowizny', 'loading': 'lazy', 'decoding': 'async', 'sizes': '(max-width: 600px) calc(100vw - 48px), (max-width: 1024px) 33vw, 50vw'}) | raw }}
+      {% else %}
+        <picture><source srcset="{{ theme.link }}/assets/images/galeria-biesiada.avif" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-biesiada.webp" alt="Regionalna biesiada w Winnicy Nowizny" width="1400" height="700" loading="lazy" decoding="async"></picture>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="gallery-lightbox" data-gallery-lightbox role="dialog" aria-modal="true" aria-label="Podgląd zdjęć w galerii" hidden>
+    <div class="gallery-lightbox-panel">
+      <button class="gallery-lightbox-close" type="button" data-lightbox-close aria-label="Zamknij podgląd">×</button>
+      <button class="gallery-lightbox-nav gallery-lightbox-prev" type="button" data-lightbox-prev aria-label="Poprzednie zdjęcie">‹</button>
+      <figure class="gallery-lightbox-figure">
+        <div data-lightbox-image-host></div>
+        <figcaption data-lightbox-caption></figcaption>
+      </figure>
+      <button class="gallery-lightbox-nav gallery-lightbox-next" type="button" data-lightbox-next aria-label="Następne zdjęcie">›</button>
+      <p class="gallery-lightbox-counter" data-lightbox-counter aria-live="polite"></p>
+    </div>
+  </div>
+</section>

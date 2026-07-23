@@ -1,0 +1,68 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 1000;
+  top: var(--sp-2);
+  left: var(--sp-2);
+  padding: 12px 18px;
+  background: var(--c-text-light);
+  color: var(--c-earth-deep);
+  font-weight: 600;
+  transform: translateY(calc(-100% - var(--sp-3)));
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+  color: var(--c-earth-deep);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--c-parchment);
+  color: var(--c-earth-dark);
+  font-family: var(--ff-body);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--c-amber);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--c-oak);
+}
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid var(--c-focus-ring);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px var(--c-focus-contrast);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  height: auto;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--ff-display);
+  font-weight: 300;
+  line-height: 1.15;
+}
+
+button {
+  font-family: var(--ff-body);
+}

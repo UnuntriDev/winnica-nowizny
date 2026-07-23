@@ -1,0 +1,45 @@
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    {% set bg = post.meta('hero_background_image') %}
+    {% if bg %}
+      {{ function('wp_get_attachment_image', bg.ID, 'hero-bg', false, {
+        'class': 'hero-bg-img',
+        'alt': 'Widok Winnicy Nowizny i Pogórza Rożnowskiego o zachodzie słońca',
+        'loading': 'eager',
+        'fetchpriority': 'high',
+        'decoding': 'async',
+        'sizes': '100vw'
+      }) | raw }}
+    {% else %}
+      <picture>
+        <source srcset="{{ theme.link }}/assets/images/hero-winnica.avif" type="image/avif">
+        <img src="{{ theme.link }}/assets/images/hero-winnica.webp" alt="Widok Winnicy Nowizny i Pogórza Rożnowskiego o zachodzie słońca" class="hero-bg-img" width="1920" height="1080" loading="eager" fetchpriority="high" decoding="async">
+      </picture>
+    {% endif %}
+  </div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-line"></div>
+    {% if post.meta('hero_label') %}
+      <p class="hero-label">{{ post.meta('hero_label') }}</p>
+    {% endif %}
+    <h1>{{ post.meta('hero_title') | default('Winnica<br>Nowizny') | raw }}</h1>
+    {% if post.meta('hero_subtitle') %}
+      <p class="hero-subtitle">{{ post.meta('hero_subtitle') }}</p>
+    {% endif %}
+    <div class="hero-buttons">
+      {% if post.meta('hero_cta_primary_text') %}
+        <a href="{{ post.meta('hero_cta_primary_url') | default('#wizyta') }}" class="btn-primary">{{ post.meta('hero_cta_primary_text') }}</a>
+      {% endif %}
+      {% if post.meta('hero_cta_secondary_text') %}
+        <a href="{{ post.meta('hero_cta_secondary_url') | default('#wina') }}" class="btn-outline">{{ post.meta('hero_cta_secondary_text') }}</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <span>Odkryj</span>
+    <div class="scroll-indicator-line"></div>
+  </div>
+</section>

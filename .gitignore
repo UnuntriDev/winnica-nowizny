@@ -1,0 +1,36 @@
+# WordPress
+wp_data/
+
+# Dependencies
+wp-theme/winnica-nowizny/node_modules/
+
+# Build output
+wp-theme/winnica-nowizny/assets/dist/
+
+# Uploads (large binary files)
+uploads/
+
+# Plugins (installed via WP-CLI / manually)
+plugins/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Docker
+.env
+
+# Local backups
+setup/backups/*
+!setup/backups/.gitkeep
+
+# Review tooling artifacts
+.review-deps/
+photo-review/

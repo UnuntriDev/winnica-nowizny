@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html class="no-js" {{ site.language_attributes }}>
+<head>
+  <meta charset="{{ site.charset }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.remove('no-js');document.documentElement.classList.add('js');</script>
+  {{ function('wp_head') }}
+</head>
+<body class="{{ body_class }}">
+  {{ function('wp_body_open') }}
+
+  <a class="skip-link" href="#main">Przejdź do treści</a>
+
+  {% include 'partials/nav.twig' %}
+
+  <main id="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  {% include 'partials/footer.twig' %}
+
+  {% include 'partials/consent-banner.twig' %}
+
+  {{ function('wp_footer') }}
+</body>
+</html>

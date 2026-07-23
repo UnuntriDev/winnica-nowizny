@@ -1,0 +1,43 @@
+<section class="section-dark" id="doswiadczenia">
+  <div class="section-dark-inner">
+    <div class="section-heading reveal">
+      <p class="section-label">{{ post.meta('exp_label') | default('Doświadczenia') }}</p>
+      <h2 class="section-title section-title-dark">{{ post.meta('exp_title') | default('Przeżyj winnicę') | raw }}</h2>
+    </div>
+    <div class="exp-grid">
+      {% set fallback_images = {
+        1: 'doswiadczenie-degustacja.webp',
+        2: 'doswiadczenie-spacer.webp',
+        3: 'doswiadczenie-warsztaty.webp',
+        4: 'doswiadczenie-piknik.webp'
+      } %}
+      {% for i in 1..4 %}
+        {% set title = post.meta('exp_card_' ~ i ~ '_title') %}
+        {% if title %}
+          <div class="exp-card reveal reveal-delay-{{ i }}">
+            <div class="exp-card-image">
+              {% set img = post.meta('exp_card_' ~ i ~ '_image') %}
+              {% if img %}
+                {{ function('wp_get_attachment_image', img.ID, 'gallery-square', false, {
+                  'alt': title ~ ' w Winnicy Nowizny',
+                  'loading': 'lazy',
+                  'decoding': 'async',
+                  'sizes': '(max-width: 360px) 96px, (max-width: 768px) 112px, (max-width: 1024px) 140px, 25vw'
+                }) | raw }}
+              {% else %}
+                {% set img_src = theme.link ~ '/assets/images/' ~ fallback_images[i] %}
+                <picture>
+                  <source srcset="{{ img_src | replace({'.webp': '.avif'}) }}" type="image/avif">
+                  <img src="{{ img_src }}" alt="{{ title }} w Winnicy Nowizny" width="750" height="1000" loading="lazy" decoding="async">
+                </picture>
+              {% endif %}
+              <div class="exp-card-gradient"></div>
+            </div>
+            <h3>{{ title }}</h3>
+            <p>{{ post.meta('exp_card_' ~ i ~ '_desc') }}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>

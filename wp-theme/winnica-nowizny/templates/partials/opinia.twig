@@ -1,0 +1,14 @@
+{% set quote = post.meta('opinia_quote') %}
+{% set author = post.meta('opinia_author') %}
+{% if quote %}
+  <section class="testimonial">
+    <div class="testimonial-inner reveal">
+      <div class="testimonial-line"></div>
+      <blockquote>{{ quote }}</blockquote>
+      {% if author %}
+        <div class="testimonial-divider"></div>
+        <p class="testimonial-author">{{ author }}</p>
+      {% endif %}
+    </div>
+  </section>
+{% endif %}

@@ -1,0 +1,100 @@
+.gallery-item--interactive {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  cursor: zoom-in;
+  font: inherit;
+}
+
+.gallery-lightbox[hidden] { display: none; }
+
+.gallery-lightbox {
+  position: fixed;
+  z-index: 300;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--sp-4);
+  background: rgba(16, 13, 10, 0.94);
+}
+
+.gallery-lightbox-panel {
+  position: relative;
+  width: min(1120px, 100%);
+  min-height: 220px;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.gallery-lightbox-figure {
+  min-width: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.gallery-lightbox-figure img {
+  width: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 160px);
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.gallery-lightbox-figure figcaption {
+  margin-top: var(--sp-2);
+  color: var(--c-text-muted);
+  font-size: var(--fs-body-sm);
+  line-height: 1.5;
+}
+
+.gallery-lightbox-close,
+.gallery-lightbox-nav {
+  min-width: 44px;
+  min-height: 44px;
+  border: 1px solid rgba(196, 180, 154, 0.45);
+  background: rgba(26, 21, 16, 0.72);
+  color: var(--c-text-light);
+  cursor: pointer;
+  font-family: var(--ff-display);
+  font-size: var(--fs-2xl);
+  line-height: 1;
+}
+
+.gallery-lightbox-close:hover,
+.gallery-lightbox-nav:hover {
+  border-color: var(--c-amber-light);
+  background: var(--c-earth-dark);
+}
+
+.gallery-lightbox-close {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+}
+
+.gallery-lightbox-counter {
+  grid-column: 2;
+  margin: var(--sp-1) 0 0;
+  color: var(--c-amber-light);
+  font-size: var(--fs-label);
+  letter-spacing: 1.5px;
+  text-align: center;
+}
+
+body.lightbox-open { overflow: hidden; }
+
+@media (max-width: 600px) {
+  .gallery-lightbox { padding: var(--sp-2); }
+
+  .gallery-lightbox-panel {
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    gap: var(--sp-1);
+  }
+
+  .gallery-lightbox-figure img { max-height: calc(100vh - 190px); }
+  .gallery-lightbox-close { top: -52px; }
+}

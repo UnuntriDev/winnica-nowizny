@@ -1,0 +1,259 @@
+@media (max-width: 1024px) {
+  .section-light { padding: 96px var(--sp-6); }
+  .section-dark { padding: 88px var(--sp-6); }
+  .section-heading { margin-bottom: var(--sp-7); }
+
+  .historia-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 0.9fr);
+    gap: var(--sp-5);
+  }
+  .historia-image { aspect-ratio: 4 / 5; }
+
+  .exp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4); }
+  .exp-card {
+    display: grid;
+    grid-template-columns: 140px minmax(0, 1fr);
+    column-gap: var(--sp-3);
+    align-items: start;
+  }
+  .exp-card-image {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    aspect-ratio: 4 / 5;
+    margin: 0;
+  }
+  .exp-card h3 { grid-column: 2; margin: 4px 0 8px; }
+  .exp-card p { grid-column: 2; }
+
+  .wines-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cellar-inner { padding: 88px var(--sp-6); gap: var(--sp-5); }
+  .terroir-grid { gap: var(--sp-4); }
+
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+
+  .gallery-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: none;
+    grid-auto-rows: clamp(180px, 20vw, 210px);
+  }
+  .gallery-tall { min-height: 0; }
+  .gallery-wide,
+  .gallery-square { aspect-ratio: auto; }
+}
+
+@media (min-width: 900px) and (max-width: 1024px) {
+  .visit-grid {
+    grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1.18fr);
+    gap: var(--sp-5);
+  }
+  .visit-grid .form-container { padding: var(--sp-4); }
+}
+
+@media (min-width: 769px) and (max-width: 899px) {
+  .visit-grid { grid-template-columns: 1fr; gap: var(--sp-6); }
+}
+
+@media (max-width: 768px) {
+  .site-nav { padding: var(--sp-2) var(--sp-3); }
+  .nav-logo { gap: 9px; }
+  .nav-logo-icon { width: 48px; height: 38px; }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 21, 16, 0.98);
+    justify-content: center;
+    align-items: center;
+    gap: 28px;
+    z-index: 99;
+  }
+
+  .nav-social-links {
+    margin: 4px 0 0;
+    gap: 12px;
+  }
+
+  .nav-links .nav-social-link { width: 40px; height: 40px; }
+
+  .nav-links.open { display: flex; }
+  .nav-hamburger { display: flex; z-index: 101; }
+
+  .hero h1 { font-size: var(--fs-display-lg); }
+  .hero-subtitle { font-size: var(--fs-md); }
+  .hero-buttons { flex-direction: column; align-items: center; gap: 12px; }
+  .hero-buttons .btn-primary,
+  .hero-buttons .btn-outline {
+    padding: 14px 20px;
+    font-size: var(--fs-label);
+    letter-spacing: 1.6px;
+    white-space: nowrap;
+  }
+
+  .section-light { padding: var(--sp-7) var(--sp-3); }
+  .section-dark { padding: var(--sp-7) var(--sp-3); }
+  .section-title { font-size: var(--fs-3xl); }
+  .section-heading { margin-bottom: var(--sp-5); }
+  section[id] { scroll-margin-top: 70px; }
+
+  .historia h2 { font-size: var(--fs-3xl); }
+  .historia-grid { grid-template-columns: 1fr; gap: var(--sp-5); }
+  .historia-image { aspect-ratio: 4 / 3; }
+  .historia-stats {
+    gap: 0;
+    margin-top: var(--sp-3);
+    padding-top: 20px;
+  }
+  .historia-stats > div { padding: 0 10px; }
+  .historia-stats > div:first-child { padding-left: 0; }
+  .historia .stat-number { font-size: var(--fs-2xl); }
+  .historia .stat-label { font-size: var(--fs-label); letter-spacing: 0.75px; }
+
+  .exp-grid { grid-template-columns: 1fr; gap: var(--sp-2); }
+  .exp-card {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    column-gap: var(--sp-2);
+    align-items: start;
+  }
+  .exp-card-image {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    aspect-ratio: 4 / 5;
+    margin: 0;
+  }
+  .exp-card h3 { grid-column: 2; margin: 4px 0 8px; }
+  .exp-card p { grid-column: 2; }
+  .wines-grid { grid-template-columns: 1fr; }
+  .wines-header { flex-direction: column; align-items: flex-start; gap: var(--sp-2); margin-bottom: var(--sp-4); }
+  .wine-card { min-height: 0; padding: var(--sp-4) var(--sp-3); }
+  .wine-card-mark { width: 42px; height: 42px; margin-bottom: var(--sp-2); }
+
+  .cellar { min-height: 0; }
+  .cellar-inner { grid-template-columns: 1fr; padding: var(--sp-6) var(--sp-3); gap: var(--sp-4); }
+  .cellar-image { aspect-ratio: 16 / 10; }
+  .cellar-year { font-size: var(--fs-4xl); }
+  .cellar h2 { font-size: var(--fs-2xl); }
+  .cellar .btn-outline-light {
+    width: 100%;
+    padding: 14px 10px;
+    min-height: 48px;
+    font-size: var(--fs-label);
+    letter-spacing: 1.35px;
+    line-height: 1.35;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .testimonial { padding: var(--sp-7) var(--sp-3); }
+  .testimonial blockquote { font-size: var(--fs-xl); }
+
+  .form-row { grid-template-columns: 1fr; }
+  .form-container { padding: var(--sp-4) var(--sp-3); }
+  .visit-header { margin-bottom: var(--sp-5); }
+  .visit-grid { grid-template-columns: 1fr; gap: var(--sp-6); }
+  #terroir { padding-top: var(--sp-6); padding-bottom: var(--sp-6); }
+  .terroir-heading { margin-bottom: var(--sp-4); }
+  .terroir-grid { grid-template-columns: 1fr; gap: var(--sp-4); }
+  .terroir-icon { width: 64px; height: 64px; margin-bottom: var(--sp-2); }
+
+  .site-footer { padding: var(--sp-6) var(--sp-3) var(--sp-3); }
+  .footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-4) var(--sp-3);
+    margin-bottom: var(--sp-4);
+  }
+  .footer-grid > :first-child,
+  .footer-grid > :last-child { grid-column: 1 / -1; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .visit-map { grid-template-columns: 1fr; margin-top: var(--sp-5); }
+  .visit-map-frame,
+  .visit-map-frame iframe { min-height: 280px; }
+  .visit-map-info { padding: var(--sp-4) var(--sp-3); }
+
+  body { padding-bottom: 64px; }
+
+  .mobile-contact-bar {
+    position: fixed;
+    z-index: 110;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 64px;
+    padding: 7px max(8px, env(safe-area-inset-right)) calc(7px + env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+    display: grid;
+    grid-template-columns: 0.85fr 0.85fr 1.2fr;
+    gap: 6px;
+    background: rgba(26, 21, 16, 0.97);
+    border-top: 1px solid rgba(196, 154, 108, 0.28);
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(12px);
+  }
+
+  .mobile-contact-bar a {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 5px;
+    border: 1px solid rgba(196, 154, 108, 0.32);
+    color: var(--c-text-light);
+    font-size: var(--fs-label);
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    line-height: 1.15;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .mobile-contact-bar a:last-child {
+    background: var(--c-amber-light);
+    border-color: var(--c-amber-light);
+    color: var(--c-earth-deep);
+  }
+
+  .consent-banner {
+    left: 12px;
+    right: 12px;
+    bottom: 76px;
+    width: auto;
+    padding: var(--sp-2);
+  }
+
+  .consent-actions { display: grid; grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto;
+    grid-auto-rows: auto;
+  }
+  .gallery-tall {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    aspect-ratio: 4 / 3;
+  }
+  .gallery-wide {
+    grid-column: 1 / -1;
+    aspect-ratio: 2 / 1;
+  }
+  .gallery-square { aspect-ratio: 1 / 1; }
+  .gallery-item:nth-child(5) {
+    grid-column: 1 / -1;
+    aspect-ratio: 2 / 1;
+  }
+}
+
+@media (max-width: 360px) {
+  .section-light,
+  .section-dark,
+  .cellar-inner,
+  .testimonial { padding-left: 20px; padding-right: 20px; }
+  .exp-card { grid-template-columns: 96px minmax(0, 1fr); column-gap: 14px; }
+  .exp-card h3 { font-size: var(--fs-lg); }
+  .exp-card p { font-size: var(--fs-meta); line-height: 1.5; }
+  .form-title { font-size: var(--fs-2xl); }
+  .mobile-contact-bar a { font-size: var(--fs-label); letter-spacing: 0.4px; }
+}

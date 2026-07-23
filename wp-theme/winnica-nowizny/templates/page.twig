@@ -1,0 +1,18 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<section class="hero hero--page">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-line"></div>
+    <h1>{{ post.title }}</h1>
+  </div>
+</section>
+
+<section class="section-light">
+  <div class="page-content reveal">
+    {{ post.content }}
+  </div>
+</section>
+{% endblock %}

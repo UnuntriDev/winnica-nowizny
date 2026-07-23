@@ -1,0 +1,44 @@
+<nav class="site-nav" id="siteNav">
+  <a href="{{ site.url }}" class="nav-logo">
+    <div class="nav-logo-icon">
+      <picture>
+        <source srcset="{{ theme.link }}/assets/images/logo-nowizny.avif" type="image/avif">
+        <img src="{{ theme.link }}/assets/images/logo-nowizny.webp" alt="" width="1536" height="1024">
+      </picture>
+    </div>
+    <span class="nav-brand">NOWIZNY</span>
+  </a>
+
+  <button class="nav-hamburger" id="navToggle" type="button" aria-label="Otwórz menu" aria-controls="navLinks" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="nav-links" id="navLinks">
+    {% if menu %}
+      {% for item in menu.items %}
+        {% set item_url = item.link | slice(0, 1) == '#' ? function('home_url', '/') ~ item.link : item.link %}
+        <a href="{{ item_url }}" class="{{ item.classes | join(' ') }}">{{ item.title }}</a>
+      {% endfor %}
+    {% else %}
+      <a href="{{ function('home_url', '/') }}#historia">Historia</a>
+      <a href="{{ function('home_url', '/') }}#doswiadczenia">Doświadczenia</a>
+      <a href="{{ function('home_url', '/') }}#wina">Wina</a>
+      <a href="{{ function('home_url', '/') }}#galeria">Galeria</a>
+      <a href="{{ function('home_url', '/') }}#wizyta" class="nav-cta">Zaplanuj wizytę</a>
+    {% endif %}
+    {% if site_instagram or site_facebook %}
+      <div class="nav-social-links" aria-label="Social media">
+        {% if site_instagram %}
+          <a href="{{ site_instagram }}" class="nav-social-link" aria-label="Instagram Winnicy Nowizny" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" class="social-dot"></circle></svg>
+          </a>
+        {% endif %}
+        {% if site_facebook %}
+          <a href="{{ site_facebook }}" class="nav-social-link" aria-label="Facebook Winnicy Nowizny" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="facebook-icon"><path d="M14 8h3V4.2c-.5-.1-2.2-.2-4.1-.2C9 4 6.3 6.4 6.3 10.8V14H2v4.3h4.3V24h5.2v-5.7h4.1l.7-4.3h-4.8v-2.8C11.5 9.9 11.9 8 14 8Z"></path></svg>
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</nav>

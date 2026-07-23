@@ -1,0 +1,598 @@
+/* ── Historia ── */
+.historia-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-8);
+  align-items: center;
+}
+
+.historia-label {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-5);
+}
+
+.historia-label-line { flex: 1; height: 1px; background: var(--c-parchment-mid); }
+
+.historia h2 {
+  font-family: var(--ff-display);
+  font-size: var(--fs-display-xl);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--c-earth-dark);
+  margin: 0 0 28px 0;
+}
+
+.historia p {
+  font-size: var(--fs-base);
+  line-height: 1.8;
+  color: var(--c-text-body);
+  margin: 0 0 20px 0;
+}
+
+.historia-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--c-parchment-mid);
+}
+
+.historia-stats > div {
+  min-width: 0;
+  padding: 0 var(--sp-3);
+  border-left: 1px solid var(--c-parchment-mid);
+}
+
+.historia-stats > div:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.historia .stat-number {
+  font-family: var(--ff-display);
+  font-size: var(--fs-display-lg);
+  font-weight: 400;
+  color: var(--c-earth-dark);
+  margin: 0 0 8px;
+  line-height: 1;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.stat-unit {
+  margin-left: 5px;
+  color: var(--c-amber);
+  font-family: var(--ff-body);
+  font-size: 0.38em;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  vertical-align: 0.32em;
+}
+
+.historia .stat-label {
+  font-size: var(--fs-label);
+  color: var(--c-amber);
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 1.35px;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.historia-image {
+  position: relative;
+  aspect-ratio: 3/4;
+  background: var(--c-parchment-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.historia-image img,
+.exp-card-image img,
+.cellar-image img,
+.gallery-item img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.historia-accent {
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  width: 160px;
+  height: 160px;
+  border: 1px solid var(--c-amber);
+  opacity: 0.2;
+}
+
+/* ── Experience Cards ── */
+.section-heading { margin-bottom: var(--sp-8); }
+
+.exp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-3);
+}
+
+.exp-card {
+  min-width: 0;
+}
+
+.exp-card-image {
+  aspect-ratio: 3/4;
+  background: var(--c-earth-mid);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: var(--sp-3);
+}
+
+.exp-card-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(26, 21, 16, 0.8));
+  height: 50%;
+}
+
+.exp-card h3 {
+  font-family: var(--ff-display);
+  font-size: var(--fs-xl);
+  font-weight: 400;
+  color: var(--c-text-light);
+  margin: 0 0 var(--sp-1) 0;
+}
+
+.exp-card p {
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
+  color: var(--c-text-muted);
+  margin: 0;
+}
+
+/* ── Wines ── */
+.wines-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: var(--sp-6);
+}
+
+.wines-link {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--c-amber);
+  text-decoration: none;
+  border-bottom: 1px solid var(--c-amber);
+  padding-bottom: 4px;
+  transition: opacity var(--duration-fast);
+}
+
+.wines-link:hover { opacity: 0.6; }
+
+.wines-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+}
+
+.wine-card {
+  position: relative;
+  min-height: 230px;
+  padding: var(--sp-4);
+  border: 1px solid rgba(139, 109, 75, 0.22);
+  background: linear-gradient(145deg, rgba(255,255,255,0.55), rgba(232,222,207,0.45));
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.wine-card::after {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(139, 109, 75, 0.1);
+  pointer-events: none;
+}
+
+.wine-card-mark {
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--sp-3);
+  border: 1px solid var(--c-amber);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--c-amber);
+  font-family: var(--ff-display);
+  font-size: var(--fs-md);
+  font-style: italic;
+}
+
+.wine-bottle {
+  height: 220px;
+  margin: 0 auto var(--sp-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: min(70%, 160px);
+}
+
+.wine-bottle img { width: 100%; height: 100%; object-fit: contain; }
+
+.wine-name {
+  font-family: var(--ff-display);
+  font-size: var(--fs-xl);
+  font-weight: 400;
+  color: var(--c-earth-dark);
+  margin: 0 0 4px 0;
+}
+
+.wine-type {
+  font-size: var(--fs-sm);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--c-amber);
+  margin: 0 0 12px 0;
+}
+
+.wine-desc {
+  font-size: var(--fs-body-sm);
+  line-height: 1.7;
+  color: var(--c-text-body);
+  margin: 0;
+}
+
+/* ── Cellar ── */
+.cellar {
+  position: relative;
+  padding: 0;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  background: var(--c-earth-deep);
+  overflow: hidden;
+}
+
+.cellar-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--c-earth-deep) 0%, var(--c-earth-dark) 40%, var(--c-earth-deep) 100%);
+}
+
+.cellar-inner {
+  position: relative;
+  z-index: 2;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: var(--sp-10) var(--sp-6);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-8);
+  align-items: center;
+}
+
+.cellar-image {
+  aspect-ratio: 4/3;
+  background: rgba(139, 109, 75, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border-subtle);
+  position: relative;
+  overflow: hidden;
+}
+
+.cellar-year {
+  font-family: var(--ff-display);
+  font-size: var(--fs-5xl);
+  font-weight: 300;
+  color: var(--c-amber-light);
+  margin: 0 0 20px 0;
+  line-height: 1;
+}
+
+.cellar h2 {
+  font-family: var(--ff-display);
+  font-size: var(--fs-display-lg);
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--c-text-light);
+  margin: 0 0 var(--sp-3) 0;
+}
+
+.cellar p {
+  font-size: var(--fs-base);
+  line-height: 1.8;
+  color: var(--c-text-muted);
+  margin: 0 0 20px 0;
+}
+
+/* ── Gallery ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+  gap: var(--sp-2);
+}
+
+.gallery-item {
+  background: var(--c-parchment-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-tall { grid-row: span 2; min-height: 400px; }
+.gallery-wide { grid-column: span 2; aspect-ratio: 2/1; }
+.gallery-square { aspect-ratio: 1/1; }
+.gallery-alt { background: var(--c-parchment-deep); }
+.gallery-alt2 { background: #d5cdc0; }
+.gallery-alt3 { background: #e2dbd0; }
+
+/* ── Testimonial ── */
+.testimonial {
+  padding: var(--sp-10) var(--sp-6);
+  background: var(--c-parchment-warm);
+}
+
+.testimonial-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.testimonial-line {
+  width: 40px;
+  height: 1px;
+  background: var(--c-amber);
+  margin: 0 auto var(--sp-5);
+}
+
+.testimonial blockquote {
+  font-family: var(--ff-display);
+  font-size: var(--fs-2xl);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--c-earth-dark);
+  margin: 0 0 var(--sp-4) 0;
+  border: none;
+  padding: 0;
+}
+
+.testimonial-divider {
+  width: 40px;
+  height: 1px;
+  background: var(--c-amber-light);
+  margin: 0 auto var(--sp-2);
+}
+
+.testimonial-author {
+  font-size: var(--fs-meta);
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--c-amber);
+  margin: 0;
+}
+
+/* ── Terroir ── */
+.terroir-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 64px;
+  text-align: center;
+}
+
+.terroir-heading {
+  margin-bottom: var(--sp-8);
+  text-align: center;
+}
+
+.wine-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--sp-1) var(--sp-2);
+  margin-top: var(--sp-2);
+}
+
+.wine-price {
+  margin: 0;
+  color: var(--c-earth-dark);
+  font-family: var(--ff-display);
+  font-size: var(--fs-lg);
+  font-weight: 500;
+}
+
+.wine-availability {
+  margin: 0;
+  color: var(--c-amber);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.wine-availability--unavailable { color: var(--c-text-body); }
+
+.terroir-icon {
+  width: 72px;
+  height: 72px;
+  border: 1.5px solid var(--c-amber-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--sp-3);
+}
+
+.terroir-title {
+  font-family: var(--ff-display);
+  font-size: var(--fs-display-sm);
+  font-weight: 500;
+  color: var(--c-earth-dark);
+  margin: 0 0 10px 0;
+}
+
+.terroir-desc {
+  font-size: var(--fs-body-sm);
+  line-height: 1.7;
+  color: var(--c-text-body);
+  margin: 0;
+}
+
+/* ── Visit / Contact ── */
+.visit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-8);
+  align-items: start;
+}
+
+.visit-grid > * { min-width: 0; }
+
+.visit-grid .form-container { width: 100%; }
+
+.visit-header { margin-bottom: var(--sp-8); }
+
+.visit-sidebar .visit-header { margin-bottom: var(--sp-6); }
+
+.visit-grid-form-only {
+  grid-template-columns: minmax(0, 760px);
+  justify-content: center;
+}
+
+.visit-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.visit-block {
+  border-bottom: 1px solid rgba(139, 109, 75, 0.2);
+  padding-bottom: 28px;
+}
+
+.visit-block:last-child { border-bottom: none; padding-bottom: 0; }
+
+.visit-block-label {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--c-amber);
+  margin: 0 0 10px 0;
+}
+
+.visit-block-text {
+  font-size: var(--fs-base);
+  line-height: 1.7;
+  color: #e8ddd0;
+  margin: 0;
+}
+
+.visit-block-text a {
+  color: inherit;
+  text-decoration-color: rgba(196, 154, 108, 0.55);
+  text-underline-offset: 4px;
+  transition: color var(--duration-fast);
+}
+
+.visit-block-text a:hover { color: var(--c-amber-light); }
+
+.visit-block-text-small {
+  font-size: var(--fs-body-sm);
+  line-height: 1.7;
+  color: var(--c-text-muted);
+  margin: 0;
+}
+
+.visit-map {
+  margin-top: var(--sp-7);
+  min-height: 340px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(280px, 0.8fr);
+  overflow: hidden;
+  border: 1px solid rgba(139, 109, 75, 0.28);
+  background: rgba(26, 21, 16, 0.88);
+}
+
+.visit-map-frame { min-height: 340px; }
+
+.visit-map-frame iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 340px;
+  display: block;
+  border: 0;
+  filter: grayscale(0.28) sepia(0.08);
+}
+
+.visit-map-info {
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.visit-map-info h3 {
+  margin: 0 0 var(--sp-2);
+  color: var(--c-text-light);
+  font-size: var(--fs-xl);
+  font-weight: 400;
+}
+
+.visit-map-info > p:not(.visit-block-label) {
+  margin: 0 0 var(--sp-3);
+  color: #e8ddd0;
+}
+
+.btn-directions {
+  padding: 13px 22px;
+  border: 1px solid var(--c-amber);
+  color: var(--c-text-light);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+
+.btn-directions:hover { background: var(--c-amber); color: var(--c-earth-deep); }
+
+.visit-map-info .visit-travel-note {
+  margin: var(--sp-2) 0 0;
+  color: var(--c-text-muted);
+  font-size: var(--fs-meta);
+  line-height: 1.5;
+}
+
+.mobile-contact-bar { display: none; }
+
+#wizyta {
+  background:
+    linear-gradient(90deg, rgba(26, 21, 16, 0.97) 0%, rgba(26, 21, 16, 0.92) 52%, rgba(26, 21, 16, 0.82) 100%),
+    image-set(
+      url('../../assets/images/wizyta-tlo.avif') type('image/avif'),
+      url('../../assets/images/wizyta-tlo.webp') type('image/webp')
+    ) center 54% / cover no-repeat;
+}

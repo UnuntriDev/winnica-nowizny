@@ -1,0 +1,40 @@
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+
+  *,
+  *::before,
+  *::after {
+    animation-delay: 0s !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-delay: 0s !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .no-js .site-nav {
+    position: absolute;
+    flex-wrap: wrap;
+    background: rgba(26, 21, 16, 0.96);
+  }
+
+  .no-js .nav-hamburger { display: none; }
+
+  .no-js .nav-links {
+    position: static;
+    display: flex;
+    flex: 1 0 100%;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 12px 18px;
+    padding-top: var(--sp-2);
+    background: transparent;
+  }
+
+  .no-js .nav-links a { font-size: var(--fs-label); }
+  .no-js .nav-links a.nav-cta { padding: 8px 14px; }
+  .no-js .nav-social-links { margin: 0; }
+  .no-js .hero { padding-top: 150px; }
+}

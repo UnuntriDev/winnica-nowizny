@@ -1,0 +1,117 @@
+/* ── Hero ── */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--c-earth-deep);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(170deg, var(--c-earth-dark) 0%, var(--c-earth-mid) 30%, var(--c-earth-dark) 60%, var(--c-earth-deep) 100%);
+  opacity: 1;
+}
+
+.hero-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 58%;
+  opacity: 1;
+}
+
+.hero-pattern { position: absolute; inset: 0; opacity: 0.04; }
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(26, 21, 16, 0.34) 0%, rgba(26, 21, 16, 0.3) 42%, rgba(26, 21, 16, 0.56) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 800px;
+  padding: 0 var(--sp-4);
+  animation: fadeIn 1.5s ease-out;
+}
+
+.hero-line {
+  width: 120px;
+  height: 1px;
+  background: var(--c-amber);
+  margin: 0 auto var(--sp-5);
+  animation: heroLine 1.2s ease-out 0.3s both;
+}
+
+.hero-label {
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--c-amber-light);
+  margin: 0 0 var(--sp-3) 0;
+  animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+.hero h1 {
+  font-family: var(--ff-display);
+  font-size: var(--fs-5xl);
+  font-weight: 300;
+  line-height: 1.08;
+  color: var(--c-text-light);
+  margin: 0 0 20px 0;
+  letter-spacing: -1px;
+  animation: fadeInUp 1s ease-out 0.7s both;
+}
+
+.hero-subtitle {
+  font-family: var(--ff-display);
+  font-size: var(--fs-display-sm);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--c-amber-light);
+  margin: 0 0 var(--sp-6) 0;
+  line-height: 1.5;
+  animation: fadeInUp 1s ease-out 0.9s both;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: var(--sp-2);
+  justify-content: center;
+  animation: fadeInUp 1s ease-out 1.1s both;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-1);
+  animation: fadeIn 1s ease-out 1.8s both;
+}
+
+.scroll-indicator span {
+  font-size: var(--fs-xs);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(221, 207, 184, 0.78);
+}
+
+.scroll-indicator-line {
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(180deg, rgba(221, 207, 184, 0.72) 0%, transparent 100%);
+}

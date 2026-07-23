@@ -1,0 +1,44 @@
+<section class="section-light" id="wina">
+  <div class="wines-header reveal">
+    <div>
+      <p class="section-label">{{ post.meta('wines_label') | default('Nasze wina') }}</p>
+      <h2 class="section-title section-title-light">{{ post.meta('wines_title') | default('Smak Pogórza') | raw }}</h2>
+    </div>
+  </div>
+  <div class="wines-grid">
+    {% for wine in wines %}
+      <div class="wine-card reveal reveal-delay-{{ loop.index }}">
+        {% if wine.thumbnail %}
+          <div class="wine-bottle">
+            {{ function('wp_get_attachment_image', wine.thumbnail.id, 'wine-bottle', false, {
+              'alt': wine.title,
+              'loading': 'lazy',
+              'decoding': 'async',
+              'sizes': '(max-width: 768px) 120px, 220px'
+            }) | raw }}
+          </div>
+        {% else %}
+          <div class="wine-card-mark" aria-hidden="true">{{ loop.index < 10 ? '0' ~ loop.index : loop.index }}</div>
+        {% endif %}
+        <h3 class="wine-name">{{ wine.title }}</h3>
+        {% if wine.meta('rodzaj') %}<p class="wine-type">{{ wine.meta('rodzaj') }}</p>{% endif %}
+        {% if wine.excerpt %}<p class="wine-desc">{{ wine.excerpt | truncate(120) }}</p>{% endif %}
+        {% set price = wine.meta('cena') %}
+        {% set has_availability = function('metadata_exists', 'post', wine.id, 'dostepne') %}
+        {% if price is not empty or has_availability %}
+          <div class="wine-meta">
+            {% if price is not empty %}
+              <p class="wine-price">{{ price | number_format(2, ',', ' ') }} zł</p>
+            {% endif %}
+            {% if has_availability %}
+              {% set is_available = wine.meta('dostepne') %}
+              <p class="wine-availability{{ is_available ? '' : ' wine-availability--unavailable' }}">
+                {{ is_available ? 'Dostępne' : 'Aktualnie niedostępne' }}
+              </p>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</section>

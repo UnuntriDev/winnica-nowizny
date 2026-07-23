@@ -1,0 +1,13 @@
+{% if analytics_id %}
+  <aside class="consent-banner" id="consentBanner" data-analytics-id="{{ analytics_id }}" aria-labelledby="consentTitle" hidden>
+    <div>
+      <p class="consent-title" id="consentTitle">Twoja prywatność</p>
+      <p>Za Twoją zgodą używamy anonimowych danych statystycznych, aby ulepszać stronę. Analityka nie uruchomi się przed wyborem.</p>
+    </div>
+    <div class="consent-actions">
+      <button type="button" data-consent="denied">Tylko niezbędne</button>
+      <button type="button" class="consent-accept" data-consent="granted">Akceptuję</button>
+    </div>
+    <a class="consent-policy" href="{{ function('get_privacy_policy_url') ?: function('home_url', '/polityka-prywatnosci/') }}">Polityka prywatności</a>
+  </aside>
+{% endif %}

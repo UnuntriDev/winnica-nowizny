@@ -1,0 +1,54 @@
+.hero--page {
+  min-height: 50vh;
+  height: auto;
+  padding-top: var(--sp-12);
+  padding-bottom: var(--sp-8);
+}
+
+.hero--page .hero-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.3;
+}
+
+.page-content {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: var(--fs-base);
+  line-height: 1.8;
+  color: var(--c-text-body);
+}
+
+.page-content h2 {
+  font-family: var(--ff-display);
+  font-size: var(--fs-3xl);
+  font-weight: 300;
+  color: var(--c-earth-dark);
+  margin: var(--sp-6) 0 var(--sp-3) 0;
+}
+
+.page-content h3 {
+  font-family: var(--ff-display);
+  font-size: var(--fs-xl);
+  font-weight: 400;
+  color: var(--c-earth-dark);
+  margin: var(--sp-5) 0 var(--sp-2) 0;
+}
+
+.page-content p { margin: 0 0 var(--sp-2) 0; }
+.page-content img { margin: var(--sp-4) 0; }
+
+.page-content a {
+  color: var(--c-amber);
+  border-bottom: 1px solid rgba(139, 109, 75, 0.3);
+  transition: border-color var(--duration-fast);
+}
+
+.page-content a:hover { border-color: var(--c-amber); }
+
+@media (max-width: 768px) {
+  .hero--page { min-height: 40vh; }
+}
