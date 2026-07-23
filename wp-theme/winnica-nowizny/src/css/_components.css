@@ -82,12 +82,28 @@
 }
 
 .section-label {
-  font-size: var(--fs-label);
-  font-weight: 500;
-  letter-spacing: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 3.5px;
   text-transform: uppercase;
   color: var(--c-amber-text);
 }
+
+.section-label::before {
+  content: '';
+  flex: 0 0 32px;
+  width: 32px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.78;
+}
+
+.historia-label .section-label::before { display: none; }
 
 .section-dark :is(.section-label, .form-label, .visit-block-label, .wine-type),
 .cellar :is(.section-label, .form-label, .visit-block-label, .wine-type) {
@@ -99,7 +115,7 @@
   font-size: var(--fs-4xl);
   font-weight: 300;
   line-height: 1.15;
-  margin: 20px 0 0 0;
+  margin: var(--sp-2) 0 0;
 }
 
 .section-title-dark { color: var(--c-text-light); }

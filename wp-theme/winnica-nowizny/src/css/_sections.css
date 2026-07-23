@@ -13,7 +13,12 @@
   margin-bottom: var(--sp-5);
 }
 
-.historia-label-line { flex: 1; height: 1px; background: var(--c-parchment-mid); }
+.historia-label-line {
+  flex: 1;
+  height: 1px;
+  background: var(--c-amber);
+  opacity: 0.28;
+}
 
 .historia h2 {
   font-family: var(--ff-display);
@@ -282,13 +287,26 @@
   overflow: hidden;
 }
 
-.cellar-year {
+.cellar .cellar-year {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
   font-family: var(--ff-display);
   font-size: var(--fs-5xl);
-  font-weight: 300;
-  color: var(--c-amber-light);
+  font-weight: 400;
+  letter-spacing: 0.035em;
+  color: var(--c-amber-hover);
   margin: 0 0 20px 0;
   line-height: 1;
+  text-shadow: 0 2px 20px rgba(196, 180, 154, 0.14);
+}
+
+.cellar .cellar-year::after {
+  content: '';
+  width: 56px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
 }
 
 .cellar h2 {
