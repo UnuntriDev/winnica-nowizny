@@ -29,7 +29,7 @@ docker compose run --rm wpcli sh /setup/install.sh
 - Logowanie jest blokowane na 30 minut po pięciu błędnych próbach z tego samego adresu i loginu.
 - Analityka GA4 pozostaje wyłączona bez poprawnego `WINNICA_GA_ID` i uruchamia się dopiero po zgodzie użytkownika.
 Instaluje WP (pl_PL), aktywuje motyw, tworzy strony, 6 win, menu.
-Pluginy: ACF (free), Timber, CF7, Yoast SEO.
+Pluginy wymagane przez motyw: ACF (free) i Timber. Metadane SEO oraz schema.org obsługuje motyw.
 
 ### 3. Seed danych
 ```bash
@@ -49,6 +49,17 @@ npm run build  # production build → assets/dist/
 - **URL:** http://localhost:8080/wp-admin
 - **Login:** admin
 - **Hasło:** ustaw `WP_ADMIN_PASSWORD` przed instalacją lub zachowaj hasło wygenerowane przez instalator
+
+## Checklista przed publikacją
+
+- Ustaw `WP_ENVIRONMENT_TYPE=production`.
+- W **Ustawienia → Czytanie** wyłącz opcję „Proś wyszukiwarki o nieindeksowanie tej witryny” (`blog_public=1`).
+- Sprawdź, czy `/wp-json/winnica/v1/health` zwraca `status: ok` i `indexable: true`.
+- Zweryfikuj tytuł, opis, canonical, Open Graph i pojedynczy blok schema.org na stronie głównej.
+- Przetestuj formularz oraz SMTP na docelowym adresie odbiorczym.
+- Wygeneruj ponownie sitemapę WordPressa i zgłoś ją w Google Search Console.
+- Zablokuj `/xmlrpc.php` na poziomie serwera (Apache/nginx), jeśli integracje zewnętrzne go nie wymagają.
+- Wykonaj kopię zapasową przed przełączeniem DNS.
 
 ## Architektura (bez ACF PRO)
 

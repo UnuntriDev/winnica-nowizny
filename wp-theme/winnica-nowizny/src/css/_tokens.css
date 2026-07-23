@@ -3,11 +3,11 @@
   --c-parchment: #F9F6F1;
   --c-parchment-warm: #f0eae0;
   --c-parchment-mid: #e8e0d4;
-  --c-parchment-deep: #ddd5c8;
   --c-earth-dark: #2a2118;
   --c-earth-deep: #1a1510;
   --c-earth-mid: #3d3025;
   --c-amber: #8B6D4B;
+  --c-amber-text: #765938;
   --c-amber-light: #C4B49A;
   --c-amber-hover: #d4c4aa;
   --c-oak: #6B4226;
@@ -63,5 +63,4 @@
 
   /* Borders */
   --border-subtle: 1px solid rgba(139, 109, 75, 0.15);
-  --border-dashed: 1px dashed rgba(139, 109, 75, 0.3);
 }

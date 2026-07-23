@@ -27,8 +27,6 @@
   opacity: 1;
 }
 
-.hero-pattern { position: absolute; inset: 0; opacity: 0.04; }
-
 .hero-overlay {
   position: absolute;
   inset: 0;

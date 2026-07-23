@@ -42,7 +42,7 @@
 .page-content img { margin: var(--sp-4) 0; }
 
 .page-content a {
-  color: var(--c-amber);
+  color: var(--c-amber-text);
   border-bottom: 1px solid rgba(139, 109, 75, 0.3);
   transition: border-color var(--duration-fast);
 }

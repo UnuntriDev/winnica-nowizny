@@ -18,7 +18,7 @@ echo "📄 Seeding homepage fields (page ID: $FRONT_ID)..."
 # Hero
 $WP post meta update $FRONT_ID hero_show 1
 $WP post meta update $FRONT_ID hero_label "Pogórze Rożnowskie · od 2005 roku"
-$WP post meta update $FRONT_ID hero_title "Winnica<br>Nowizny"
+$WP post meta update $FRONT_ID hero_title "Winnica <br>Nowizny"
 $WP post meta update $FRONT_ID hero_subtitle "Gdzie tradycja winiarstwa spotyka piękno Pogórza Rożnowskiego"
 $WP post meta update $FRONT_ID hero_cta_primary_text "Zaplanuj wizytę"
 $WP post meta update $FRONT_ID hero_cta_primary_url "#wizyta"
@@ -56,7 +56,7 @@ $WP post meta update $FRONT_ID wines_show 1
 $WP post meta update $FRONT_ID wines_label "Nasze wina"
 $WP post meta update $FRONT_ID wines_title "Smak Pogórza"
 $WP post meta update $FRONT_ID wines_archive_label "Zobacz wszystkie wina →"
-$WP post meta update $FRONT_ID wines_count 3
+$WP post meta update $FRONT_ID wines_count 6
 
 # Piwnica
 $WP post meta update $FRONT_ID cellar_show 1

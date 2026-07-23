@@ -5,7 +5,7 @@
 
 defined('ABSPATH') || exit;
 
-define('WINNICA_VERSION', '1.3.4');
+define('WINNICA_VERSION', '1.4.0');
 define('WINNICA_DIR', get_template_directory());
 define('WINNICA_URI', get_template_directory_uri());
 
@@ -26,6 +26,9 @@ require_once WINNICA_DIR . '/inc/assets.php';
 
 // ── Custom Post Types ──
 require_once WINNICA_DIR . '/inc/cpt-wino.php';
+
+// Canonical redirects for legacy one-page routes
+require_once WINNICA_DIR . '/inc/redirects.php';
 
 // Native contact form and messages stored in wp-admin
 require_once WINNICA_DIR . '/inc/contact-form.php';

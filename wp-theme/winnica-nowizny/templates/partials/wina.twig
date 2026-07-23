@@ -22,7 +22,7 @@
         {% endif %}
         <h3 class="wine-name">{{ wine.title }}</h3>
         {% if wine.meta('rodzaj') %}<p class="wine-type">{{ wine.meta('rodzaj') }}</p>{% endif %}
-        {% if wine.excerpt %}<p class="wine-desc">{{ wine.excerpt | truncate(120) }}</p>{% endif %}
+        {% if wine.post_excerpt %}<p class="wine-desc">{{ wine.post_excerpt | truncate(120) }}</p>{% endif %}
         {% set price = wine.meta('cena') %}
         {% set has_availability = function('metadata_exists', 'post', wine.id, 'dostepne') %}
         {% if price is not empty or has_availability %}

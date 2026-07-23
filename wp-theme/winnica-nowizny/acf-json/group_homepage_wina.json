@@ -79,34 +79,6 @@
             "append": ""
         },
         {
-            "key": "field_wines_archive_label",
-            "label": "Tekst linku do archiwum",
-            "name": "wines_archive_label",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": false,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_wines_show",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Zobacz wszystkie wina →",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
             "key": "field_wines_count",
             "label": "Ilość win do wyświetlenia",
             "name": "wines_count",
@@ -128,7 +100,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": 3,
+            "default_value": 6,
             "min": 1,
             "max": 6,
             "step": "",

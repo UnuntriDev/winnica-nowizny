@@ -8,7 +8,7 @@
       {% set title = post.meta('terroir_' ~ i ~ '_title') %}
       {% if title %}
         <div class="reveal reveal-delay-{{ i }}">
-          <div class="terroir-icon">
+          <div class="terroir-icon" aria-hidden="true">
             {{ post.meta('terroir_' ~ i ~ '_icon') | raw }}
           </div>
           <h3 class="terroir-title">{{ title }}</h3>

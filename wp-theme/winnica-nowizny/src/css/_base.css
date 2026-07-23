@@ -37,7 +37,7 @@ body {
 }
 
 a {
-  color: var(--c-amber);
+  color: var(--c-amber-text);
   text-decoration: none;
 }
 

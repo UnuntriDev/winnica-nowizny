@@ -30,6 +30,7 @@ add_action('init', function (): void {
     remove_action('wp_print_styles', 'print_emoji_styles');
     remove_action('wp_head', 'rest_output_link_wp_head');
     remove_action('wp_head', 'wp_oembed_add_discovery_links');
+    remove_action('template_redirect', 'wp_shortlink_header', 11);
 });
 
 add_action('wp_enqueue_scripts', function (): void {
@@ -39,7 +40,13 @@ add_action('wp_enqueue_scripts', function (): void {
 }, 100);
 
 add_action('send_headers', function (): void {
-    if (!is_admin() && !is_user_logged_in() && !is_404() && !is_search() && !headers_sent()) {
+    if (is_admin() || is_user_logged_in() || is_404() || is_search() || headers_sent()) {
+        return;
+    }
+
+    if (!empty($_GET)) {
+        header('Cache-Control: private, no-store, max-age=0');
+    } else {
         header('Cache-Control: public, max-age=300, stale-while-revalidate=60');
     }
 });

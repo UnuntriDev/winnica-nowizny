@@ -15,6 +15,7 @@ if (!class_exists('Timber')) {
 Timber::$dirname = ['templates', 'templates/partials'];
 
 add_filter('timber_context', function (array $context): array {
+    $context['menu']           = new Timber\Menu('primary');
     $context['site_phone']     = get_theme_mod('winnica_phone', '607 578 156');
     $context['site_email']     = get_theme_mod('winnica_email', 'winnicanowizny@op.pl');
     $context['site_address']   = get_theme_mod('winnica_address', 'Połom Mały 60, 32-862 Porąbka Iwkowska');

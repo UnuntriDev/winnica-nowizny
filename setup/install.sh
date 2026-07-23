@@ -57,7 +57,6 @@ $WP theme delete twentytwentyfive 2>/dev/null || true
 echo "📦 Installing plugins..."
 $WP plugin install advanced-custom-fields --activate
 $WP plugin install timber-library --activate
-$WP plugin install wordpress-seo --activate
 
 echo "🔄 Syncing ACF field groups from JSON..."
 for f in /var/www/html/wp-content/themes/winnica-nowizny/acf-json/*.json; do
@@ -70,9 +69,7 @@ FRONT_ID=$($WP post list --post_type=page --name=home --field=ID)
 $WP option update show_on_front page
 $WP option update page_on_front "$FRONT_ID"
 
-echo "📄 Creating additional pages..."
-$WP post create --post_type=page --post_title="O nas" --post_status=publish --post_name=o-nas
-$WP post create --post_type=page --post_title="Kontakt" --post_status=publish --post_name=kontakt
+echo "📄 Creating privacy page..."
 PRIVACY_ID=$($WP post create --post_type=page --post_title="Polityka prywatności" --post_status=publish --post_name=polityka-prywatnosci --post_content="$(cat /setup/privacy-policy.html)" --porcelain)
 $WP option update wp_page_for_privacy_policy "$PRIVACY_ID"
 

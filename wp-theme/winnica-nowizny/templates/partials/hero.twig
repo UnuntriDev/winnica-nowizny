@@ -12,8 +12,21 @@
       }) | raw }}
     {% else %}
       <picture>
-        <source srcset="{{ theme.link }}/assets/images/hero-winnica.avif" type="image/avif">
-        <img src="{{ theme.link }}/assets/images/hero-winnica.webp" alt="Widok Winnicy Nowizny i Pogórza Rożnowskiego o zachodzie słońca" class="hero-bg-img" width="1920" height="1080" loading="eager" fetchpriority="high" decoding="async">
+        <source
+          srcset="{{ theme.link }}/assets/images/hero-winnica-768.avif 768w, {{ theme.link }}/assets/images/hero-winnica-1280.avif 1280w, {{ theme.link }}/assets/images/hero-winnica.avif 1920w"
+          sizes="100vw"
+          type="image/avif">
+        <img
+          src="{{ theme.link }}/assets/images/hero-winnica.webp"
+          srcset="{{ theme.link }}/assets/images/hero-winnica-768.webp 768w, {{ theme.link }}/assets/images/hero-winnica-1280.webp 1280w, {{ theme.link }}/assets/images/hero-winnica.webp 1920w"
+          sizes="100vw"
+          alt="Widok Winnicy Nowizny i Pogórza Rożnowskiego o zachodzie słońca"
+          class="hero-bg-img"
+          width="1920"
+          height="1080"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async">
       </picture>
     {% endif %}
   </div>
@@ -24,7 +37,7 @@
     {% if post.meta('hero_label') %}
       <p class="hero-label">{{ post.meta('hero_label') }}</p>
     {% endif %}
-    <h1>{{ post.meta('hero_title') | default('Winnica<br>Nowizny') | raw }}</h1>
+    <h1>{{ post.meta('hero_title') | default('Winnica <br>Nowizny') | raw }}</h1>
     {% if post.meta('hero_subtitle') %}
       <p class="hero-subtitle">{{ post.meta('hero_subtitle') }}</p>
     {% endif %}
