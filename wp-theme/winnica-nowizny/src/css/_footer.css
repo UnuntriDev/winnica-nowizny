@@ -98,7 +98,11 @@
 .consent-actions .consent-accept { background: var(--c-amber-light); color: var(--c-earth-deep); }
 .consent-policy { display: inline-block; margin-top: 12px; font-size: var(--fs-sm); text-decoration: underline; text-underline-offset: 3px; }
 
-.footer-social { display: flex; gap: var(--sp-2); margin-bottom: 28px; }
+.footer-social {
+  display: flex;
+  gap: var(--sp-2);
+  margin: var(--sp-3) 0 28px;
+}
 
 .footer-social-icon {
   width: 40px;
