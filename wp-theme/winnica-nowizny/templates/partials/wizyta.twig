@@ -1,6 +1,6 @@
 <section class="section-dark" id="wizyta">
   <div class="section-dark-inner">
-    {% set has_visit_info = post.meta('wizyta_address') or post.meta('wizyta_hours') or post.meta('wizyta_contact') or post.meta('wizyta_directions') %}
+    {% set has_visit_info = post.meta('wizyta_address') or post.meta('wizyta_hours') or post.meta('wizyta_contact') or post.meta('wizyta_directions') or post.meta('wizyta_show_map') %}
     {% if has_visit_info %}
       <div class="visit-grid">
         <div class="visit-sidebar">
@@ -40,6 +40,23 @@
           </div>
         {% endif %}
         </div>
+        {% if post.meta('wizyta_show_map') %}
+          <div class="visit-map reveal" role="region" aria-label="Mapa dojazdu do Winnicy Nowizny">
+            <div class="visit-map-frame">
+              {% if post.meta('wizyta_map_embed') %}
+                {{ post.meta('wizyta_map_embed') | raw }}
+              {% else %}
+                <iframe
+                  src="https://www.google.com/maps?q=Po%C5%82om+Ma%C5%82y+60%2C+32-862+Por%C4%85bka+Iwkowska&output=embed"
+                  title="Winnica Nowizny — Połom Mały 60"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  allowfullscreen>
+                </iframe>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
         </div>
     {% else %}
       <div class="visit-header reveal">
@@ -123,34 +140,5 @@
         </div>
       </div>
     </div>
-    {% if post.meta('wizyta_show_map') %}
-      <section class="visit-map reveal" aria-labelledby="visit-map-title">
-        <div class="visit-map-frame">
-          {% if post.meta('wizyta_map_embed') %}
-            {{ post.meta('wizyta_map_embed') | raw }}
-          {% else %}
-            <iframe
-              src="https://www.google.com/maps?q=Po%C5%82om+Ma%C5%82y+60%2C+32-862+Por%C4%85bka+Iwkowska&output=embed"
-              title="Winnica Nowizny — Połom Mały 60"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen>
-            </iframe>
-          {% endif %}
-        </div>
-        <div class="visit-map-info">
-          <p class="visit-block-label">Dojazd</p>
-          <h3 id="visit-map-title">Winnica Nowizny</h3>
-          <p>Połom Mały 60<br>32-862 Porąbka Iwkowska</p>
-          <a class="btn-directions" href="https://www.google.com/maps/dir/?api=1&amp;destination=Po%C5%82om+Ma%C5%82y+60%2C+32-862+Por%C4%85bka+Iwkowska" target="_blank" rel="noopener noreferrer">Wyznacz trasę</a>
-          {% if post.meta('wizyta_parking') %}
-            <p class="visit-travel-note"><strong>Parking:</strong> {{ post.meta('wizyta_parking') }}</p>
-          {% endif %}
-          {% if post.meta('wizyta_accessibility') %}
-            <p class="visit-travel-note"><strong>Dostępność:</strong> {{ post.meta('wizyta_accessibility') }}</p>
-          {% endif %}
-        </div>
-      </section>
-    {% endif %}
   </div>
 </section>
