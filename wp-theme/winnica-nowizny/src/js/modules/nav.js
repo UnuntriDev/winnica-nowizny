@@ -1,3 +1,32 @@
+function initScrollSpy(links) {
+  if (!links || !('IntersectionObserver' in window)) return;
+
+  const anchors = Array.from(links.querySelectorAll('a[href*="#"]'))
+    .filter(a => !a.classList.contains('nav-social-link'));
+
+  const map = new Map();
+  anchors.forEach(anchor => {
+    const hash = new URL(anchor.href, window.location.href).hash;
+    if (!hash || hash === '#') return;
+    const section = document.querySelector(hash);
+    if (section) map.set(section, anchor);
+  });
+
+  if (!map.size) return;
+
+  const setActive = (anchor) => {
+    anchors.forEach(a => a.classList.toggle('is-active', a === anchor));
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries
+      .filter(entry => entry.isIntersecting)
+      .forEach(entry => setActive(map.get(entry.target)));
+  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+  map.forEach((_, section) => observer.observe(section));
+}
+
 export function initNav() {
   const nav = document.getElementById('siteNav');
   const toggle = document.getElementById('navToggle');
@@ -9,6 +38,8 @@ export function initNav() {
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
+
+  initScrollSpy(links);
 
   if (toggle && links) {
     const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';

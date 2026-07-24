@@ -14,6 +14,7 @@
   --c-text-body: #6b6056;
   --c-text-light: #f5f0e8;
   --c-text-muted: #c4b49a;
+  --c-text-soft: #ddd2c2;
   --c-focus-ring: #f7dfb6;
   --c-focus-contrast: #1a1510;
 
@@ -63,4 +64,12 @@
 
   /* Borders */
   --border-subtle: 1px solid rgba(139, 109, 75, 0.15);
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+
+  /* Section rhythm */
+  --section-pad-light: 112px;
+  --section-pad-dark: 96px;
 }

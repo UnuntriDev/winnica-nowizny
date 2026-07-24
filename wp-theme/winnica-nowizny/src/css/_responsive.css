@@ -8,22 +8,16 @@
     gap: var(--sp-5);
   }
   .historia-image { aspect-ratio: 4 / 5; }
+  .historia-visual { padding-left: var(--sp-2); }
 
   .exp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4); }
   .exp-card {
     display: grid;
-    grid-template-columns: 140px minmax(0, 1fr);
-    column-gap: var(--sp-3);
-    align-items: start;
+    grid-template-columns: 150px minmax(0, 1fr);
+    align-items: stretch;
   }
-  .exp-card-image {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-    aspect-ratio: 4 / 5;
-    margin: 0;
-  }
-  .exp-card h3 { grid-column: 2; margin: 4px 0 8px; }
-  .exp-card p { grid-column: 2; }
+  .exp-card-image { aspect-ratio: 3 / 4; }
+  .exp-card-body { padding: var(--sp-3); }
 
   .wines-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .cellar-inner { padding: 88px var(--sp-6); gap: var(--sp-5); }
@@ -75,14 +69,14 @@
 
   .hero h1 { font-size: var(--fs-display-lg); }
   .hero-subtitle { font-size: var(--fs-md); }
-  .hero-buttons { flex-direction: column; align-items: center; gap: 12px; }
-  .hero-buttons .btn-primary,
-  .hero-buttons .btn-outline {
-    padding: 14px 20px;
+  .hero-buttons { flex-direction: column; align-items: center; gap: var(--sp-2); }
+  .hero-buttons .btn-primary {
+    padding: 14px 24px;
     font-size: var(--fs-label);
     letter-spacing: 1.6px;
     white-space: nowrap;
   }
+  .hero-buttons .btn-text { font-size: var(--fs-body-sm); }
 
   .section-light { padding: var(--sp-7) var(--sp-3); }
   .section-dark { padding: var(--sp-7) var(--sp-3); }
@@ -96,32 +90,28 @@
 
   .historia h2 { font-size: var(--fs-3xl); }
   .historia-grid { grid-template-columns: 1fr; gap: var(--sp-5); }
+  .historia-visual { padding: 0 0 var(--sp-6); }
   .historia-image { aspect-ratio: 4 / 3; }
   .historia-stats {
-    gap: 0;
-    margin-top: var(--sp-3);
-    padding-top: 20px;
+    left: 50%;
+    width: min(248px, calc(100% - var(--sp-4)));
+    min-height: 168px;
+    transform: translateX(-50%);
+    gap: 12px var(--sp-1);
+    padding: 20px;
   }
-  .historia-stats > div { padding: 0 10px; }
-  .historia-stats > div:first-child { padding-left: 0; }
   .historia .stat-number { font-size: var(--fs-2xl); }
   .historia .stat-label { font-size: var(--fs-label); letter-spacing: 0.75px; }
 
-  .exp-grid { grid-template-columns: 1fr; gap: var(--sp-2); }
+  .exp-grid { grid-template-columns: 1fr; gap: var(--sp-3); }
   .exp-card {
     display: grid;
-    grid-template-columns: 112px minmax(0, 1fr);
-    column-gap: var(--sp-2);
-    align-items: start;
+    grid-template-columns: 120px minmax(0, 1fr);
+    align-items: stretch;
   }
-  .exp-card-image {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-    aspect-ratio: 4 / 5;
-    margin: 0;
-  }
-  .exp-card h3 { grid-column: 2; margin: 4px 0 8px; }
-  .exp-card p { grid-column: 2; }
+  .exp-card-image { aspect-ratio: 3 / 4; }
+  .exp-card-body { padding: var(--sp-3); }
+  .exp-card h3 { margin: 0 0 6px; }
   .wines-grid { grid-template-columns: 1fr; }
   .wines-header { flex-direction: column; align-items: flex-start; gap: var(--sp-2); margin-bottom: var(--sp-4); }
   .wine-card { min-height: 0; padding: var(--sp-4) var(--sp-3); }
@@ -238,7 +228,8 @@
   .section-dark,
   .cellar-inner,
   .testimonial { padding-left: 20px; padding-right: 20px; }
-  .exp-card { grid-template-columns: 96px minmax(0, 1fr); column-gap: 14px; }
+  .exp-card { grid-template-columns: 96px minmax(0, 1fr); }
+  .exp-card-body { padding: var(--sp-2); }
   .exp-card h3 { font-size: var(--fs-lg); }
   .exp-card p { font-size: var(--fs-meta); line-height: 1.5; }
   .form-title { font-size: var(--fs-2xl); }

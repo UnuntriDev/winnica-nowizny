@@ -13,10 +13,25 @@
   background: transparent;
 }
 
+/* Readability scrim over the bright hero; fades once a solid bar takes over. */
+.site-nav::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 160px;
+  background: linear-gradient(180deg, rgba(26, 21, 16, 0.5) 0%, rgba(26, 21, 16, 0) 100%);
+  opacity: 1;
+  transition: opacity var(--duration-mid);
+  pointer-events: none;
+  z-index: -1;
+}
+
 .site-nav.scrolled {
   background: rgba(26, 21, 16, 0.95);
   box-shadow: 0 1px 20px rgba(0, 0, 0, 0.15);
 }
+
+.site-nav.scrolled::before { opacity: 0; }
 
 .nav-logo {
   display: flex;
@@ -56,45 +71,88 @@
 
 .nav-links {
   display: flex;
-  gap: 36px;
+  gap: 34px;
   align-items: center;
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  letter-spacing: 2.5px;
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   margin-left: auto;
 }
 
 .nav-links a {
+  position: relative;
   color: var(--c-text-light);
   text-decoration: none;
-  transition: opacity var(--duration-fast);
+  padding-bottom: 3px;
+  transition: color var(--duration-fast);
 }
 
-.nav-links a:hover { opacity: 0.6; color: var(--c-text-light); }
+/* Animated underline for hover + current section. */
+.nav-links a:not(.nav-cta):not(.nav-social-link)::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1.5px;
+  background: var(--c-amber-light);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
 
+.nav-links a:not(.nav-cta):not(.nav-social-link):hover {
+  color: var(--c-amber-light);
+}
+
+.nav-links a:not(.nav-cta):not(.nav-social-link):hover::after {
+  transform: scaleX(1);
+}
+
+/* Active section: brighter colour + persistent, slightly heavier underline. */
+.nav-links a.is-active:not(.nav-cta) {
+  color: var(--c-amber-hover);
+}
+
+.nav-links a.is-active:not(.nav-cta)::after {
+  height: 2px;
+  bottom: -3px;
+  transform: scaleX(1);
+}
+
+/* Subtle outline CTA — distinct but no longer dominant. */
 .nav-links a.nav-cta {
-  background: rgba(196, 180, 154, 0.12);
-  padding: 10px 24px;
-  letter-spacing: 2px;
-  transition: background var(--duration-fast), opacity var(--duration-fast);
+  color: var(--c-amber-light);
+  background: transparent;
+  border: 1px solid rgba(196, 180, 154, 0.38);
+  border-radius: var(--radius-sm);
+  padding: 8px 20px;
+  letter-spacing: 1.5px;
+  transition: background var(--duration-fast), border-color var(--duration-fast), color var(--duration-fast);
 }
 
-.site-nav.scrolled .nav-links a.nav-cta { background: rgba(139, 109, 75, 0.2); }
-.nav-links a.nav-cta:hover { opacity: 0.85; }
+.site-nav.scrolled .nav-links a.nav-cta { background: transparent; }
+
+.nav-links a.nav-cta:hover {
+  background: rgba(196, 180, 154, 0.12);
+  border-color: var(--c-amber-light);
+  color: var(--c-amber-light);
+}
 
 .nav-social-links {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-left: -18px;
+  gap: 10px;
+  margin-left: -8px;
 }
 
 .nav-links .nav-social-link {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   padding: 0;
   border: 1px solid rgba(196, 180, 154, 0.35);
+  border-radius: var(--radius-sm);
   display: grid;
   place-items: center;
   flex: 0 0 auto;

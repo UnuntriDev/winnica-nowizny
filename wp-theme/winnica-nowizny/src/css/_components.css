@@ -1,77 +1,113 @@
-/* ── Buttons ── */
-.btn-primary {
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--c-earth-deep);
-  background: var(--c-amber-light);
-  padding: var(--sp-2) var(--sp-5);
-  text-decoration: none;
-  transition: all var(--duration-mid);
-  display: inline-block;
+/* ── Buttons ──
+   Shared base for every button-like control; variants only set color/border. */
+.btn-primary,
+.btn-secondary,
+.btn-outline,
+.btn-outline-light,
+.form-submit {
   font-family: var(--ff-body);
-  border: none;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  padding: var(--sp-2) var(--sp-5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  transition: background var(--duration-mid), border-color var(--duration-mid), color var(--duration-mid), transform var(--duration-mid);
 }
 
-.btn-primary:hover {
+.btn-primary,
+.form-submit {
+  color: var(--c-earth-deep);
+  background: var(--c-amber-light);
+  border-color: var(--c-amber-light);
+}
+
+.btn-primary:hover,
+.form-submit:hover {
   background: var(--c-amber-hover);
+  border-color: var(--c-amber-hover);
   transform: translateY(-1px);
   color: var(--c-earth-deep);
 }
 
+/* Secondary / outline share the same shape; light variant for dark grounds. */
+.btn-secondary,
 .btn-outline {
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  letter-spacing: 3px;
-  text-transform: uppercase;
   color: var(--c-amber-light);
-  border: 1px solid rgba(196, 180, 154, 0.4);
-  padding: var(--sp-2) var(--sp-5);
-  text-decoration: none;
-  transition: all var(--duration-mid);
-  display: inline-block;
-  font-family: var(--ff-body);
   background: transparent;
-  cursor: pointer;
+  border-color: rgba(196, 180, 154, 0.45);
 }
 
+.btn-secondary:hover,
 .btn-outline:hover {
   border-color: var(--c-amber-light);
-  background: rgba(196, 180, 154, 0.08);
+  background: rgba(196, 180, 154, 0.1);
   color: var(--c-amber-light);
 }
 
 .btn-outline-light {
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  letter-spacing: 3px;
-  text-transform: uppercase;
   color: var(--c-text-light);
-  border: 1px solid rgba(245, 240, 232, 0.3);
-  padding: var(--sp-2) 36px;
-  text-decoration: none;
-  transition: all var(--duration-mid);
-  display: inline-block;
-  font-family: var(--ff-body);
+  background: transparent;
+  border-color: rgba(245, 240, 232, 0.35);
 }
 
 .btn-outline-light:hover {
-  background: rgba(245, 240, 232, 0.08);
-  border-color: rgba(245, 240, 232, 0.6);
+  background: rgba(245, 240, 232, 0.1);
+  border-color: rgba(245, 240, 232, 0.65);
   color: var(--c-text-light);
+}
+
+/* Text link with arrow — lightweight tertiary action. */
+.btn-text {
+  font-family: var(--ff-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--c-amber-light);
+  background: none;
+  border: none;
+  padding: var(--sp-1) 2px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color var(--duration-fast), gap var(--duration-fast);
+}
+
+.btn-text::after {
+  content: '\2192';
+  font-size: 1.1em;
+  line-height: 1;
+  transition: transform var(--duration-fast);
+}
+
+.btn-text:hover {
+  color: var(--c-amber-hover);
+  gap: 12px;
+}
+
+.btn-text:hover::after {
+  transform: translateX(2px);
 }
 
 /* ── Section shared ── */
 .section-light {
-  padding: var(--sp-12) var(--sp-6);
+  padding: var(--section-pad-light) var(--sp-6);
   max-width: var(--max-w);
   margin: 0 auto;
 }
 
 .section-dark {
-  padding: var(--sp-10) var(--sp-6);
+  padding: var(--section-pad-dark) var(--sp-6);
   background: var(--c-earth-dark);
   color: var(--c-text-light);
 }
@@ -110,9 +146,10 @@
 
 /* ── Form elements ── */
 .form-container {
-  background: rgba(139, 109, 75, 0.08);
+  background: rgba(139, 109, 75, 0.1);
   padding: var(--sp-6);
-  border: var(--border-subtle);
+  border: 1px solid rgba(196, 180, 154, 0.18);
+  border-radius: var(--radius-md);
 }
 
 .form-title {
@@ -154,15 +191,19 @@
 
 .form-input {
   height: 48px;
-  background: rgba(139, 109, 75, 0.06);
-  border: 1px solid rgba(139, 109, 75, 0.2);
+  background: rgba(26, 21, 16, 0.28);
+  border: 1px solid rgba(196, 180, 154, 0.28);
+  border-radius: var(--radius-sm);
   padding: 0 var(--sp-2);
   font-family: var(--ff-body);
   font-size: var(--fs-body-sm);
   color: var(--c-text-light);
-  transition: border-color var(--duration-fast);
+  transition: border-color var(--duration-fast), background var(--duration-fast);
   width: 100%;
 }
+
+.form-input:hover,
+.form-textarea:hover { border-color: rgba(196, 180, 154, 0.45); }
 
 .form-input:focus-visible { border-color: var(--c-amber-light); }
 .form-input::placeholder { color: rgba(196, 180, 154, 0.4); }
@@ -183,14 +224,15 @@
 .form-select option { color: var(--c-earth-deep); }
 
 .form-textarea {
-  min-height: 140px;
-  background: rgba(139, 109, 75, 0.06);
-  border: 1px solid rgba(139, 109, 75, 0.2);
+  min-height: 108px;
+  background: rgba(26, 21, 16, 0.28);
+  border: 1px solid rgba(196, 180, 154, 0.28);
+  border-radius: var(--radius-sm);
   padding: var(--sp-2);
   font-family: var(--ff-body);
   font-size: var(--fs-body-sm);
   color: var(--c-text-light);
-  transition: border-color var(--duration-fast);
+  transition: border-color var(--duration-fast), background var(--duration-fast);
   width: 100%;
   resize: vertical;
 }
@@ -199,42 +241,36 @@
 .form-textarea::placeholder { color: rgba(196, 180, 154, 0.4); }
 
 .form-submit {
-  font-family: var(--ff-body);
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--c-earth-deep);
-  background: var(--c-amber-light);
+  width: 100%;
+  margin-top: var(--sp-1);
   padding: var(--sp-2) var(--sp-6);
-  cursor: pointer;
-  transition: all var(--duration-mid);
-  display: inline-block;
-  border: none;
-  text-align: center;
 }
-
-.form-submit:hover { background: var(--c-amber-hover); }
 
 .form-consent {
   display: grid;
-  grid-template-columns: 18px 1fr;
-  gap: 10px;
+  grid-template-columns: 20px 1fr;
+  gap: 12px;
   align-items: start;
-  color: var(--c-text-muted);
-  font-size: var(--fs-meta);
-  line-height: 1.5;
+  color: var(--c-text-soft);
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
   cursor: pointer;
 }
 
 .form-consent input {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   margin-top: 2px;
   accent-color: var(--c-amber-light);
 }
 
-.form-consent a { color: var(--c-amber-light); }
+.form-consent a {
+  color: var(--c-amber-light);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.form-consent a:hover { color: var(--c-amber-hover); }
 
 .form-notice {
   margin-bottom: var(--sp-3);

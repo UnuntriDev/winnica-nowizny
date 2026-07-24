@@ -72,7 +72,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "Gdzie tradycja spotyka pasję",
+            "default_value": "Rodzinna pasja<br><em>zakwita w winorośli</em>",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
@@ -101,7 +101,7 @@
                 "id": ""
             },
             "rows": 4,
-            "default_value": "",
+            "default_value": "Winnica Nowizny to rodzinne przedsięwzięcie Urszuli i Bogusława Kamińskich, rozwijane od 2005 roku w Połomiu Małym na malowniczym Pogórzu Rożnowskim. Na południe od Krakowa, w miejscu, gdzie klimat, gleba i pasja spotykają się w jednym miejscu.",
             "new_lines": "",
             "maxlength": "",
             "placeholder": ""
@@ -129,10 +129,38 @@
                 "id": ""
             },
             "rows": 4,
-            "default_value": "",
+            "default_value": "Nasze wino jest wyrazem tego terenu, jego historii, mikroklimatu i charakteru. Każda butelka opowiada historię tego wzgórza, tych winorośli i naszej rodziny.",
             "new_lines": "",
             "maxlength": "",
             "placeholder": ""
+        },
+        {
+            "key": "field_hist_signature",
+            "label": "Podpis",
+            "name": "historia_signature",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_hist_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Urszula i Bogusław Kamińscy",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         },
         {
             "key": "field_hist_image",
@@ -215,7 +243,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "default_value": "2005",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
@@ -243,7 +271,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "default_value": "Rok założenia",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
@@ -271,7 +299,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "default_value": "1,5 ha",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
@@ -299,7 +327,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "default_value": "Powierzchnia",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
@@ -327,7 +355,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "default_value": "7",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
@@ -355,7 +383,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "default_value": "Odmian",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
@@ -383,5 +411,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1784744127
+    "modified": 1784802000
 }

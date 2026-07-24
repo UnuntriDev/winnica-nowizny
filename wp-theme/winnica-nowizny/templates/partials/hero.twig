@@ -46,7 +46,7 @@
         <a href="{{ post.meta('hero_cta_primary_url') | default('#wizyta') }}" class="btn-primary">{{ post.meta('hero_cta_primary_text') }}</a>
       {% endif %}
       {% if post.meta('hero_cta_secondary_text') %}
-        <a href="{{ post.meta('hero_cta_secondary_url') | default('#wina') }}" class="btn-outline">{{ post.meta('hero_cta_secondary_text') }}</a>
+        <a href="{{ post.meta('hero_cta_secondary_url') | default('#wina') }}" class="btn-text hero-cta-text">{{ post.meta('hero_cta_secondary_text') }}</a>
       {% endif %}
     </div>
   </div>

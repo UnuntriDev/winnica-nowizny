@@ -2,7 +2,7 @@
   <div class="section-dark-inner">
     <div class="section-heading reveal">
       <p class="section-label">{{ post.meta('exp_label') | default('Doświadczenia') }}</p>
-      <h2 class="section-title section-title-dark">{{ post.meta('exp_title') | default('Przeżyj winnicę') | raw }}</h2>
+      <h2 class="section-title section-title-dark">{{ post.meta('exp_title') | default('Poczuj charakter winnicy') | raw }}</h2>
     </div>
     <div class="exp-grid">
       {% set fallback_images = {
@@ -33,8 +33,10 @@
               {% endif %}
               <div class="exp-card-gradient"></div>
             </div>
-            <h3>{{ title }}</h3>
-            <p>{{ post.meta('exp_card_' ~ i ~ '_desc') }}</p>
+            <div class="exp-card-body">
+              <h3>{{ title }}</h3>
+              <p>{{ post.meta('exp_card_' ~ i ~ '_desc') }}</p>
+            </div>
           </div>
         {% endif %}
       {% endfor %}

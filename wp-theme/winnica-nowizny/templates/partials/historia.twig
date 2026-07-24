@@ -4,7 +4,7 @@
       <div class="historia-label reveal">
         <span class="section-label">{{ post.meta('historia_label') | default('Nasza historia') }}</span>
       </div>
-      <h2 class="reveal reveal-delay-1">{{ post.meta('historia_title') | default('Gdzie tradycja spotyka pasję') | raw }}</h2>
+      <h2 class="reveal reveal-delay-1">{{ post.meta('historia_title') | default('Rodzinna pasja<br><em>zakwita w winorośli</em>') | raw }}</h2>
       {% if post.meta('historia_text_1') %}
         <p class="reveal reveal-delay-2">{{ post.meta('historia_text_1') }}</p>
       {% endif %}
@@ -12,8 +12,29 @@
         <p class="reveal reveal-delay-2">{{ post.meta('historia_text_2') }}</p>
       {% endif %}
 
+      {% if post.meta('historia_signature') %}
+        <p class="historia-signature reveal reveal-delay-3">{{ post.meta('historia_signature') }}</p>
+      {% endif %}
+    </div>
+    <div class="historia-visual reveal reveal-delay-2">
+      <div class="historia-image">
+        {% set img = post.meta('historia_image') %}
+        {% if img %}
+          {{ function('wp_get_attachment_image', img.ID, 'section-photo', false, {
+            'alt': 'Rzędy winorośli Winnicy Nowizny na tle Pogórza Rożnowskiego',
+            'loading': 'lazy',
+            'decoding': 'async',
+            'sizes': '(max-width: 768px) calc(100vw - 48px), (max-width: 1400px) 50vw, 650px'
+          }) | raw }}
+        {% else %}
+          <picture>
+            <source srcset="{{ theme.link }}/assets/images/historia-winnica.avif" type="image/avif">
+            <img src="{{ theme.link }}/assets/images/historia-winnica.webp" alt="Rzędy winorośli Winnicy Nowizny na tle Pogórza Rożnowskiego" width="900" height="1200" loading="lazy" decoding="async">
+          </picture>
+        {% endif %}
+      </div>
       {% if post.meta('historia_stat_1_number') %}
-        <div class="historia-stats reveal reveal-delay-3">
+        <div class="historia-stats">
           <div>
             <p class="stat-number">{{ post.meta('historia_stat_1_number') }}</p>
             <p class="stat-label">{{ post.meta('historia_stat_1_label') }}</p>
@@ -35,25 +56,6 @@
           {% endif %}
         </div>
       {% endif %}
-    </div>
-    <div class="reveal reveal-delay-2">
-      <div class="historia-image">
-        {% set img = post.meta('historia_image') %}
-        {% if img %}
-          {{ function('wp_get_attachment_image', img.ID, 'section-photo', false, {
-            'alt': 'Rzędy winorośli Winnicy Nowizny na tle Pogórza Rożnowskiego',
-            'loading': 'lazy',
-            'decoding': 'async',
-            'sizes': '(max-width: 768px) calc(100vw - 48px), (max-width: 1400px) 50vw, 650px'
-          }) | raw }}
-        {% else %}
-          <picture>
-            <source srcset="{{ theme.link }}/assets/images/historia-winnica.avif" type="image/avif">
-            <img src="{{ theme.link }}/assets/images/historia-winnica.webp" alt="Rzędy winorośli Winnicy Nowizny na tle Pogórza Rożnowskiego" width="900" height="1200" loading="lazy" decoding="async">
-          </picture>
-        {% endif %}
-        <div class="historia-accent"></div>
-      </div>
     </div>
   </div>
 </section>

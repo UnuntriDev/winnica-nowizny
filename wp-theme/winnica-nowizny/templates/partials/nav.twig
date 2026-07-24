@@ -17,7 +17,8 @@
     {% if menu %}
       {% for item in menu.items %}
         {% set item_url = item.link | slice(0, 1) == '#' ? function('home_url', '/') ~ item.link : item.link %}
-        <a href="{{ item_url }}" class="{{ item.classes | join(' ') }}">{{ item.title }}</a>
+        {% set is_cta = '#wizyta' in item.link %}
+        <a href="{{ item_url }}" class="{{ item.classes | join(' ') }}{{ is_cta ? ' nav-cta' : '' }}">{{ item.title }}</a>
       {% endfor %}
     {% else %}
       <a href="{{ function('home_url', '/') }}#historia">Historia</a>

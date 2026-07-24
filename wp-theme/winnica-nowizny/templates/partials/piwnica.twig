@@ -17,7 +17,7 @@
         </picture>
       {% endif %}
     </div>
-    <div>
+    <div class="cellar-content">
       <p class="cellar-year reveal">{{ post.meta('cellar_year') | default('1891') }}</p>
       <h2 class="reveal reveal-delay-1">{{ post.meta('cellar_title') | default('Piwnica z historią') | raw }}</h2>
       {% if post.meta('cellar_text_1') %}
