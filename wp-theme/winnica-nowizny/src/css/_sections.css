@@ -1,7 +1,8 @@
 /* ── Historia ── */
+/* Content-dominant split — text leads, portrait sits as a narrower accent. */
 .historia-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.15fr 0.85fr;
   gap: var(--sp-8);
   align-items: center;
 }
@@ -302,7 +303,8 @@
   margin: 0 auto;
   padding: var(--section-pad-dark) var(--sp-6);
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* Image-dominant split — mirrors historia's ratio in reverse for rhythm. */
+  grid-template-columns: 1.2fr 0.8fr;
   gap: var(--sp-8);
   align-items: center;
 }
