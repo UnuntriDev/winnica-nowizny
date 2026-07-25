@@ -19,7 +19,6 @@
   .exp-card-image { aspect-ratio: 3 / 4; }
   .exp-card-body { padding: var(--sp-3); }
 
-  .wines-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .cellar-inner { padding: 88px var(--sp-6); gap: var(--sp-5); }
   .terroir-grid { gap: var(--sp-4); }
 
@@ -112,10 +111,7 @@
   .exp-card-image { aspect-ratio: 3 / 4; }
   .exp-card-body { padding: var(--sp-3); }
   .exp-card h3 { margin: 0 0 6px; }
-  .wines-grid { grid-template-columns: 1fr; }
   .wines-header { flex-direction: column; align-items: flex-start; gap: var(--sp-2); margin-bottom: var(--sp-4); }
-  .wine-card-body { padding: var(--sp-4) var(--sp-3); }
-  .wine-card-mark { width: 42px; height: 42px; }
 
   .cellar { min-height: 0; }
   .cellar-inner { grid-template-columns: 1fr; padding: var(--sp-6) var(--sp-3); gap: var(--sp-4); }

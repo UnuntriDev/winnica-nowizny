@@ -75,29 +75,39 @@ $WP option update wp_page_for_privacy_policy "$PRIVACY_ID"
 
 echo "🍷 Creating wine posts..."
 # Real range from the winery. Card label comes from the 'rodzaj' post meta (not the
-# taxonomy). This is a showcase — no price/availability. Bottle photos are uploaded
-# through the WP media library as content, not seeded here.
+# taxonomy). This is a showcase — no price/availability. Cut-out bottle photos
+# (transparent WebP) are set as featured images via the Media Library, not seeded here.
 $WP post create --post_type=wino --post_title="Bukowiec" --post_status=publish --post_name=bukowiec --menu_order=1 \
-  --post_excerpt="Szczep Bianka, rocznik 2025. Wytrawne, świeże, z nutami cytrusów, zielonego jabłka i białych kwiatów."
+  --post_excerpt="Świeże i cytrusowe, z nutami zielonego jabłka oraz białych kwiatów."
 
 $WP post create --post_type=wino --post_title="Szpilówka Wytrawna" --post_status=publish --post_name=szpilowka-wytrawna --menu_order=2 \
-  --post_excerpt="Szczep Solaris, rocznik 2025. Wytrawne, pełne i słoneczne, z nutami dojrzałej gruszki i moreli."
+  --post_excerpt="Pełne i słoneczne, z nutami dojrzałej gruszki i moreli."
 
 $WP post create --post_type=wino --post_title="Szpilówka Półsłodka" --post_status=publish --post_name=szpilowka-polslodka --menu_order=3 \
-  --post_excerpt="Szczep Solaris, rocznik 2025. Półsłodkie, łagodne, z nutami brzoskwini, miodu i dojrzałych jabłek."
+  --post_excerpt="Łagodne, z nutami brzoskwini, miodu i dojrzałych jabłek."
 
 $WP post create --post_type=wino --post_title="Rosé" --post_status=publish --post_name=rose --menu_order=4 \
-  --post_excerpt="Szczep Cabernet Cortis, rocznik 2025. Półsłodkie, świeże, z nutami truskawki, maliny i czerwonych porzeczek."
+  --post_excerpt="Świeże, z nutami truskawki, maliny i czerwonych porzeczek."
 
 $WP post create --post_type=wino --post_title="Marszałek" --post_status=publish --post_name=marszalek --menu_order=5 \
-  --post_excerpt="Szczep Marechal Foch, rocznik 2025. Wytrawne, głębokie, z nutami leśnych jagód, wiśni i delikatnej przyprawy."
+  --post_excerpt="Głębokie, z nutami leśnych jagód, wiśni i delikatnej przyprawy."
 
-echo "🏷️ Setting wine types (rodzaj meta drives the card label)..."
+echo "🏷️ Setting wine meta (rodzaj = card label, szczep + rocznik = helper line)..."
 $WP post meta update $($WP post list --post_type=wino --name=bukowiec --field=ID) rodzaj "Białe wytrawne"
 $WP post meta update $($WP post list --post_type=wino --name=szpilowka-wytrawna --field=ID) rodzaj "Białe wytrawne"
 $WP post meta update $($WP post list --post_type=wino --name=szpilowka-polslodka --field=ID) rodzaj "Białe półsłodkie"
 $WP post meta update $($WP post list --post_type=wino --name=rose --field=ID) rodzaj "Różowe półsłodkie"
 $WP post meta update $($WP post list --post_type=wino --name=marszalek --field=ID) rodzaj "Czerwone wytrawne"
+
+$WP post meta update $($WP post list --post_type=wino --name=bukowiec --field=ID) szczep "Bianka"
+$WP post meta update $($WP post list --post_type=wino --name=szpilowka-wytrawna --field=ID) szczep "Solaris"
+$WP post meta update $($WP post list --post_type=wino --name=szpilowka-polslodka --field=ID) szczep "Solaris"
+$WP post meta update $($WP post list --post_type=wino --name=rose --field=ID) szczep "Cabernet Cortis"
+$WP post meta update $($WP post list --post_type=wino --name=marszalek --field=ID) szczep "Marechal Foch"
+
+for slug in bukowiec szpilowka-wytrawna szpilowka-polslodka rose marszalek; do
+  $WP post meta update $($WP post list --post_type=wino --name=$slug --field=ID) rocznik "2025"
+done
 
 echo "🧭 Creating menu..."
 $WP menu create "Menu główne"
@@ -131,5 +141,5 @@ echo "⚠️  Next steps:"
 echo "   1. ACF fields auto-sync from acf-json/ folder"
 echo "   2. Run: sh /setup/seed-acf-meta.sh"
 echo "   3. Run: sh /setup/seed-homepage.sh"
-echo "   4. Upload wine photos via Media Library"
+echo "   4. Set cut-out bottle photos (transparent WebP) as each wine's featured image"
 echo "   5. Set Customizer options: Appearance → Customize → Winnica Nowizny"

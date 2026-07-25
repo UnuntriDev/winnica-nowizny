@@ -1,48 +1,46 @@
-<section class="section-light" id="wina">
+<section class="section-light wines" id="wina">
   <div class="wines-header reveal">
     <div>
       <p class="section-label">{{ post.meta('wines_label') | default('Nasze wina') }}</p>
       <h2 class="section-title section-title-light">{{ post.meta('wines_title') | default('Smak Pogórza') | raw }}</h2>
     </div>
+    <div class="wine-slider-controls" aria-hidden="true">
+      <button class="wine-nav" type="button" data-dir="prev" aria-label="Poprzednie wino" tabindex="-1">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <button class="wine-nav" type="button" data-dir="next" aria-label="Następne wino" tabindex="-1">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
   </div>
-  <div class="wines-grid">
-    {% for wine in wines %}
-      <div class="wine-card reveal reveal-delay-{{ loop.index }}">
-        {% if wine.thumbnail %}
-          <div class="wine-photo">
-            {{ function('wp_get_attachment_image', wine.thumbnail.id, 'wine-bottle', false, {
-              'alt': 'Butelka wina ' ~ wine.title ~ ' z Winnicy Nowizny',
-              'loading': 'lazy',
-              'decoding': 'async',
-              'sizes': '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
-            }) | raw }}
+
+  <div class="wine-slider reveal" data-wine-slider>
+    <ul class="wine-track" tabindex="0" role="list" aria-label="Kolekcja win Winnicy Nowizny">
+      {% for wine in wines %}
+        <li class="wine-slide" role="listitem">
+          <div class="wine-stage">
+            {% if wine.thumbnail %}
+              {{ function('wp_get_attachment_image', wine.thumbnail.id, 'bottle', false, {
+                'alt': 'Butelka wina ' ~ wine.title ~ ' z Winnicy Nowizny',
+                'class': 'wine-bottle-img',
+                'sizes': '(max-width: 600px) 55vw, (max-width: 900px) 34vw, 240px'
+              }) | raw }}
+            {% else %}
+              <span class="wine-bottle-fallback" aria-hidden="true">{{ loop.index < 10 ? '0' ~ loop.index : loop.index }}</span>
+            {% endif %}
           </div>
-        {% else %}
-          <div class="wine-photo-placeholder">
-            <div class="wine-card-mark" aria-hidden="true">{{ loop.index < 10 ? '0' ~ loop.index : loop.index }}</div>
+          <div class="wine-info">
+            {% if wine.meta('rodzaj') %}<p class="wine-type">{{ wine.meta('rodzaj') }}</p>{% endif %}
+            <h3 class="wine-name">{{ wine.title }}</h3>
+            {% if wine.post_excerpt %}<p class="wine-desc">{{ wine.post_excerpt }}</p>{% endif %}
+            {% set szczep = wine.meta('szczep') %}
+            {% set rocznik = wine.meta('rocznik') %}
+            {% if szczep %}
+              <p class="wine-grape">{{ szczep }}{% if rocznik %} <span aria-hidden="true">·</span> rocznik {{ rocznik }}{% endif %}</p>
+            {% endif %}
           </div>
-        {% endif %}
-        <div class="wine-card-body">
-          <h3 class="wine-name">{{ wine.title }}</h3>
-          {% if wine.meta('rodzaj') %}<p class="wine-type">{{ wine.meta('rodzaj') }}</p>{% endif %}
-          {% if wine.post_excerpt %}<p class="wine-desc">{{ wine.post_excerpt | truncate(120) }}</p>{% endif %}
-          {% set price = wine.meta('cena') %}
-          {% set has_availability = function('metadata_exists', 'post', wine.id, 'dostepne') %}
-          {% if price is not empty or has_availability %}
-            <div class="wine-meta">
-              {% if price is not empty %}
-                <p class="wine-price">{{ price | number_format(2, ',', ' ') }} zł</p>
-              {% endif %}
-              {% if has_availability %}
-                {% set is_available = wine.meta('dostepne') %}
-                <p class="wine-availability{{ is_available ? '' : ' wine-availability--unavailable' }}">
-                  {{ is_available ? 'Dostępne' : 'Aktualnie niedostępne' }}
-                </p>
-              {% endif %}
-            </div>
-          {% endif %}
-        </div>
-      </div>
-    {% endfor %}
+        </li>
+      {% endfor %}
+    </ul>
   </div>
 </section>
