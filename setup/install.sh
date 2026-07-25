@@ -78,7 +78,7 @@ echo "🍷 Creating wine posts..."
 # taxonomy). This is a showcase — no price/availability. Cut-out bottle photos
 # (transparent WebP) are set as featured images via the Media Library, not seeded here.
 $WP post create --post_type=wino --post_title="Bukowiec" --post_status=publish --post_name=bukowiec --menu_order=1 \
-  --post_excerpt="Świeże i cytrusowe, z nutami zielonego jabłka oraz białych kwiatów."
+  --post_excerpt="Świeże i cytrusowe, z nutami jabłka i białych kwiatów."
 
 # Szpilówka appears twice; the card label (rodzaj) tells the two apart, so the
 # title stays short.
@@ -92,7 +92,7 @@ $WP post create --post_type=wino --post_title="Rosé" --post_status=publish --po
   --post_excerpt="Świeże, z nutami truskawki, maliny i czerwonych porzeczek."
 
 $WP post create --post_type=wino --post_title="Marszałek" --post_status=publish --post_name=marszalek --menu_order=5 \
-  --post_excerpt="Głębokie, z nutami leśnych jagód, wiśni i delikatnej przyprawy."
+  --post_excerpt="Głębokie, z nutami leśnych jagód, wiśni i przypraw."
 
 echo "🏷️ Setting wine meta (rodzaj = card label, szczep = helper line)..."
 $WP post meta update $($WP post list --post_type=wino --name=bukowiec --field=ID) rodzaj "Białe wytrawne"

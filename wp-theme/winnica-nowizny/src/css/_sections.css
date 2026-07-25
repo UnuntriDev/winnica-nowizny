@@ -200,7 +200,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: var(--sp-6);
+  margin-bottom: var(--sp-2);
 }
 
 /* ── Wina — collection grid ──
@@ -208,7 +208,7 @@
    five across on desktop, reflowing to fewer columns on smaller screens. */
 .wines-grid {
   list-style: none;
-  margin: var(--sp-3) 0 0;
+  margin: 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -316,19 +316,26 @@
 }
 
 .wine-desc {
-  font-size: var(--fs-body-sm);
-  line-height: 1.6;
+  font-size: 0.9375rem; /* ~15px, a touch larger for readability */
+  line-height: 1.7;
   color: var(--c-text-body);
-  margin: 0 auto 14px;
+  margin: 0 auto 10px;
   max-width: 32ch;
+  min-height: calc(2 * 1.7em); /* reserve two lines so the grape line stays level */
 }
 
 .wine-grape {
   font-size: var(--fs-meta);
-  letter-spacing: 0.4px;
-  color: var(--c-oak);
-  margin: auto 0 0; /* pin to the card bottom so grape lines stay aligned */
-  padding-top: 4px;
+  color: var(--c-text-body);
+  margin: 0;
+}
+
+.wine-grape-label {
+  margin-right: 6px;
+  color: var(--c-amber-text);
+  font-size: var(--fs-label);
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
 }
 
 /* Reflow: 5 across → 3 on tablet → 2 on phones. */
