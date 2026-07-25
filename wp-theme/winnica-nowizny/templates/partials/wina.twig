@@ -9,35 +9,39 @@
     {% for wine in wines %}
       <div class="wine-card reveal reveal-delay-{{ loop.index }}">
         {% if wine.thumbnail %}
-          <div class="wine-bottle">
+          <div class="wine-photo">
             {{ function('wp_get_attachment_image', wine.thumbnail.id, 'wine-bottle', false, {
-              'alt': wine.title,
+              'alt': 'Butelka wina ' ~ wine.title ~ ' z Winnicy Nowizny',
               'loading': 'lazy',
               'decoding': 'async',
-              'sizes': '(max-width: 768px) 120px, 220px'
+              'sizes': '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
             }) | raw }}
           </div>
         {% else %}
-          <div class="wine-card-mark" aria-hidden="true">{{ loop.index < 10 ? '0' ~ loop.index : loop.index }}</div>
-        {% endif %}
-        <h3 class="wine-name">{{ wine.title }}</h3>
-        {% if wine.meta('rodzaj') %}<p class="wine-type">{{ wine.meta('rodzaj') }}</p>{% endif %}
-        {% if wine.post_excerpt %}<p class="wine-desc">{{ wine.post_excerpt | truncate(120) }}</p>{% endif %}
-        {% set price = wine.meta('cena') %}
-        {% set has_availability = function('metadata_exists', 'post', wine.id, 'dostepne') %}
-        {% if price is not empty or has_availability %}
-          <div class="wine-meta">
-            {% if price is not empty %}
-              <p class="wine-price">{{ price | number_format(2, ',', ' ') }} zł</p>
-            {% endif %}
-            {% if has_availability %}
-              {% set is_available = wine.meta('dostepne') %}
-              <p class="wine-availability{{ is_available ? '' : ' wine-availability--unavailable' }}">
-                {{ is_available ? 'Dostępne' : 'Aktualnie niedostępne' }}
-              </p>
-            {% endif %}
+          <div class="wine-photo-placeholder">
+            <div class="wine-card-mark" aria-hidden="true">{{ loop.index < 10 ? '0' ~ loop.index : loop.index }}</div>
           </div>
         {% endif %}
+        <div class="wine-card-body">
+          <h3 class="wine-name">{{ wine.title }}</h3>
+          {% if wine.meta('rodzaj') %}<p class="wine-type">{{ wine.meta('rodzaj') }}</p>{% endif %}
+          {% if wine.post_excerpt %}<p class="wine-desc">{{ wine.post_excerpt | truncate(120) }}</p>{% endif %}
+          {% set price = wine.meta('cena') %}
+          {% set has_availability = function('metadata_exists', 'post', wine.id, 'dostepne') %}
+          {% if price is not empty or has_availability %}
+            <div class="wine-meta">
+              {% if price is not empty %}
+                <p class="wine-price">{{ price | number_format(2, ',', ' ') }} zł</p>
+              {% endif %}
+              {% if has_availability %}
+                {% set is_available = wine.meta('dostepne') %}
+                <p class="wine-availability{{ is_available ? '' : ' wine-availability--unavailable' }}">
+                  {{ is_available ? 'Dostępne' : 'Aktualnie niedostępne' }}
+                </p>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
       </div>
     {% endfor %}
   </div>

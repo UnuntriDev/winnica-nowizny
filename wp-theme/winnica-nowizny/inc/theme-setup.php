@@ -16,7 +16,7 @@ add_action('after_setup_theme', function () {
         'footer'  => __('Menu stopka', 'winnica-nowizny'),
     ]);
 
-    add_image_size('wine-bottle', 400, 880, true);
+    add_image_size('wine-bottle', 600, 800, true);
     add_image_size('gallery-square', 600, 600, true);
     add_image_size('gallery-tall', 600, 1200, true);
     add_image_size('gallery-wide', 1200, 600, true);

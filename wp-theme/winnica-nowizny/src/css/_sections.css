@@ -211,30 +211,43 @@
 
 .wine-card {
   position: relative;
-  min-height: 230px;
-  padding: var(--sp-4);
-  border: 1px solid rgba(139, 109, 75, 0.22);
-  background: linear-gradient(145deg, rgba(255,255,255,0.55), rgba(232,222,207,0.45));
-  text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  border: 1px solid rgba(139, 109, 75, 0.22);
+  background: linear-gradient(145deg, rgba(255,255,255,0.55), rgba(232,222,207,0.45));
   overflow: hidden;
 }
 
-.wine-card::after {
-  content: '';
-  position: absolute;
-  inset: 12px;
-  border: 1px solid rgba(139, 109, 75, 0.1);
-  pointer-events: none;
+/* Bottle photographed in situ — same setting across the range for a cohesive set. */
+.wine-photo {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--c-parchment-mid);
+}
+
+.wine-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.wine-card:hover .wine-photo img { transform: scale(1.04); }
+
+/* Fallback until a wine has its own photo. */
+.wine-photo-placeholder {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  display: grid;
+  place-items: center;
+  background: var(--c-parchment-mid);
 }
 
 .wine-card-mark {
   width: 48px;
   height: 48px;
-  margin-bottom: var(--sp-3);
   border: 1px solid var(--c-amber);
   border-radius: 50%;
   display: grid;
@@ -245,17 +258,12 @@
   font-style: italic;
 }
 
-.wine-bottle {
-  height: 220px;
-  margin: 0 auto var(--sp-3);
+.wine-card-body {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: min(70%, 160px);
+  flex-direction: column;
+  flex: 1;
+  padding: var(--sp-4);
 }
-
-.wine-bottle img { width: 100%; height: 100%; object-fit: contain; }
 
 .wine-name {
   font-family: var(--ff-display);
@@ -469,11 +477,12 @@
 
 .wine-meta {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: baseline;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: var(--sp-1) var(--sp-2);
-  margin-top: var(--sp-2);
+  margin-top: auto;
+  padding-top: var(--sp-3);
 }
 
 .wine-price {

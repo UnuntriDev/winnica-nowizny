@@ -74,37 +74,30 @@ PRIVACY_ID=$($WP post create --post_type=page --post_title="Polityka prywatnośc
 $WP option update wp_page_for_privacy_policy "$PRIVACY_ID"
 
 echo "🍷 Creating wine posts..."
-$WP post create --post_type=wino --post_title="Solaris" --post_status=publish --post_name=solaris \
-  --post_excerpt="Białe wino wytrawne o delikatnym, owocowym charakterze z nutami jabłka i moreli."
+# Real range from the winery. Card label comes from the 'rodzaj' post meta (not the
+# taxonomy). This is a showcase — no price/availability. Bottle photos are uploaded
+# through the WP media library as content, not seeded here.
+$WP post create --post_type=wino --post_title="Bukowiec" --post_status=publish --post_name=bukowiec --menu_order=1 \
+  --post_excerpt="Szczep Bianka, rocznik 2025. Wytrawne, świeże, z nutami cytrusów, zielonego jabłka i białych kwiatów."
 
-$WP post create --post_type=wino --post_title="Johanniter" --post_status=publish --post_name=johanniter \
-  --post_excerpt="Aromatyczne białe wino z wyraźnymi nutami cytrusów i białych kwiatów."
+$WP post create --post_type=wino --post_title="Szpilówka Wytrawna" --post_status=publish --post_name=szpilowka-wytrawna --menu_order=2 \
+  --post_excerpt="Szczep Solaris, rocznik 2025. Wytrawne, pełne i słoneczne, z nutami dojrzałej gruszki i moreli."
 
-$WP post create --post_type=wino --post_title="Rondo" --post_status=publish --post_name=rondo \
-  --post_excerpt="Czerwone wino wytrawne o pełnym ciele, z nutami ciemnych owoców i delikatną taninowością."
+$WP post create --post_type=wino --post_title="Szpilówka Półsłodka" --post_status=publish --post_name=szpilowka-polslodka --menu_order=3 \
+  --post_excerpt="Szczep Solaris, rocznik 2025. Półsłodkie, łagodne, z nutami brzoskwini, miodu i dojrzałych jabłek."
 
-$WP post create --post_type=wino --post_title="Regent" --post_status=publish --post_name=regent \
-  --post_excerpt="Eleganckie czerwone wino z wyraźną strukturą i nutami wiśni oraz czekolady."
+$WP post create --post_type=wino --post_title="Rosé" --post_status=publish --post_name=rose --menu_order=4 \
+  --post_excerpt="Szczep Cabernet Cortis, rocznik 2025. Półsłodkie, świeże, z nutami truskawki, maliny i czerwonych porzeczek."
 
-$WP post create --post_type=wino --post_title="Hibernal" --post_status=publish --post_name=hibernal \
-  --post_excerpt="Białe wino półwytrawne z delikatną słodyczą i nutami miodu i gruszki."
+$WP post create --post_type=wino --post_title="Marszałek" --post_status=publish --post_name=marszalek --menu_order=5 \
+  --post_excerpt="Szczep Marechal Foch, rocznik 2025. Wytrawne, głębokie, z nutami leśnych jagód, wiśni i delikatnej przyprawy."
 
-$WP post create --post_type=wino --post_title="Różowe Nowizny" --post_status=publish --post_name=rozowe-nowizny \
-  --post_excerpt="Świeże wino różowe z nutami truskawki i maliny, idealne na letnie wieczory."
-
-echo "🏷️ Creating wine categories..."
-$WP term create rodzaj-wina "Białe wytrawne" --slug=biale-wytrawne 2>/dev/null || true
-$WP term create rodzaj-wina "Białe półwytrawne" --slug=biale-polwytrawne 2>/dev/null || true
-$WP term create rodzaj-wina "Czerwone wytrawne" --slug=czerwone-wytrawne 2>/dev/null || true
-$WP term create rodzaj-wina "Różowe" --slug=rozowe 2>/dev/null || true
-
-echo "🔗 Assigning categories to wines..."
-$WP post term set $($WP post list --post_type=wino --name=solaris --field=ID) rodzaj-wina biale-wytrawne
-$WP post term set $($WP post list --post_type=wino --name=johanniter --field=ID) rodzaj-wina biale-wytrawne
-$WP post term set $($WP post list --post_type=wino --name=rondo --field=ID) rodzaj-wina czerwone-wytrawne
-$WP post term set $($WP post list --post_type=wino --name=regent --field=ID) rodzaj-wina czerwone-wytrawne
-$WP post term set $($WP post list --post_type=wino --name=hibernal --field=ID) rodzaj-wina biale-polwytrawne
-$WP post term set $($WP post list --post_type=wino --name=rozowe-nowizny --field=ID) rodzaj-wina rozowe
+echo "🏷️ Setting wine types (rodzaj meta drives the card label)..."
+$WP post meta update $($WP post list --post_type=wino --name=bukowiec --field=ID) rodzaj "Białe wytrawne"
+$WP post meta update $($WP post list --post_type=wino --name=szpilowka-wytrawna --field=ID) rodzaj "Białe wytrawne"
+$WP post meta update $($WP post list --post_type=wino --name=szpilowka-polslodka --field=ID) rodzaj "Białe półsłodkie"
+$WP post meta update $($WP post list --post_type=wino --name=rose --field=ID) rodzaj "Różowe półsłodkie"
+$WP post meta update $($WP post list --post_type=wino --name=marszalek --field=ID) rodzaj "Czerwone wytrawne"
 
 echo "🧭 Creating menu..."
 $WP menu create "Menu główne"
@@ -113,7 +106,7 @@ $WP menu item add-custom "Menu główne" "Historia" "#historia"
 $WP menu item add-custom "Menu główne" "Doświadczenia" "#doswiadczenia"
 $WP menu item add-custom "Menu główne" "Wina" "#wina"
 $WP menu item add-custom "Menu główne" "Galeria" "#galeria"
-$WP menu item add-custom "Menu główne" "Zaplanuj wizytę" "#wizyta"
+$WP menu item add-custom "Menu główne" "Odwiedź nas" "#wizyta"
 
 echo "⚙️ Setting Customizer options..."
 $WP theme mod set winnica_phone "607 578 156"

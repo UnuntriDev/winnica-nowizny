@@ -114,8 +114,8 @@
   .exp-card h3 { margin: 0 0 6px; }
   .wines-grid { grid-template-columns: 1fr; }
   .wines-header { flex-direction: column; align-items: flex-start; gap: var(--sp-2); margin-bottom: var(--sp-4); }
-  .wine-card { min-height: 0; padding: var(--sp-4) var(--sp-3); }
-  .wine-card-mark { width: 42px; height: 42px; margin-bottom: var(--sp-2); }
+  .wine-card-body { padding: var(--sp-4) var(--sp-3); }
+  .wine-card-mark { width: 42px; height: 42px; }
 
   .cellar { min-height: 0; }
   .cellar-inner { grid-template-columns: 1fr; padding: var(--sp-6) var(--sp-3); gap: var(--sp-4); }
