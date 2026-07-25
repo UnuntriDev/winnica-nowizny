@@ -331,8 +331,6 @@
   padding-top: 4px;
 }
 
-.wine-grape span { margin: 0 4px; color: var(--c-amber); }
-
 /* Reflow: 5 across → 3 on tablet → 2 on phones. */
 @media (max-width: 1023px) {
   .wines-grid { grid-template-columns: repeat(3, 1fr); }

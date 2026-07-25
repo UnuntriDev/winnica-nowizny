@@ -25,10 +25,7 @@
           <h3 class="wine-name">{{ wine.title }}</h3>
           {% if wine.post_excerpt %}<p class="wine-desc">{{ wine.post_excerpt }}</p>{% endif %}
           {% set szczep = wine.meta('szczep') %}
-          {% set rocznik = wine.meta('rocznik') %}
-          {% if szczep %}
-            <p class="wine-grape">{{ szczep }}{% if rocznik %} <span aria-hidden="true">·</span> rocznik {{ rocznik }}{% endif %}</p>
-          {% endif %}
+          {% if szczep %}<p class="wine-grape">{{ szczep }}</p>{% endif %}
         </div>
       </li>
     {% endfor %}

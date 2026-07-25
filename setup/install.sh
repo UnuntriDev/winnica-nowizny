@@ -80,10 +80,12 @@ echo "🍷 Creating wine posts..."
 $WP post create --post_type=wino --post_title="Bukowiec" --post_status=publish --post_name=bukowiec --menu_order=1 \
   --post_excerpt="Świeże i cytrusowe, z nutami zielonego jabłka oraz białych kwiatów."
 
-$WP post create --post_type=wino --post_title="Szpilówka Wytrawna" --post_status=publish --post_name=szpilowka-wytrawna --menu_order=2 \
+# Szpilówka appears twice; the card label (rodzaj) tells the two apart, so the
+# title stays short.
+$WP post create --post_type=wino --post_title="Szpilówka" --post_status=publish --post_name=szpilowka-wytrawna --menu_order=2 \
   --post_excerpt="Pełne i słoneczne, z nutami dojrzałej gruszki i moreli."
 
-$WP post create --post_type=wino --post_title="Szpilówka Półsłodka" --post_status=publish --post_name=szpilowka-polslodka --menu_order=3 \
+$WP post create --post_type=wino --post_title="Szpilówka" --post_status=publish --post_name=szpilowka-polslodka --menu_order=3 \
   --post_excerpt="Łagodne, z nutami brzoskwini, miodu i dojrzałych jabłek."
 
 $WP post create --post_type=wino --post_title="Rosé" --post_status=publish --post_name=rose --menu_order=4 \
@@ -92,7 +94,7 @@ $WP post create --post_type=wino --post_title="Rosé" --post_status=publish --po
 $WP post create --post_type=wino --post_title="Marszałek" --post_status=publish --post_name=marszalek --menu_order=5 \
   --post_excerpt="Głębokie, z nutami leśnych jagód, wiśni i delikatnej przyprawy."
 
-echo "🏷️ Setting wine meta (rodzaj = card label, szczep + rocznik = helper line)..."
+echo "🏷️ Setting wine meta (rodzaj = card label, szczep = helper line)..."
 $WP post meta update $($WP post list --post_type=wino --name=bukowiec --field=ID) rodzaj "Białe wytrawne"
 $WP post meta update $($WP post list --post_type=wino --name=szpilowka-wytrawna --field=ID) rodzaj "Białe wytrawne"
 $WP post meta update $($WP post list --post_type=wino --name=szpilowka-polslodka --field=ID) rodzaj "Białe półsłodkie"
@@ -104,10 +106,6 @@ $WP post meta update $($WP post list --post_type=wino --name=szpilowka-wytrawna 
 $WP post meta update $($WP post list --post_type=wino --name=szpilowka-polslodka --field=ID) szczep "Solaris"
 $WP post meta update $($WP post list --post_type=wino --name=rose --field=ID) szczep "Cabernet Cortis"
 $WP post meta update $($WP post list --post_type=wino --name=marszalek --field=ID) szczep "Marechal Foch"
-
-for slug in bukowiec szpilowka-wytrawna szpilowka-polslodka rose marszalek; do
-  $WP post meta update $($WP post list --post_type=wino --name=$slug --field=ID) rocznik "2025"
-done
 
 echo "🧭 Creating menu..."
 $WP menu create "Menu główne"
