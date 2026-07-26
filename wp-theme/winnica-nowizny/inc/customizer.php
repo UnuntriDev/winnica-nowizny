@@ -55,27 +55,17 @@ add_action('customize_register', function (WP_Customize_Manager $wp_customize) {
         'type'    => 'textarea',
     ]);
 
-    $wp_customize->add_setting('winnica_season_notice', [
-        'default'           => 'Wizyty grupowe po wcześniejszej rezerwacji',
-        'sanitize_callback' => 'sanitize_text_field',
-    ]);
-    $wp_customize->add_control('winnica_season_notice', [
-        'label'   => 'Uwaga sezonowa',
-        'section' => 'winnica_contact',
-        'type'    => 'text',
-    ]);
-
     // ── Section: Social Media ──
     $wp_customize->add_section('winnica_social', [
         'title' => 'Social Media',
         'panel' => 'winnica_panel',
     ]);
 
+    // Only the networks the templates actually render; adding a field here without
+    // a matching link in nav.twig and footer.twig just creates a dead control.
     $social_fields = [
         'winnica_facebook'  => 'Facebook URL',
         'winnica_instagram' => 'Instagram URL',
-        'winnica_tiktok'    => 'TikTok URL',
-        'winnica_youtube'   => 'YouTube URL',
     ];
 
     foreach ($social_fields as $id => $label) {

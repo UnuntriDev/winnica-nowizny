@@ -1,7 +1,6 @@
 /* ── Buttons ──
    Shared base for every button-like control; variants only set color/border. */
 .btn-primary,
-.btn-secondary,
 .btn-outline,
 .btn-outline-light,
 .form-submit {
@@ -37,15 +36,13 @@
   color: var(--c-earth-deep);
 }
 
-/* Secondary / outline share the same shape; light variant for dark grounds. */
-.btn-secondary,
+/* Outline on light grounds; the -light variant below is for dark ones. */
 .btn-outline {
   color: var(--c-amber-light);
   background: transparent;
   border-color: rgba(196, 180, 154, 0.45);
 }
 
-.btn-secondary:hover,
 .btn-outline:hover {
   border-color: var(--c-amber-light);
   background: rgba(196, 180, 154, 0.1);
