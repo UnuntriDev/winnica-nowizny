@@ -5,6 +5,24 @@
 
 defined('ABSPATH') || exit;
 
+/**
+ * Production must be indexable and a reachable staging must not be, or search
+ * engines either lose the real site or find the rehearsal. Local machines sit
+ * behind nothing Google can reach, so their setting is nobody's business.
+ */
+function winnica_indexing_misconfigured(string $environment, bool $indexable): bool
+{
+    if ($environment === 'production') {
+        return !$indexable;
+    }
+
+    if ($environment === 'local') {
+        return false;
+    }
+
+    return $indexable;
+}
+
 add_action('rest_api_init', function (): void {
     register_rest_route('winnica/v1', '/health', [
         'methods'             => 'GET',
@@ -14,8 +32,7 @@ add_action('rest_api_init', function (): void {
             $database_ok = $wpdb->get_var('SELECT 1') === '1';
             $environment = wp_get_environment_type();
             $indexable = (bool) get_option('blog_public');
-            $production_noindex = $environment === 'production' && !$indexable;
-            $healthy = $database_ok && !$production_noindex;
+            $healthy = $database_ok && !winnica_indexing_misconfigured($environment, $indexable);
 
             return new WP_REST_Response([
                 'status'      => $healthy ? 'ok' : 'degraded',
@@ -49,19 +66,29 @@ add_filter('site_status_tests', function (array $tests): array {
     $tests['direct']['winnica_search_visibility'] = [
         'label' => 'Widoczność Winnicy w wyszukiwarkach',
         'test'  => function (): array {
-            $production = wp_get_environment_type() === 'production';
+            $environment = wp_get_environment_type();
             $indexable = (bool) get_option('blog_public');
-            $status = $production && !$indexable ? 'critical' : ($indexable ? 'good' : 'recommended');
+            $misconfigured = winnica_indexing_misconfigured($environment, $indexable);
+
+            if ($environment === 'production') {
+                $description = $misconfigured
+                    ? 'Środowisko produkcyjne ma włączone noindex. Włącz widoczność w Ustawienia → Czytanie.'
+                    : 'Produkcja jest widoczna dla wyszukiwarek, tak jak powinna.';
+            } elseif ($environment === 'local') {
+                $description = 'Środowisko lokalne nie jest osiągalne dla wyszukiwarek, ustawienie nie ma znaczenia.';
+            } else {
+                $description = $misconfigured
+                    ? 'Publiczne środowisko testowe pozwala się indeksować. Wyłącz widoczność w Ustawienia → Czytanie, zanim Google znajdzie kopię strony.'
+                    : 'Środowisko testowe ma noindex, prawidłowo.';
+            }
 
             return [
                 'label'       => $indexable
                     ? 'Wyszukiwarki mogą indeksować stronę'
                     : 'Indeksowanie strony jest wyłączone',
-                'status'      => $status,
+                'status'      => $misconfigured ? 'critical' : 'good',
                 'badge'       => ['label' => 'Winnica Nowizny', 'color' => 'blue'],
-                'description' => '<p>' . ($production && !$indexable
-                    ? 'Środowisko produkcyjne ma włączone noindex. Włącz widoczność w Ustawienia → Czytanie przed publikacją.'
-                    : 'Na środowisku deweloperskim noindex jest prawidłowy. Przed publikacją sprawdź Ustawienia → Czytanie.') . '</p>',
+                'description' => '<p>' . $description . '</p>',
                 'actions'     => '',
                 'test'        => 'winnica_search_visibility',
             ];
