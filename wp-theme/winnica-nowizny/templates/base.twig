@@ -13,7 +13,8 @@
 
   {% include 'partials/nav.twig' %}
 
-  <main id="main">
+  {# tabindex="-1" so the skip link actually moves focus here, not just the scroll position. #}
+  <main id="main" tabindex="-1">
     {% block content %}{% endblock %}
   </main>
 

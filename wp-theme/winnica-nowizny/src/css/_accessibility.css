@@ -1,3 +1,18 @@
+/* Skip-link and other scripted focus targets are containers, not controls, so the
+   ring would only confuse. Real controls keep their own :focus-visible styles. */
+[tabindex="-1"]:focus { outline: none; }
+
+/* WCAG 2.5.8 Target Size (Minimum) asks for 24x24 CSS px. These links sit in text
+   columns where line-height alone left them at 20-22px. */
+.footer-links a,
+.footer-consent-settings,
+.visit-block-text a,
+.consent-policy {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto !important; }
 
