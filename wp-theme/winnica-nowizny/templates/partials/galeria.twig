@@ -10,7 +10,8 @@
       {% if img1 %}
         {{ function('wp_get_attachment_image', img1.ID, 'gallery-tall', false, {'alt': 'Gościnne wnętrze Winnicy Nowizny z widokiem na dolinę', 'loading': 'lazy', 'decoding': 'async', 'sizes': '(max-width: 768px) calc(50vw - 28px), 33vw'}) | raw }}
       {% else %}
-        <picture><source srcset="{{ theme.link }}/assets/images/galeria-wnetrze.avif" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-wnetrze.webp" alt="Gościnne wnętrze Winnicy Nowizny z widokiem na dolinę" width="800" height="1200" loading="lazy" decoding="async"></picture>
+        {% set sizes1 = '(max-width: 768px) calc(50vw - 28px), 33vw' %}
+        <picture><source srcset="{{ theme.link }}/assets/images/galeria-wnetrze-480.avif 480w, {{ theme.link }}/assets/images/galeria-wnetrze.avif 800w" sizes="{{ sizes1 }}" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-wnetrze.webp" srcset="{{ theme.link }}/assets/images/galeria-wnetrze-480.webp 480w, {{ theme.link }}/assets/images/galeria-wnetrze.webp 800w" sizes="{{ sizes1 }}" alt="Gościnne wnętrze Winnicy Nowizny z widokiem na dolinę" width="800" height="1200" loading="lazy" decoding="async"></picture>
       {% endif %}
     </div>
 
@@ -20,7 +21,8 @@
       {% if img2 %}
         {{ function('wp_get_attachment_image', img2.ID, 'gallery-wide', false, {'alt': 'Taras z widokiem na winnicę i Pogórze Rożnowskie', 'loading': 'lazy', 'decoding': 'async', 'sizes': '(max-width: 768px) calc(50vw - 28px), 66vw'}) | raw }}
       {% else %}
-        <picture><source srcset="{{ theme.link }}/assets/images/galeria-taras.avif" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-taras.webp" alt="Taras z widokiem na winnicę i Pogórze Rożnowskie" width="1400" height="700" loading="lazy" decoding="async"></picture>
+        {% set sizes2 = '(max-width: 768px) calc(50vw - 28px), 66vw' %}
+        <picture><source srcset="{{ theme.link }}/assets/images/galeria-taras-480.avif 480w, {{ theme.link }}/assets/images/galeria-taras-960.avif 960w, {{ theme.link }}/assets/images/galeria-taras.avif 1400w" sizes="{{ sizes2 }}" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-taras.webp" srcset="{{ theme.link }}/assets/images/galeria-taras-480.webp 480w, {{ theme.link }}/assets/images/galeria-taras-960.webp 960w, {{ theme.link }}/assets/images/galeria-taras.webp 1400w" sizes="{{ sizes2 }}" alt="Taras z widokiem na winnicę i Pogórze Rożnowskie" width="1400" height="700" loading="lazy" decoding="async"></picture>
       {% endif %}
     </div>
 
@@ -30,7 +32,8 @@
       {% if img3 %}
         {{ function('wp_get_attachment_image', img3.ID, 'gallery-square', false, {'alt': 'Domowe pierogi z wędzoną śliwką', 'loading': 'lazy', 'decoding': 'async', 'sizes': '(max-width: 768px) calc(50vw - 28px), 33vw'}) | raw }}
       {% else %}
-        <picture><source srcset="{{ theme.link }}/assets/images/galeria-pierogi.avif" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-pierogi.webp" alt="Domowe pierogi z wędzoną śliwką" width="800" height="800" loading="lazy" decoding="async"></picture>
+        {% set sizes3 = '(max-width: 768px) calc(50vw - 28px), 33vw' %}
+        <picture><source srcset="{{ theme.link }}/assets/images/galeria-pierogi-480.avif 480w, {{ theme.link }}/assets/images/galeria-pierogi.avif 800w" sizes="{{ sizes3 }}" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-pierogi.webp" srcset="{{ theme.link }}/assets/images/galeria-pierogi-480.webp 480w, {{ theme.link }}/assets/images/galeria-pierogi.webp 800w" sizes="{{ sizes3 }}" alt="Domowe pierogi z wędzoną śliwką" width="800" height="800" loading="lazy" decoding="async"></picture>
       {% endif %}
     </div>
 
@@ -40,7 +43,8 @@
       {% if img4 %}
         {{ function('wp_get_attachment_image', img4.ID, 'gallery-square', false, {'alt': 'Daniele przy Winnicy Nowizny', 'loading': 'lazy', 'decoding': 'async', 'sizes': '(max-width: 768px) calc(100vw - 48px), 33vw'}) | raw }}
       {% else %}
-        <picture><source srcset="{{ theme.link }}/assets/images/galeria-daniele.avif" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-daniele.webp" alt="Daniele przy Winnicy Nowizny" width="800" height="800" loading="lazy" decoding="async"></picture>
+        {% set sizes4 = '(max-width: 768px) calc(100vw - 48px), 33vw' %}
+        <picture><source srcset="{{ theme.link }}/assets/images/galeria-daniele-480.avif 480w, {{ theme.link }}/assets/images/galeria-daniele.avif 800w" sizes="{{ sizes4 }}" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-daniele.webp" srcset="{{ theme.link }}/assets/images/galeria-daniele-480.webp 480w, {{ theme.link }}/assets/images/galeria-daniele.webp 800w" sizes="{{ sizes4 }}" alt="Daniele przy Winnicy Nowizny" width="800" height="800" loading="lazy" decoding="async"></picture>
       {% endif %}
     </div>
 
@@ -50,7 +54,8 @@
       {% if img5 %}
         {{ function('wp_get_attachment_image', img5.ID, 'gallery-square', false, {'alt': 'Dojrzałe winogrona z Winnicy Nowizny', 'loading': 'lazy', 'decoding': 'async', 'sizes': '(max-width: 768px) calc(50vw - 28px), 33vw'}) | raw }}
       {% else %}
-        <picture><source srcset="{{ theme.link }}/assets/images/galeria-winogrona.avif" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-winogrona.webp" alt="Dojrzałe winogrona z Winnicy Nowizny" width="800" height="800" loading="lazy" decoding="async"></picture>
+        {% set sizes5 = '(max-width: 768px) calc(50vw - 28px), 33vw' %}
+        <picture><source srcset="{{ theme.link }}/assets/images/galeria-winogrona-480.avif 480w, {{ theme.link }}/assets/images/galeria-winogrona.avif 800w" sizes="{{ sizes5 }}" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-winogrona.webp" srcset="{{ theme.link }}/assets/images/galeria-winogrona-480.webp 480w, {{ theme.link }}/assets/images/galeria-winogrona.webp 800w" sizes="{{ sizes5 }}" alt="Dojrzałe winogrona z Winnicy Nowizny" width="800" height="800" loading="lazy" decoding="async"></picture>
       {% endif %}
     </div>
 
@@ -60,7 +65,8 @@
       {% if img6 %}
         {{ function('wp_get_attachment_image', img6.ID, 'gallery-wide', false, {'alt': 'Regionalna biesiada w Winnicy Nowizny', 'loading': 'lazy', 'decoding': 'async', 'sizes': '(max-width: 768px) calc(50vw - 28px), 66vw'}) | raw }}
       {% else %}
-        <picture><source srcset="{{ theme.link }}/assets/images/galeria-biesiada.avif" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-biesiada.webp" alt="Regionalna biesiada w Winnicy Nowizny" width="1400" height="700" loading="lazy" decoding="async"></picture>
+        {% set sizes6 = '(max-width: 768px) calc(50vw - 28px), 66vw' %}
+        <picture><source srcset="{{ theme.link }}/assets/images/galeria-biesiada-480.avif 480w, {{ theme.link }}/assets/images/galeria-biesiada-960.avif 960w, {{ theme.link }}/assets/images/galeria-biesiada.avif 1400w" sizes="{{ sizes6 }}" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-biesiada.webp" srcset="{{ theme.link }}/assets/images/galeria-biesiada-480.webp 480w, {{ theme.link }}/assets/images/galeria-biesiada-960.webp 960w, {{ theme.link }}/assets/images/galeria-biesiada.webp 1400w" sizes="{{ sizes6 }}" alt="Regionalna biesiada w Winnicy Nowizny" width="1400" height="700" loading="lazy" decoding="async"></picture>
       {% endif %}
     </div>
   </div>
