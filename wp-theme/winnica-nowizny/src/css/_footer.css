@@ -71,7 +71,7 @@
 
 .consent-banner {
   position: fixed;
-  z-index: 200;
+  z-index: var(--z-consent);
   right: var(--sp-3);
   bottom: var(--sp-3);
   width: min(520px, calc(100vw - 48px));

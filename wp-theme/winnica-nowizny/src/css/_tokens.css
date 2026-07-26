@@ -56,6 +56,16 @@
   --max-w: 1400px;
   --nav-height: 80px;
 
+  /* Stacking order, low to high. Only elements that overlap across the whole page
+     belong here; z-index inside a component's own stacking context stays local. */
+  --z-nav-overlay: 99;   /* fullscreen mobile menu, sits under the bar itself */
+  --z-nav: 100;
+  --z-nav-toggle: 101;   /* hamburger stays reachable above the open overlay */
+  --z-mobile-bar: 110;
+  --z-consent: 200;
+  --z-lightbox: 300;
+  --z-skip-link: 1000;   /* must clear everything, including the lightbox */
+
   /* Transitions */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --duration-fast: 0.3s;

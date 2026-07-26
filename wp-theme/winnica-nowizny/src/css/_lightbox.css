@@ -11,7 +11,7 @@
 
 .gallery-lightbox {
   position: fixed;
-  z-index: 300;
+  z-index: var(--z-lightbox);
   inset: 0;
   display: grid;
   place-items: center;
