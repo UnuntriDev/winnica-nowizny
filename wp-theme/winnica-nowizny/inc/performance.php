@@ -137,6 +137,10 @@ function winnica_flush_page_cache(): void
 add_action('save_post', 'winnica_flush_page_cache');
 add_action('customize_save_after', 'winnica_flush_page_cache');
 add_action('switch_theme', 'winnica_flush_page_cache');
+// The nav renders a real menu (Timber\Menu('primary')), so a menu edit changes
+// the cached HTML. Terms stay unhooked: rodzaj-wina is registered but nothing
+// in the templates prints it.
+add_action('wp_update_nav_menu', 'winnica_flush_page_cache');
 
 add_filter('big_image_size_threshold', function () {
     return 2560;
