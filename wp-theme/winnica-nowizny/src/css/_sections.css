@@ -144,15 +144,6 @@
   border: 1px solid rgba(196, 180, 154, 0.14);
   border-radius: var(--radius-md);
   overflow: hidden;
-  transition: border-color var(--duration-mid), transform var(--duration-mid);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .exp-card:hover {
-    border-color: rgba(196, 180, 154, 0.4);
-    transform: translateY(-3px);
-  }
-  .exp-card:hover .exp-card-image img { transform: scale(1.04); }
 }
 
 .exp-card-image {
@@ -161,8 +152,6 @@
   position: relative;
   overflow: hidden;
 }
-
-.exp-card-image img { transition: transform var(--duration-slow) var(--ease-out); }
 
 .exp-card-gradient {
   position: absolute;
@@ -338,13 +327,49 @@
   text-transform: uppercase;
 }
 
-/* Reflow: 5 across → 3 on tablet → 2 on phones. */
+/* Reflow: 5 across → 3 on tablet. Phones get a swipeable slider instead. */
 @media (max-width: 1023px) {
   .wines-grid { grid-template-columns: repeat(3, 1fr); }
 }
+
+/* Phones: one-row slider. Cards are narrow enough that the next bottle peeks in,
+   which is the whole affordance — scroll-snap does the rest, no JS. The track
+   bleeds to the screen edges and re-adds the section padding as its own, so the
+   first card still lines up with the heading and the last one can reach the edge. */
 @media (max-width: 640px) {
-  .wines-grid { grid-template-columns: repeat(2, 1fr); gap: var(--sp-4) var(--sp-3); }
+  .wines-grid {
+    --edge: var(--sp-3);
+    display: flex;
+    gap: var(--sp-3);
+    margin-inline: calc(-1 * var(--edge));
+    padding-inline: var(--edge);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline-start: var(--edge);
+    scrollbar-width: none;
+  }
+  .wines-grid::-webkit-scrollbar { display: none; }
+
+  .wine-slide {
+    flex: 0 0 min(68%, 260px);
+    scroll-snap-align: start;
+  }
+
+  .wine-stage { height: clamp(240px, 64vw, 260px); }
+  .wine-info { padding: var(--sp-2) 4px 0; }
   .wine-name { font-size: var(--fs-xl); }
+  .wine-desc {
+    min-height: 0;
+    margin-bottom: var(--sp-1);
+    font-size: var(--fs-body-sm);
+    line-height: 1.55;
+  }
+}
+
+/* Smallest phones drop the section padding to 20px; keep the bleed in step. */
+@media (max-width: 360px) {
+  .wines-grid { --edge: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
