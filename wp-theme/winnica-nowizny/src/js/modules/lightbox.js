@@ -56,8 +56,22 @@ export function initLightbox() {
     counter.textContent = `${activeIndex + 1} / ${items.length}`;
   };
 
+  // The focus trap keeps the keyboard inside, but a screen reader's virtual
+  // cursor can still wander into the page behind the dialog. inert closes that
+  // path too; everything except the modal (and its ancestors) gets it.
+  const setBackgroundInert = (state) => {
+    let node = modal;
+    while (node.parentElement) {
+      for (const sibling of node.parentElement.children) {
+        if (sibling !== node) sibling.inert = state;
+      }
+      node = node.parentElement;
+    }
+  };
+
   const close = () => {
     modal.hidden = true;
+    setBackgroundInert(false);
     document.body.classList.remove('lightbox-open');
     returnFocus?.focus();
   };
@@ -66,6 +80,7 @@ export function initLightbox() {
     returnFocus = trigger;
     render(index);
     modal.hidden = false;
+    setBackgroundInert(true);
     document.body.classList.add('lightbox-open');
     closeButton.focus();
   };

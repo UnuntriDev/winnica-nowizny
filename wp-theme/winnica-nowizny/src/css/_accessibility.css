@@ -12,9 +12,11 @@
   border: 0;
 }
 
-/* Skip-link and other scripted focus targets are containers, not controls, so the
-   ring would only confuse. Real controls keep their own :focus-visible styles. */
-[tabindex="-1"]:focus { outline: none; }
+/* Scripted focus targets that are containers, not controls: the skip-link's
+   destination and the cookie panel. Named one by one so a future component
+   with tabindex="-1" keeps its focus ring unless someone decides otherwise. */
+#main:focus,
+#consentPanel:focus { outline: none; }
 
 /* WCAG 2.5.8 Target Size (Minimum) asks for 24x24 CSS px. These links sit in text
    columns where line-height alone left them at 20-22px. */
