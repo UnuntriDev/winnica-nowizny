@@ -27,7 +27,7 @@
         <p class="footer-col-title">Kontakt</p>
         <div class="footer-links">
           {% if site_email %}<a href="mailto:{{ site_email }}">{{ site_email }}</a>{% endif %}
-          {% if site_phone %}<a href="tel:+48{{ site_phone | replace({' ': ''}) }}">tel. {{ site_phone }}</a>{% endif %}
+          {% if site_phone_href %}<a href="{{ site_phone_href }}">tel. {{ site_phone }}</a>{% endif %}
         </div>
         <div class="footer-social">
           {% if site_instagram %}
