@@ -24,4 +24,8 @@ $context['contact_status'] = in_array(
     true
 ) ? $contact_status : '';
 
+$contact_old = winnica_contact_old_input();
+$context['contact_old']    = $contact_old['values'];
+$context['contact_errors'] = $contact_old['errors'];
+
 Timber::render('front-page.twig', $context);

@@ -63,11 +63,47 @@ function winnica_contact_fingerprint(): string
     return hash_hmac('sha256', $ip, wp_salt('auth'));
 }
 
-function winnica_contact_redirect(string $status): void
+function winnica_contact_redirect(string $status, array $payload = []): void
 {
-    $url = add_query_arg('contact', $status, home_url('/'));
-    wp_safe_redirect($url . '#wizyta');
+    $args = ['contact' => $status];
+
+    if ($payload) {
+        $key = bin2hex(random_bytes(12));
+        set_transient('winnica_contact_old_' . $key, $payload, 10 * MINUTE_IN_SECONDS);
+        $args['ct'] = $key;
+    }
+
+    wp_safe_redirect(add_query_arg($args, home_url('/')) . '#wizyta');
     exit;
+}
+
+/**
+ * One-shot recovery of a rejected submission, so a visitor who mistyped one field
+ * does not have to write the whole message again. The lookup key travels in the URL
+ * and is burned on first read, so a shared link never replays somebody else's data.
+ *
+ * @return array{values: array<string, mixed>, errors: string[]}
+ */
+function winnica_contact_old_input(): array
+{
+    $empty = ['values' => [], 'errors' => []];
+
+    $key = sanitize_key(wp_unslash($_GET['ct'] ?? ''));
+    if ($key === '' || !ctype_xdigit($key)) {
+        return $empty;
+    }
+
+    $stored = get_transient('winnica_contact_old_' . $key);
+    delete_transient('winnica_contact_old_' . $key);
+
+    if (!is_array($stored)) {
+        return $empty;
+    }
+
+    return [
+        'values' => is_array($stored['values'] ?? null) ? $stored['values'] : [],
+        'errors' => is_array($stored['errors'] ?? null) ? $stored['errors'] : [],
+    ];
 }
 
 function winnica_handle_contact_form(): void
@@ -97,14 +133,16 @@ function winnica_handle_contact_form(): void
     if ($attempts >= 4) {
         winnica_contact_redirect('rate_limit');
     }
-    set_transient($rate_key, $attempts + 1, 15 * MINUTE_IN_SECONDS);
 
-    $name    = sanitize_text_field(wp_unslash($_POST['contact_name'] ?? ''));
-    $email   = sanitize_email(wp_unslash($_POST['contact_email'] ?? ''));
-    $phone   = sanitize_text_field(wp_unslash($_POST['contact_phone'] ?? ''));
-    $topic   = sanitize_key(wp_unslash($_POST['contact_topic'] ?? 'inne'));
-    $message = sanitize_textarea_field(wp_unslash($_POST['contact_message'] ?? ''));
-    $consent = !empty($_POST['contact_consent']);
+    $name = sanitize_text_field(wp_unslash($_POST['contact_name'] ?? ''));
+    // Keep the raw address alongside the sanitised one: sanitize_email() strips a
+    // malformed value down to an empty string, and we still want to show it back.
+    $email_input = sanitize_text_field(wp_unslash($_POST['contact_email'] ?? ''));
+    $email       = sanitize_email($email_input);
+    $phone       = sanitize_text_field(wp_unslash($_POST['contact_phone'] ?? ''));
+    $topic       = sanitize_key(wp_unslash($_POST['contact_topic'] ?? ''));
+    $message     = sanitize_textarea_field(wp_unslash($_POST['contact_message'] ?? ''));
+    $consent     = !empty($_POST['contact_consent']);
 
     $topics = [
         'degustacja' => 'Degustacja',
@@ -114,22 +152,46 @@ function winnica_handle_contact_form(): void
         'inne'       => 'Inne pytanie',
     ];
 
+    $url_count = preg_match_all('~https?://|www\.~iu', $message);
+
+    $errors = [];
+    if (mb_strlen($name) < 2 || mb_strlen($name) > 100) {
+        $errors[] = 'name';
+    }
+    if (!is_email($email)) {
+        $errors[] = 'email';
+    }
     if (!isset($topics[$topic])) {
-        $topic = 'inne';
+        $errors[] = 'topic';
+        $topic = '';
+    }
+    if (mb_strlen($message) < 10 || mb_strlen($message) > 4000 || $url_count > 2) {
+        $errors[] = 'message';
+    }
+    if (!$consent) {
+        $errors[] = 'consent';
     }
 
-    $url_count = preg_match_all('~https?://|www\.~iu', $message);
-    if (
-        mb_strlen($name) < 2
-        || mb_strlen($name) > 100
-        || !is_email($email)
-        || mb_strlen($message) < 10
-        || mb_strlen($message) > 4000
-        || $url_count > 2
-        || !$consent
-    ) {
-        winnica_contact_redirect('validation');
+    if ($errors) {
+        winnica_contact_redirect('validation', [
+            'values' => [
+                'name'    => $name,
+                'email'   => $email_input,
+                'phone'   => $phone,
+                'topic'   => $topic,
+                'message' => $message,
+                'consent' => $consent,
+                // Reuse the original timestamp token so correcting a typo does not
+                // trip the "form filled in too fast" guard all over again.
+                'started' => $started,
+            ],
+            'errors' => $errors,
+        ]);
     }
+
+    // Only submissions that get past validation count against the limit, so nobody
+    // locks themselves out by fixing their own typos.
+    set_transient($rate_key, $attempts + 1, 15 * MINUTE_IN_SECONDS);
 
     $topic_label = $topics[$topic];
     $content = sprintf(

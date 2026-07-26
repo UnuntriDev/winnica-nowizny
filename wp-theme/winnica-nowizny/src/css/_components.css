@@ -223,6 +223,9 @@
 
 .form-select option { color: var(--c-earth-deep); }
 
+/* No topic chosen yet: read the placeholder as a hint, not as a filled answer. */
+.form-select:invalid { color: rgba(196, 180, 154, 0.55); }
+
 .form-textarea {
   min-height: 108px;
   background: rgba(26, 21, 16, 0.28);
@@ -271,6 +274,16 @@
 }
 
 .form-consent a:hover { color: var(--c-amber-hover); }
+
+/* Fields the server rejected, so the visitor sees what to fix without re-reading. */
+.form-input[aria-invalid="true"],
+.form-textarea[aria-invalid="true"] {
+  border-color: rgba(205, 122, 108, 0.8);
+  background: rgba(143, 65, 51, 0.16);
+}
+
+.form-consent-error { color: #f3d7d1; }
+.form-consent-error input { outline: 2px solid rgba(205, 122, 108, 0.8); outline-offset: 2px; }
 
 .form-notice {
   margin-bottom: var(--sp-3);
