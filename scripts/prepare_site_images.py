@@ -3,8 +3,9 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-PROJECT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(PROJECT / ".review-deps"))
+# Load-bearing: puts .review-deps on sys.path and explains itself when the
+# compiled wheels there do not match this interpreter.
+import _deps
 
 from PIL import Image, ImageEnhance, ImageOps
 from pillow_heif import register_heif_opener
@@ -13,8 +14,7 @@ from pillow_heif import register_heif_opener
 register_heif_opener()
 
 SOURCE = Path("zdjecia-zrodlowe")
-OUTPUT = PROJECT / "wp-theme" / "winnica-nowizny" / "assets" / "images"
-OUTPUT.mkdir(parents=True, exist_ok=True)
+OUTPUT = _deps.PROJECT / "wp-theme" / "winnica-nowizny" / "assets" / "images"
 
 # output name: (source name, width, height, crop centering, explicit rotation)
 IMAGES = {
@@ -34,7 +34,8 @@ IMAGES = {
 }
 
 
-for output_name, (source_name, width, height, centering, rotation) in IMAGES.items():
+def build(output_name: str, destination: Path = OUTPUT) -> None:
+    source_name, width, height, centering, rotation = IMAGES[output_name]
     with Image.open(SOURCE / source_name) as source:
         image = ImageOps.exif_transpose(source).convert("RGB")
         if rotation:
@@ -47,5 +48,18 @@ for output_name, (source_name, width, height, centering, rotation) in IMAGES.ite
         )
         image = ImageEnhance.Contrast(image).enhance(1.03)
         image = ImageEnhance.Color(image).enhance(0.96)
-        image.save(OUTPUT / output_name, "WEBP", quality=84, method=6)
+        image.save(destination / output_name, "WEBP", quality=84, method=6)
         print(f"{output_name}: {width}x{height}")
+
+
+if __name__ == "__main__":
+    # Names on the command line rebuild only those files. Regenerating all
+    # thirteen to change one is how retired photos come back from the dead.
+    requested = sys.argv[1:] or list(IMAGES)
+    unknown = [name for name in requested if name not in IMAGES]
+    if unknown:
+        raise SystemExit(f"unknown images: {', '.join(unknown)}")
+
+    OUTPUT.mkdir(parents=True, exist_ok=True)
+    for name in requested:
+        build(name)

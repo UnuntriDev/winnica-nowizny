@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import csv
-import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / ".review-deps"))
+# Load-bearing: puts .review-deps on sys.path and explains itself when the
+# compiled wheels there do not match this interpreter.
+import _deps
 
 from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageStat
 from pillow_heif import register_heif_opener
