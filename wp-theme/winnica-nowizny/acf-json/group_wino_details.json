@@ -39,7 +39,7 @@
         {
             "key": "field_wino_szczepy",
             "label": "Szczepy",
-            "name": "szczepy",
+            "name": "szczep",
             "aria-label": "",
             "type": "text",
             "instructions": "np. Solaris, Johanniter, Rondo",
