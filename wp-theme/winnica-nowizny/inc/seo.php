@@ -186,10 +186,15 @@ function winnica_schema_organization(): void {
     //
     // Same fact as the "Godziny otwarcia" block on the front page (ACF field
     // wizyta_hours), written for machines. Change one, change the other.
+    //
+    // The windows must not overlap. Sunday opens at 11:00 in spring and autumn
+    // but at 14:00 in high summer, so one April-to-November range would state
+    // both and leave a crawler to pick.
     $seasons = [
-        ['04-01', '11-30', ['Saturday'], '11:00', '20:00'],
-        ['04-01', '11-30', ['Sunday'], '14:00', '20:00'],
-        ['07-01', '08-31', ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], '11:00', '20:00'],
+        ['04-01', '06-30', ['Saturday', 'Sunday'], '11:00', '20:00'],
+        ['07-01', '08-31', ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], '11:00', '20:00'],
+        ['07-01', '08-31', ['Sunday'], '14:00', '20:00'],
+        ['09-01', '11-30', ['Saturday', 'Sunday'], '11:00', '20:00'],
     ];
 
     $today = current_time('Y-m-d');
