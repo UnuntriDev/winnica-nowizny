@@ -144,6 +144,8 @@ function winnica_handle_contact_form(): void
     $email_input = sanitize_text_field(wp_unslash($_POST['contact_email'] ?? ''));
     $email       = sanitize_email($email_input);
     $phone       = sanitize_text_field(wp_unslash($_POST['contact_phone'] ?? ''));
+    $date        = sanitize_text_field(wp_unslash($_POST['contact_date'] ?? ''));
+    $guests      = sanitize_text_field(wp_unslash($_POST['contact_guests'] ?? ''));
     $topic       = sanitize_key(wp_unslash($_POST['contact_topic'] ?? ''));
     $message     = sanitize_textarea_field(wp_unslash($_POST['contact_message'] ?? ''));
     $consent     = !empty($_POST['contact_consent']);
@@ -175,6 +177,19 @@ function winnica_handle_contact_form(): void
     if (!$consent) {
         $errors[] = 'consent';
     }
+    // Both reservation helpers are optional; they only fail when filled in and
+    // impossible. The date must parse as a real calendar day, not sit in the
+    // past, and stay within two years, which catches year typos.
+    if ($date !== '') {
+        $parsed = DateTimeImmutable::createFromFormat('!Y-m-d', $date, wp_timezone());
+        $today  = new DateTimeImmutable('today', wp_timezone());
+        if (!$parsed || $parsed->format('Y-m-d') !== $date || $parsed < $today || $parsed > $today->modify('+2 years')) {
+            $errors[] = 'date';
+        }
+    }
+    if ($guests !== '' && (!ctype_digit($guests) || (int) $guests < 1 || (int) $guests > 60)) {
+        $errors[] = 'guests';
+    }
 
     if ($errors) {
         winnica_contact_redirect('validation', [
@@ -182,6 +197,8 @@ function winnica_handle_contact_form(): void
                 'name'    => $name,
                 'email'   => $email_input,
                 'phone'   => $phone,
+                'date'    => $date,
+                'guests'  => $guests,
                 'topic'   => $topic,
                 'message' => $message,
                 'consent' => $consent,
@@ -199,10 +216,12 @@ function winnica_handle_contact_form(): void
 
     $topic_label = $topics[$topic];
     $content = sprintf(
-        "Imię i nazwisko: %s\nE-mail: %s\nTelefon: %s\nTemat: %s\n\nWiadomość:\n%s",
+        "Imię i nazwisko: %s\nE-mail: %s\nTelefon: %s\nPreferowana data wizyty: %s\nLiczba osób: %s\nTemat: %s\n\nWiadomość:\n%s",
         $name,
         $email,
         $phone ?: 'nie podano',
+        $date ?: 'nie podano',
+        $guests ?: 'nie podano',
         $topic_label,
         $message
     );
@@ -221,6 +240,8 @@ function winnica_handle_contact_form(): void
     update_post_meta($message_id, '_contact_name', $name);
     update_post_meta($message_id, '_contact_email', $email);
     update_post_meta($message_id, '_contact_phone', $phone);
+    update_post_meta($message_id, '_contact_date', $date);
+    update_post_meta($message_id, '_contact_guests', $guests);
     update_post_meta($message_id, '_contact_topic', $topic);
     update_post_meta($message_id, '_contact_status', 'new');
     update_post_meta($message_id, '_contact_fingerprint', $fingerprint);
@@ -255,6 +276,8 @@ function winnica_message_meta_box(WP_Post $post): void
     $status = get_post_meta($post->ID, '_contact_status', true) ?: 'new';
     $email  = get_post_meta($post->ID, '_contact_email', true);
     $phone  = get_post_meta($post->ID, '_contact_phone', true);
+    $date   = get_post_meta($post->ID, '_contact_date', true);
+    $guests = get_post_meta($post->ID, '_contact_guests', true);
     $sent   = get_post_meta($post->ID, '_contact_email_sent', true) === '1';
     wp_nonce_field('winnica_message_status', 'winnica_message_status_nonce');
 
@@ -267,6 +290,12 @@ function winnica_message_meta_box(WP_Post $post): void
     echo '<p><strong>E-mail:</strong><br><a href="mailto:' . esc_attr($email) . '">' . esc_html($email) . '</a></p>';
     if ($phone) {
         echo '<p><strong>Telefon:</strong><br><a href="tel:' . esc_attr(preg_replace('/\D+/', '', $phone)) . '">' . esc_html($phone) . '</a></p>';
+    }
+    if ($date) {
+        echo '<p><strong>Preferowana data:</strong><br>' . esc_html($date) . '</p>';
+    }
+    if ($guests) {
+        echo '<p><strong>Liczba osób:</strong><br>' . esc_html($guests) . '</p>';
     }
     echo '<p><strong>Powiadomienie e-mail:</strong><br>' . ($sent ? 'wysłane' : 'niewysłane / SMTP nieaktywne') . '</p>';
 }
