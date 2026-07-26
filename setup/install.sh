@@ -78,7 +78,7 @@ echo "🍷 Creating wine posts..."
 # taxonomy). This is a showcase — no price/availability. Cut-out bottle photos
 # (transparent WebP) are set as featured images via the Media Library, not seeded here.
 $WP post create --post_type=wino --post_title="Bukowiec" --post_status=publish --post_name=bukowiec --menu_order=1 \
-  --post_excerpt="Świeże i cytrusowe, z nutami jabłka i białych kwiatów."
+  --post_excerpt="Świeże i cytrusowe, z nutami jabłka i białego pieprzu."
 
 # Szpilówka appears twice; the card label (rodzaj) tells the two apart, so the
 # title stays short.
