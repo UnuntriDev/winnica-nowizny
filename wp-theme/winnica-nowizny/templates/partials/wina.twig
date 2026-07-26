@@ -21,8 +21,12 @@
           {% endif %}
         </div>
         <div class="wine-info">
-          {% if wine.meta('rodzaj') %}<p class="wine-type">{{ wine.meta('rodzaj') }}</p>{% endif %}
-          <h3 class="wine-name">{{ wine.title }}</h3>
+          {# Two wines share the title "Szpilówka" and only the type tells them apart.
+             Carry the type into the heading so browsing by headings is not a guess,
+             and hide the visible copy from readers to avoid saying it twice. #}
+          {% set rodzaj = wine.meta('rodzaj') %}
+          {% if rodzaj %}<p class="wine-type" aria-hidden="true">{{ rodzaj }}</p>{% endif %}
+          <h3 class="wine-name">{{ wine.title }}{% if rodzaj %}<span class="sr-only">, {{ rodzaj }}</span>{% endif %}</h3>
           {% if wine.post_excerpt %}<p class="wine-desc">{{ wine.post_excerpt }}</p>{% endif %}
           {% set szczep = wine.meta('szczep') %}
           {% if szczep %}<p class="wine-grape"><span class="wine-grape-label">Szczep</span>{{ szczep }}</p>{% endif %}
