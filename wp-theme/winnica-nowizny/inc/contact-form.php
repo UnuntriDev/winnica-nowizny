@@ -54,7 +54,11 @@ function winnica_contact_token_is_valid(string $token): bool
     $age = time() - $timestamp;
     $expected = hash_hmac('sha256', (string) $timestamp, wp_salt('nonce'));
 
-    return $age >= 3 && $age <= 7200 && hash_equals($expected, $parts[1]);
+    // No minimum age. The token is baked into the cached front page, so by the time
+    // anyone submits it is already minutes old and the "filled in too fast" test
+    // could never fire. What is left is a replay window plus the signature; the
+    // honeypot, the nonce and the rate limit carry the anti-spam work.
+    return $age >= 0 && $age <= 7200 && hash_equals($expected, $parts[1]);
 }
 
 function winnica_contact_fingerprint(): string
