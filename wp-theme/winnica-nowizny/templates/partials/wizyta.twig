@@ -6,19 +6,19 @@
         <div class="visit-sidebar">
           <div class="visit-header reveal">
             <p class="section-label">{{ post.meta('wizyta_label') | default('Zaplanuj wizytę') }}</p>
-            <h2 class="section-title section-title-dark">{{ post.meta('wizyta_title') | default('Odwiedź nas') | raw }}</h2>
+            <h2 class="section-title section-title-dark">{{ function('wp_kses_post', post.meta('wizyta_title') | default('Odwiedź nas')) | raw }}</h2>
           </div>
         <div class="visit-info reveal">
         {% if post.meta('wizyta_address') %}
           <div class="visit-block">
             <p class="visit-block-label">Adres</p>
-            <p class="visit-block-text">{{ post.meta('wizyta_address') | raw }}</p>
+            <p class="visit-block-text">{{ function('wp_kses_post', post.meta('wizyta_address')) | raw }}</p>
           </div>
         {% endif %}
         {% if post.meta('wizyta_hours') %}
           <div class="visit-block">
             <p class="visit-block-label">Godziny otwarcia</p>
-            <p class="visit-block-text">{{ post.meta('wizyta_hours') | raw }}</p>
+            <p class="visit-block-text">{{ function('wp_kses_post', post.meta('wizyta_hours')) | raw }}</p>
             {% if post.meta('wizyta_hours_note') %}
               <p class="visit-block-text-small">{{ post.meta('wizyta_hours_note') }}</p>
             {% endif %}
@@ -27,13 +27,13 @@
         {% if post.meta('wizyta_contact') %}
           <div class="visit-block">
             <p class="visit-block-label">Kontakt</p>
-            <p class="visit-block-text">{{ post.meta('wizyta_contact') | raw }}</p>
+            <p class="visit-block-text">{{ function('wp_kses_post', post.meta('wizyta_contact')) | raw }}</p>
           </div>
         {% endif %}
         {% if post.meta('wizyta_directions') %}
           <div class="visit-block">
             <p class="visit-block-label">Dojazd</p>
-            <p class="visit-block-text">{{ post.meta('wizyta_directions') | raw }}</p>
+            <p class="visit-block-text">{{ function('wp_kses_post', post.meta('wizyta_directions')) | raw }}</p>
             {% if post.meta('wizyta_directions_note') %}
               <p class="visit-block-text-small">{{ post.meta('wizyta_directions_note') }}</p>
             {% endif %}
@@ -47,6 +47,8 @@
                  iframe inside it. Nothing reaches Google until the visitor asks for it. #}
               <template data-map-embed>
                 {% if post.meta('wizyta_map_embed') %}
+                  {# Stays raw on purpose: wp_kses_post strips <iframe>, which is the
+                     whole point of this field. It is admin-only and gated by the facade. #}
                   {{ post.meta('wizyta_map_embed') | raw }}
                 {% else %}
                   <iframe
@@ -77,7 +79,7 @@
     {% else %}
       <div class="visit-header reveal">
         <p class="section-label">{{ post.meta('wizyta_label') | default('Zaplanuj wizytę') }}</p>
-        <h2 class="section-title section-title-dark">{{ post.meta('wizyta_title') | default('Odwiedź nas') | raw }}</h2>
+        <h2 class="section-title section-title-dark">{{ function('wp_kses_post', post.meta('wizyta_title') | default('Odwiedź nas')) | raw }}</h2>
       </div>
       <div class="visit-grid visit-grid-form-only">
     {% endif %}

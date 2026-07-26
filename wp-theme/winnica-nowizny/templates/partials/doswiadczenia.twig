@@ -2,7 +2,7 @@
   <div class="section-dark-inner">
     <div class="section-heading reveal">
       <p class="section-label">{{ post.meta('exp_label') | default('Doświadczenia') }}</p>
-      <h2 class="section-title section-title-dark">{{ post.meta('exp_title') | default('Poczuj charakter winnicy') | raw }}</h2>
+      <h2 class="section-title section-title-dark">{{ function('wp_kses_post', post.meta('exp_title') | default('Poczuj charakter winnicy')) | raw }}</h2>
     </div>
     <div class="exp-grid">
       {% set fallback_images = {

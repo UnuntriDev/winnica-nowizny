@@ -37,7 +37,7 @@
     {% if post.meta('hero_label') %}
       <p class="hero-label">{{ post.meta('hero_label') }}</p>
     {% endif %}
-    <h1>{{ post.meta('hero_title') | default('Winnica <br>Nowizny') | raw }}</h1>
+    <h1>{{ function('wp_kses_post', post.meta('hero_title') | default('Winnica <br>Nowizny')) | raw }}</h1>
     {% if post.meta('hero_subtitle') %}
       <p class="hero-subtitle">{{ post.meta('hero_subtitle') }}</p>
     {% endif %}
