@@ -47,9 +47,9 @@
                  iframe inside it. Nothing reaches Google until the visitor asks for it. #}
               <template data-map-embed>
                 {% if post.meta('wizyta_map_embed') %}
-                  {# Stays raw on purpose: wp_kses_post strips <iframe>, which is the
-                     whole point of this field. It is admin-only and gated by the facade. #}
-                  {{ post.meta('wizyta_map_embed') | raw }}
+                  {# wp_kses_post would strip the <iframe> this field exists to hold, so it
+                     goes through a dedicated filter: iframe-only, Google Maps hosts only. #}
+                  {{ function('winnica_kses_map_embed', post.meta('wizyta_map_embed')) | raw }}
                 {% else %}
                   <iframe
                     src="https://www.google.com/maps?q=Po%C5%82om+Ma%C5%82y+60%2C+32-862+Por%C4%85bka+Iwkowska&amp;output=embed&amp;z=17"
