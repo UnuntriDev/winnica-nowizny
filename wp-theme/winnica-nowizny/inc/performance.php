@@ -119,8 +119,11 @@ add_action('template_redirect', function (): void {
     header('X-Winnica-Cache: MISS');
     ob_start(function (string $html): string {
         if (http_response_code() === 200 && $html !== '') {
-            // Keep this TTL below the 2-hour form token validity window in winnica_contact_token_is_valid().
-            set_transient(winnica_page_cache_key(), $html, 5 * MINUTE_IN_SECONDS);
+            // A cold render costs ~1.9s against ~0.6s warm, and every expiry made one
+            // visitor pay it. Editing flushes the cache anyway (save_post,
+            // customize_save_after), so the TTL is only a backstop. Keep it below the
+            // 2-hour form token validity window in winnica_contact_token_is_valid().
+            set_transient(winnica_page_cache_key(), $html, HOUR_IN_SECONDS);
         }
         return $html;
     });
