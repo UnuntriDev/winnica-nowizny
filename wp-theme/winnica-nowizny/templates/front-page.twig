@@ -1,39 +1,39 @@
 {% extends "base.twig" %}
 
 {% block content %}
-  {% if post.meta('hero_show') %}
+  {% if show.hero %}
     {% include 'partials/hero.twig' %}
   {% endif %}
 
-  {% if post.meta('historia_show') %}
+  {% if show.historia %}
     {% include 'partials/historia.twig' %}
   {% endif %}
 
-  {% if post.meta('exp_show') %}
+  {% if show.exp %}
     {% include 'partials/doswiadczenia.twig' %}
   {% endif %}
 
-  {% if post.meta('wines_show') %}
+  {% if show.wines %}
     {% include 'partials/wina.twig' %}
   {% endif %}
 
-  {% if post.meta('cellar_show') %}
+  {% if show.cellar %}
     {% include 'partials/piwnica.twig' %}
   {% endif %}
 
-  {% if post.meta('galeria_show') %}
+  {% if show.galeria %}
     {% include 'partials/galeria.twig' %}
   {% endif %}
 
-  {% if post.meta('opinia_show') %}
+  {% if show.opinia %}
     {% include 'partials/opinia.twig' %}
   {% endif %}
 
-  {% if post.meta('terroir_show') %}
+  {% if show.terroir %}
     {% include 'partials/terroir.twig' %}
   {% endif %}
 
-  {% if post.meta('wizyta_show') %}
+  {% if show.wizyta %}
     {% include 'partials/wizyta.twig' %}
   {% endif %}
 
