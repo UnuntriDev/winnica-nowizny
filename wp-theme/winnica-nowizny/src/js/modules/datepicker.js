@@ -92,7 +92,6 @@ const setup = (root) => {
       </thead>
       <tbody></tbody>
     </table>
-    <p class="datepicker-foot">Rezerwacje przyjmujemy od jutra.</p>
   `;
 
   root.append(toggle, popup);

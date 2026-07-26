@@ -150,12 +150,6 @@
   outline-offset: -2px;
 }
 
-.datepicker-foot {
-  margin: var(--sp-1) 0 0;
-  font-size: var(--fs-xs);
-  color: var(--c-text-muted);
-}
-
 /* On a phone the field is narrower than the calendar, so an edge-anchored popup
    hangs off the screen whichever edge you pick. Centre it on the field instead
    and let it shrink: seven columns still clear the 24px target size at 300px. */

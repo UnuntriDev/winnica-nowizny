@@ -162,9 +162,11 @@
                    przegladarki, wiec na polskiej stronie potrafi pokazac 08/15/2026.
                    Kalendarz dokleja datepicker.js, a bez JS wystarczy wpisac date. #}
                 <div class="datepicker" data-datepicker>
-                  <input class="form-input" id="contact-date" name="contact_date" type="text" value="{{ old.date | default('') }}" placeholder="DD.MM.RRRR" inputmode="numeric" maxlength="10" autocomplete="off" aria-describedby="contact-date-hint"{% if 'date' in errs %} aria-invalid="true"{% endif %}>
+                  <input class="form-input" id="contact-date" name="contact_date" type="text" value="{{ old.date | default('') }}" placeholder="DD.MM.RRRR" inputmode="numeric" maxlength="10" autocomplete="off" aria-describedby="contact-date-format"{% if 'date' in errs %} aria-invalid="true"{% endif %}>
                 </div>
-                <p class="form-hint" id="contact-date-hint">Format DD.MM.RRRR, np. 15.08.2026</p>
+                {# Placeholder niesie format dla patrzacych, ale znika po pierwszym
+                   znaku i czytniki ekranu go nie ogłaszają; ten opis zostaje. #}
+                <span class="sr-only" id="contact-date-format">Format daty: dzień, miesiąc, rok, na przykład 15.08.2026</span>
               </div>
               <div class="form-group">
                 <label class="form-label" for="contact-guests">Liczba osób (min. 8 osób)</label>

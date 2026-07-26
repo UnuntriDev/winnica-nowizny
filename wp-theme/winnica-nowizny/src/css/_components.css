@@ -203,7 +203,11 @@
 .form-textarea:hover { border-color: rgba(196, 180, 154, 0.45); }
 
 .form-input:focus-visible { border-color: var(--c-amber-light); }
-.form-input::placeholder { color: rgba(196, 180, 154, 0.4); }
+
+/* A hint nobody can read is not a hint: at 0.4 this sat at 2.4:1 against the
+   field, well under the 4.5:1 that makes text legible. Still clearly softer
+   than the near-white of a real answer, so it does not read as filled in. */
+.form-input::placeholder { color: rgba(196, 180, 154, 0.75); }
 
 .form-select {
   appearance: none;
@@ -220,15 +224,9 @@
 
 .form-select option { color: var(--c-earth-deep); }
 
-/* No topic chosen yet: read the placeholder as a hint, not as a filled answer. */
-.form-select:invalid { color: rgba(196, 180, 154, 0.55); }
-
-.form-hint {
-  margin: 6px 0 0;
-  font-size: var(--fs-xs);
-  line-height: 1.5;
-  color: var(--c-text-muted);
-}
+/* No topic chosen yet: read the placeholder as a hint, not as a filled answer.
+   Same alpha as ::placeholder above, for the same legibility reason. */
+.form-select:invalid { color: rgba(196, 180, 154, 0.75); }
 
 .form-textarea {
   min-height: 108px;
