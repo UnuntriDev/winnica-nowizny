@@ -44,16 +44,10 @@ add_action('customize_register', function (WP_Customize_Manager $wp_customize) {
     $wp_customize->add_setting('winnica_gps_lng', ['default' => '', 'sanitize_callback' => 'sanitize_text_field']);
     $wp_customize->add_control('winnica_gps_lng', ['label' => 'GPS Longitude', 'section' => 'winnica_contact', 'type' => 'text']);
 
-    // Godziny
-    $wp_customize->add_setting('winnica_hours', [
-        'default'           => '',
-        'sanitize_callback' => 'sanitize_textarea_field',
-    ]);
-    $wp_customize->add_control('winnica_hours', [
-        'label'   => 'Godziny otwarcia',
-        'section' => 'winnica_contact',
-        'type'    => 'textarea',
-    ]);
+    // Godzin otwarcia tu nie ma celowo: widoczne godziny edytuje się na stronie
+    // głównej (grupa Wizyta, pole "Godziny otwarcia"), a ich wersję dla Google
+    // trzyma inc/seo.php, bo sezonowego grafiku nie da się zapisać w jednym polu
+    // tekstowym.
 
     // ── Section: Social Media ──
     $wp_customize->add_section('winnica_social', [

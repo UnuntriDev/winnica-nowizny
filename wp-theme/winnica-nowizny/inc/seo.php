@@ -122,7 +122,6 @@ function winnica_schema_organization(): void {
     $lng     = get_theme_mod('winnica_gps_lng', '');
     $fb      = get_theme_mod('winnica_facebook', '');
     $ig      = get_theme_mod('winnica_instagram', '');
-    $hours   = get_theme_mod('winnica_hours', '');
     $url     = home_url('/');
     $image   = get_theme_file_uri('assets/images/hero-winnica.webp');
 
@@ -181,9 +180,40 @@ function winnica_schema_organization(): void {
         $winery['sameAs'] = array_values($same_as);
     }
 
-    if ($hours) {
-        $winery['openingHours'] = array_filter(array_map('trim', explode("\n", $hours)));
-    }
+    // Plain openingHours cannot say "weekends only, except daily in high summer",
+    // and a search result promising Tuesday in April sends someone up the hill to
+    // a closed gate. The seasons go in one by one instead.
+    //
+    // Same fact as the "Godziny otwarcia" block on the front page (ACF field
+    // wizyta_hours), written for machines. Change one, change the other.
+    $seasons = [
+        ['04-01', '11-30', ['Saturday'], '11:00', '20:00'],
+        ['04-01', '11-30', ['Sunday'], '14:00', '20:00'],
+        ['07-01', '08-31', ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], '11:00', '20:00'],
+    ];
+
+    $today = current_time('Y-m-d');
+    $year  = (int) current_time('Y');
+
+    $winery['openingHoursSpecification'] = array_map(
+        static function (array $season) use ($today, $year): array {
+            [$from, $through, $days, $opens, $closes] = $season;
+            // Once this year's season is over the dates describe the past, so the
+            // window rolls forward to the next one rather than going stale in
+            // December and staying that way until somebody notices.
+            $season_year = ($year . '-' . $through) < $today ? $year + 1 : $year;
+
+            return [
+                '@type'        => 'OpeningHoursSpecification',
+                'dayOfWeek'    => $days,
+                'opens'        => $opens,
+                'closes'       => $closes,
+                'validFrom'    => $season_year . '-' . $from,
+                'validThrough' => $season_year . '-' . $through,
+            ];
+        },
+        $seasons
+    );
 
     $schema = [
         '@context' => 'https://schema.org',
