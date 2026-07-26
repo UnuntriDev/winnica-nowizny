@@ -94,7 +94,8 @@ function winnica_seo_meta(): void {
     }
 
     echo '<meta property="og:locale" content="pl_PL">' . "\n";
-    echo '<meta property="og:type" content="' . (is_singular() && !is_front_page() ? 'article' : 'website') . '">' . "\n";
+    // Pages (privacy policy) are not articles; only a real post would be.
+    echo '<meta property="og:type" content="' . (is_singular('post') ? 'article' : 'website') . '">' . "\n";
     echo '<meta property="og:site_name" content="Winnica Nowizny">' . "\n";
     echo '<meta property="og:title" content="' . esc_attr($title) . '">' . "\n";
     echo '<meta property="og:description" content="' . esc_attr($description) . '">' . "\n";
@@ -144,13 +145,16 @@ function winnica_schema_organization(): void {
     ];
 
     if ($address) {
+        // The Customizer holds the full postal line ("Połom Mały 60, 32-862 ...").
+        // streetAddress wants only the street part, or the postal code shows up
+        // twice; the segment before the first comma is exactly that.
         $winery['address'] = [
             '@type'           => 'PostalAddress',
             'addressLocality' => 'Połom Mały',
             'postalCode'      => '32-862',
             'addressRegion'   => 'Małopolska',
             'addressCountry'  => 'PL',
-            'streetAddress'   => $address,
+            'streetAddress'   => trim(explode(',', $address, 2)[0]),
         ];
     }
 
