@@ -42,18 +42,34 @@
         </div>
         {% if post.meta('wizyta_show_map') %}
           <div class="visit-map reveal" role="region" aria-label="Mapa dojazdu do Winnicy Nowizny">
-            <div class="visit-map-frame">
-              {% if post.meta('wizyta_map_embed') %}
-                {{ post.meta('wizyta_map_embed') | raw }}
-              {% else %}
-                <iframe
-                  src="https://www.google.com/maps?q=Po%C5%82om+Ma%C5%82y+60%2C+32-862+Por%C4%85bka+Iwkowska&output=embed"
-                  title="Winnica Nowizny — Połom Mały 60"
-                  loading="lazy"
-                  referrerpolicy="no-referrer-when-downgrade"
-                  allowfullscreen>
-                </iframe>
-              {% endif %}
+            <div class="visit-map-frame" data-map>
+              {# A <template> has no browsing context, so the parser never fetches the
+                 iframe inside it. Nothing reaches Google until the visitor asks for it. #}
+              <template data-map-embed>
+                {% if post.meta('wizyta_map_embed') %}
+                  {{ post.meta('wizyta_map_embed') | raw }}
+                {% else %}
+                  <iframe
+                    src="https://www.google.com/maps?q=Po%C5%82om+Ma%C5%82y+60%2C+32-862+Por%C4%85bka+Iwkowska&amp;output=embed"
+                    title="Winnica Nowizny, Połom Mały 60"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen>
+                  </iframe>
+                {% endif %}
+              </template>
+
+              <div class="map-facade">
+                <svg class="map-facade-pin" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Z"></path>
+                  <circle cx="12" cy="9" r="2.5"></circle>
+                </svg>
+                <p class="map-facade-text">Mapę dostarcza Google. Po jej włączeniu Google pozna Twój adres IP.</p>
+                <button class="btn-outline-light map-facade-btn" type="button" data-map-load>Pokaż mapę</button>
+                <a class="map-facade-link"
+                   href="https://www.google.com/maps/search/?api=1&amp;query=Po%C5%82om+Ma%C5%82y+60%2C+32-862+Por%C4%85bka+Iwkowska"
+                   target="_blank" rel="noopener noreferrer">Otwórz w Google Maps</a>
+              </div>
             </div>
           </div>
         {% endif %}
