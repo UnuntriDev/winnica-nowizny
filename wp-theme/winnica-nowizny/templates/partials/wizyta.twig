@@ -5,7 +5,7 @@
       <div class="visit-grid">
         <div class="visit-sidebar">
           <div class="visit-header reveal">
-            <p class="section-label">{{ post.meta('wizyta_label') | default('Bądź w kontakcie z nami') }}</p>
+            <p class="section-label">{{ post.meta('wizyta_label') | default('Pozostańmy w kontakcie') }}</p>
             <h2 class="section-title section-title-dark">{{ function('wp_kses_post', post.meta('wizyta_title') | default('Odwiedź nas')) | raw }}</h2>
           </div>
         <div class="visit-info reveal">
@@ -78,7 +78,7 @@
         </div>
     {% else %}
       <div class="visit-header reveal">
-        <p class="section-label">{{ post.meta('wizyta_label') | default('Bądź w kontakcie z nami') }}</p>
+        <p class="section-label">{{ post.meta('wizyta_label') | default('Pozostańmy w kontakcie') }}</p>
         <h2 class="section-title section-title-dark">{{ function('wp_kses_post', post.meta('wizyta_title') | default('Odwiedź nas')) | raw }}</h2>
       </div>
       <div class="visit-grid visit-grid-form-only">
