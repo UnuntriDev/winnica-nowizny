@@ -60,22 +60,32 @@ function winnica_seo_canonical_url(): string {
     return '';
 }
 
-function winnica_seo_image_url(): string {
+/**
+ * Sharing previews need the dimensions of whichever image we actually send, not
+ * the theme fallback's, or the crop is wrong on every post with a thumbnail.
+ *
+ * @return array{url: string, width: int, height: int}
+ */
+function winnica_seo_image(): array {
     if (is_singular() && has_post_thumbnail()) {
-        $thumbnail = get_the_post_thumbnail_url(get_queried_object_id(), 'large');
-        if ($thumbnail) {
-            return $thumbnail;
+        $src = wp_get_attachment_image_src(get_post_thumbnail_id(get_queried_object_id()), 'large');
+        if (is_array($src) && $src[0]) {
+            return ['url' => $src[0], 'width' => (int) $src[1], 'height' => (int) $src[2]];
         }
     }
 
-    return get_theme_file_uri('assets/images/hero-winnica.webp');
+    return [
+        'url'    => get_theme_file_uri('assets/images/hero-winnica.webp'),
+        'width'  => 1920,
+        'height' => 1080,
+    ];
 }
 
 function winnica_seo_meta(): void {
     $title       = wp_get_document_title();
     $description = winnica_seo_description();
     $canonical   = winnica_seo_canonical_url();
-    $image       = winnica_seo_image_url();
+    $image       = winnica_seo_image();
     $url         = $canonical ?: home_url('/');
 
     echo '<meta name="description" content="' . esc_attr($description) . '">' . "\n";
@@ -89,14 +99,14 @@ function winnica_seo_meta(): void {
     echo '<meta property="og:title" content="' . esc_attr($title) . '">' . "\n";
     echo '<meta property="og:description" content="' . esc_attr($description) . '">' . "\n";
     echo '<meta property="og:url" content="' . esc_url($url) . '">' . "\n";
-    echo '<meta property="og:image" content="' . esc_url($image) . '">' . "\n";
-    echo '<meta property="og:image:width" content="1920">' . "\n";
-    echo '<meta property="og:image:height" content="1080">' . "\n";
+    echo '<meta property="og:image" content="' . esc_url($image['url']) . '">' . "\n";
+    echo '<meta property="og:image:width" content="' . esc_attr((string) $image['width']) . '">' . "\n";
+    echo '<meta property="og:image:height" content="' . esc_attr((string) $image['height']) . '">' . "\n";
     echo '<meta property="og:image:alt" content="Winnica Nowizny na Pogórzu Rożnowskim">' . "\n";
     echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
     echo '<meta name="twitter:title" content="' . esc_attr($title) . '">' . "\n";
     echo '<meta name="twitter:description" content="' . esc_attr($description) . '">' . "\n";
-    echo '<meta name="twitter:image" content="' . esc_url($image) . '">' . "\n";
+    echo '<meta name="twitter:image" content="' . esc_url($image['url']) . '">' . "\n";
 }
 
 function winnica_schema_organization(): void {
