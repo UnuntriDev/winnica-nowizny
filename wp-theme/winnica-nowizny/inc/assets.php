@@ -31,6 +31,35 @@ add_action('wp_enqueue_scripts', function () {
                 WINNICA_VERSION,
                 true
             );
+
+            // Fonts now ship with the theme, so the browser only finds them after it
+            // has parsed the stylesheet. Preload the faces that paint the first
+            // screen; the italic and any later face can wait for the cascade.
+            $first_paint = [
+                'assets/fonts/source-sans-3-normal-latin.woff2',
+                'assets/fonts/source-sans-3-normal-latin-ext.woff2',
+                'assets/fonts/cormorant-garamond-normal-latin.woff2',
+                'assets/fonts/cormorant-garamond-normal-latin-ext.woff2',
+            ];
+
+            $preloads = [];
+            foreach ($first_paint as $src) {
+                if (!empty($manifest[$src]['file'])) {
+                    $preloads[] = WINNICA_URI . '/assets/dist/' . $manifest[$src]['file'];
+                }
+            }
+
+            if ($preloads) {
+                add_action('wp_head', function () use ($preloads): void {
+                    foreach ($preloads as $href) {
+                        // crossorigin is required even same-origin: fonts fetch anonymously.
+                        printf(
+                            '<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
+                            esc_url($href)
+                        );
+                    }
+                }, 2);
+            }
         }
     } else {
         wp_enqueue_style(
@@ -47,11 +76,4 @@ add_action('wp_enqueue_scripts', function () {
             true
         );
     }
-
-    wp_enqueue_style(
-        'winnica-fonts',
-        'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Source+Sans+3:wght@400;500;600&display=swap',
-        [],
-        null
-    );
 });

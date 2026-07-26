@@ -5,11 +5,6 @@
 
 defined('ABSPATH') || exit;
 
-add_action('wp_head', function () {
-    echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";
-    echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
-}, 1);
-
 add_filter('script_loader_tag', function (string $tag, string $handle) {
     if (str_starts_with($handle, 'winnica-')) {
         return str_replace(' src=', ' defer src=', $tag);
