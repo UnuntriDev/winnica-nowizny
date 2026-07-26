@@ -6,11 +6,12 @@
     </div>
     <div class="exp-grid">
       {% set fallback_images = {
-        1: 'doswiadczenie-degustacja.webp',
-        2: 'doswiadczenie-spacer.webp',
-        3: 'doswiadczenie-warsztaty.webp',
-        4: 'doswiadczenie-piknik.webp'
+        1: {name: 'doswiadczenie-degustacja', w: 750, h: 1000},
+        2: {name: 'doswiadczenie-spacer', w: 750, h: 1000},
+        3: {name: 'doswiadczenie-daniele', w: 750, h: 1000},
+        4: {name: 'doswiadczenie-park-linowy', w: 675, h: 900}
       } %}
+      {% set exp_sizes = '(max-width: 360px) 96px, (max-width: 768px) 112px, (max-width: 1024px) 140px, 25vw' %}
       {% for i in 1..4 %}
         {% set title = post.meta('exp_card_' ~ i ~ '_title') %}
         {% if title %}
@@ -25,10 +26,11 @@
                   'sizes': '(max-width: 360px) 96px, (max-width: 768px) 112px, (max-width: 1024px) 140px, 25vw'
                 }) | raw }}
               {% else %}
-                {% set img_src = theme.link ~ '/assets/images/' ~ fallback_images[i] %}
+                {% set fb = fallback_images[i] %}
+                {% set img_base = theme.link ~ '/assets/images/' ~ fb.name %}
                 <picture>
-                  <source srcset="{{ img_src | replace({'.webp': '.avif'}) }}" type="image/avif">
-                  <img src="{{ img_src }}" alt="{{ title }} w Winnicy Nowizny" width="750" height="1000" loading="lazy" decoding="async">
+                  <source srcset="{{ img_base }}-480.avif 480w, {{ img_base }}.avif {{ fb.w }}w" sizes="{{ exp_sizes }}" type="image/avif">
+                  <img src="{{ img_base }}.webp" srcset="{{ img_base }}-480.webp 480w, {{ img_base }}.webp {{ fb.w }}w" sizes="{{ exp_sizes }}" alt="{{ title }} w Winnicy Nowizny" width="{{ fb.w }}" height="{{ fb.h }}" loading="lazy" decoding="async">
                 </picture>
               {% endif %}
               <div class="exp-card-gradient"></div>
