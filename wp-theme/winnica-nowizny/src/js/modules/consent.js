@@ -15,12 +15,30 @@ function loadAnalytics(id) {
   document.head.appendChild(script);
 }
 
+// Blocked storage (Safari private mode, strict cookie settings) throws on access
+// rather than returning null, so every call has to be guarded.
+function readChoice() {
+  try {
+    return window.localStorage.getItem(STORAGE_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function storeChoice(choice) {
+  try {
+    window.localStorage.setItem(STORAGE_KEY, choice);
+  } catch {
+    // Nothing to remember it in; the choice still applies to this page view.
+  }
+}
+
 export function initConsent() {
   const banner = document.getElementById('consentBanner');
   if (!banner) return;
 
   const analyticsId = banner.dataset.analyticsId || '';
-  const stored = window.localStorage.getItem(STORAGE_KEY);
+  const stored = readChoice();
 
   if (stored === 'granted') loadAnalytics(analyticsId);
   if (!stored) banner.hidden = false;
@@ -28,7 +46,7 @@ export function initConsent() {
   banner.querySelectorAll('[data-consent]').forEach((button) => {
     button.addEventListener('click', () => {
       const choice = button.dataset.consent;
-      window.localStorage.setItem(STORAGE_KEY, choice);
+      storeChoice(choice);
       banner.hidden = true;
       if (choice === 'granted') loadAnalytics(analyticsId);
     });
