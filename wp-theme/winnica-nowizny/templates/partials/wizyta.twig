@@ -158,13 +158,17 @@
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label" for="contact-date">Preferowana data wizyty</label>
-                {# min = jutro: cache trzyma strone do godziny, wczorajsze "dzisiaj"
-                   robiloby falszywe bledy walidacji tuz po polnocy #}
-                <input class="form-input" id="contact-date" name="contact_date" type="date" value="{{ old.date | default('') }}" min="{{ 'now +1 day' | date('Y-m-d') }}"{% if 'date' in errs %} aria-invalid="true"{% endif %}>
+                {# Zwykly text, nie type="date": natywny picker rysuje sie w jezyku
+                   przegladarki, wiec na polskiej stronie potrafi pokazac 08/15/2026.
+                   Kalendarz dokleja datepicker.js, a bez JS wystarczy wpisac date. #}
+                <div class="datepicker" data-datepicker>
+                  <input class="form-input" id="contact-date" name="contact_date" type="text" value="{{ old.date | default('') }}" placeholder="DD.MM.RRRR" inputmode="numeric" maxlength="10" autocomplete="off" aria-describedby="contact-date-hint"{% if 'date' in errs %} aria-invalid="true"{% endif %}>
+                </div>
+                <p class="form-hint" id="contact-date-hint">Format DD.MM.RRRR, np. 15.08.2026</p>
               </div>
               <div class="form-group">
-                <label class="form-label" for="contact-guests">Liczba osób</label>
-                <input class="form-input" id="contact-guests" name="contact_guests" type="number" value="{{ old.guests | default('') }}" inputmode="numeric" min="1" max="60"{% if 'guests' in errs %} aria-invalid="true"{% endif %}>
+                <label class="form-label" for="contact-guests">Liczba osób (min. 8 osób)</label>
+                <input class="form-input" id="contact-guests" name="contact_guests" type="number" value="{{ old.guests | default('') }}" inputmode="numeric" min="8" max="60"{% if 'guests' in errs %} aria-invalid="true"{% endif %}>
               </div>
             </div>
 

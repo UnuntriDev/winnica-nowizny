@@ -223,6 +223,13 @@
 /* No topic chosen yet: read the placeholder as a hint, not as a filled answer. */
 .form-select:invalid { color: rgba(196, 180, 154, 0.55); }
 
+.form-hint {
+  margin: 6px 0 0;
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--c-text-muted);
+}
+
 .form-textarea {
   min-height: 108px;
   background: rgba(26, 21, 16, 0.28);

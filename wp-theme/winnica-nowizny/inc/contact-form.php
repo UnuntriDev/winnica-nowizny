@@ -67,6 +67,36 @@ function winnica_contact_fingerprint(): string
     return hash_hmac('sha256', $ip, wp_salt('auth'));
 }
 
+/**
+ * Visitors type the date the Polish way ("15.08.2026"); everything downstream
+ * wants one sortable shape. Returns '' when the string is not a real calendar
+ * day, so 30.02 is rejected here instead of quietly becoming 2 March.
+ */
+function winnica_parse_visit_date(string $input): string
+{
+    $input = trim($input);
+
+    if (preg_match('#^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$#', $input, $parts)) {
+        [, $day, $month, $year] = $parts;
+    } elseif (preg_match('#^(\d{4})-(\d{1,2})-(\d{1,2})$#', $input, $parts)) {
+        // Still accept ISO: a browser that autofills a cached page, or an older
+        // message being edited, should not read as a typo.
+        [, $year, $month, $day] = $parts;
+    } else {
+        return '';
+    }
+
+    return checkdate((int) $month, (int) $day, (int) $year)
+        ? sprintf('%04d-%02d-%02d', $year, $month, $day)
+        : '';
+}
+
+function winnica_format_visit_date(string $iso): string
+{
+    $parsed = DateTimeImmutable::createFromFormat('!Y-m-d', $iso);
+    return $parsed ? $parsed->format('d.m.Y') : $iso;
+}
+
 function winnica_contact_redirect(string $status, array $payload = []): void
 {
     $args = ['contact' => $status];
@@ -144,7 +174,10 @@ function winnica_handle_contact_form(): void
     $email_input = sanitize_text_field(wp_unslash($_POST['contact_email'] ?? ''));
     $email       = sanitize_email($email_input);
     $phone       = sanitize_text_field(wp_unslash($_POST['contact_phone'] ?? ''));
-    $date        = sanitize_text_field(wp_unslash($_POST['contact_date'] ?? ''));
+    // Keep the typed date next to the normalised one: showing back "15.O8.2026"
+    // is how somebody spots their own typo.
+    $date_input  = sanitize_text_field(wp_unslash($_POST['contact_date'] ?? ''));
+    $date        = winnica_parse_visit_date($date_input);
     $guests      = sanitize_text_field(wp_unslash($_POST['contact_guests'] ?? ''));
     $topic       = sanitize_key(wp_unslash($_POST['contact_topic'] ?? ''));
     $message     = sanitize_textarea_field(wp_unslash($_POST['contact_message'] ?? ''));
@@ -180,14 +213,18 @@ function winnica_handle_contact_form(): void
     // Both reservation helpers are optional; they only fail when filled in and
     // impossible. The date must parse as a real calendar day, not sit in the
     // past, and stay within two years, which catches year typos.
-    if ($date !== '') {
-        $parsed = DateTimeImmutable::createFromFormat('!Y-m-d', $date, wp_timezone());
-        $today  = new DateTimeImmutable('today', wp_timezone());
-        if (!$parsed || $parsed->format('Y-m-d') !== $date || $parsed < $today || $parsed > $today->modify('+2 years')) {
+    if ($date_input !== '') {
+        $parsed = $date !== ''
+            ? DateTimeImmutable::createFromFormat('!Y-m-d', $date, wp_timezone())
+            : false;
+        $today = new DateTimeImmutable('today', wp_timezone());
+        if (!$parsed || $parsed < $today || $parsed > $today->modify('+2 years')) {
             $errors[] = 'date';
         }
     }
-    if ($guests !== '' && (!ctype_digit($guests) || (int) $guests < 1 || (int) $guests > 60)) {
+    // Eight is the smallest group we host, so a smaller number is a rejection
+    // now rather than a disappointing reply later.
+    if ($guests !== '' && (!ctype_digit($guests) || (int) $guests < 8 || (int) $guests > 60)) {
         $errors[] = 'guests';
     }
 
@@ -197,7 +234,7 @@ function winnica_handle_contact_form(): void
                 'name'    => $name,
                 'email'   => $email_input,
                 'phone'   => $phone,
-                'date'    => $date,
+                'date'    => $date_input,
                 'guests'  => $guests,
                 'topic'   => $topic,
                 'message' => $message,
@@ -220,7 +257,7 @@ function winnica_handle_contact_form(): void
         $name,
         $email,
         $phone ?: 'nie podano',
-        $date ?: 'nie podano',
+        $date ? winnica_format_visit_date($date) : 'nie podano',
         $guests ?: 'nie podano',
         $topic_label,
         $message
@@ -292,7 +329,7 @@ function winnica_message_meta_box(WP_Post $post): void
         echo '<p><strong>Telefon:</strong><br><a href="tel:' . esc_attr(preg_replace('/\D+/', '', $phone)) . '">' . esc_html($phone) . '</a></p>';
     }
     if ($date) {
-        echo '<p><strong>Preferowana data:</strong><br>' . esc_html($date) . '</p>';
+        echo '<p><strong>Preferowana data:</strong><br>' . esc_html(winnica_format_visit_date($date)) . '</p>';
     }
     if ($guests) {
         echo '<p><strong>Liczba osób:</strong><br>' . esc_html($guests) . '</p>';

@@ -4,6 +4,7 @@ import { initReveal } from './modules/reveal.js';
 import { initConsent } from './modules/consent.js';
 import { initLightbox } from './modules/lightbox.js';
 import { initMap } from './modules/map.js';
+import { initDatepicker } from './modules/datepicker.js';
 
 const modules = [
   ['nav', initNav],
@@ -11,6 +12,7 @@ const modules = [
   ['consent', initConsent],
   ['lightbox', initLightbox],
   ['map', initMap],
+  ['datepicker', initDatepicker],
 ];
 
 document.addEventListener('DOMContentLoaded', () => {

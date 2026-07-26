@@ -1,0 +1,171 @@
+/* ── Date picker (reservation form) ── */
+.datepicker {
+  position: relative;
+}
+
+/* The toggle sits inside the field, so the text needs to stop before it. */
+.datepicker .form-input {
+  padding-right: 44px;
+}
+
+.datepicker-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 44px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--c-amber-light);
+  transition: color var(--duration-fast);
+}
+
+.datepicker-toggle:hover { color: var(--c-amber-hover); }
+
+.datepicker-toggle svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.datepicker-popup {
+  position: absolute;
+  z-index: 2;
+  top: calc(100% + 6px);
+  left: 0;
+  width: max-content;
+  min-width: 268px;
+  max-width: min(320px, calc(100vw - 48px));
+  padding: var(--sp-2);
+  background: var(--c-earth-dark);
+  border: 1px solid rgba(196, 180, 154, 0.28);
+  border-radius: var(--radius-md);
+  box-shadow: 0 18px 40px rgba(26, 21, 16, 0.45);
+}
+
+.datepicker-popup[hidden] { display: none; }
+
+.datepicker-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-1);
+  margin-bottom: var(--sp-1);
+}
+
+.datepicker-title {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--c-text-light);
+}
+
+.datepicker-nav {
+  width: 32px;
+  height: 32px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-lg);
+  line-height: 1;
+  color: var(--c-amber-light);
+  background: none;
+  border: 1px solid rgba(196, 180, 154, 0.22);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--duration-fast), color var(--duration-fast);
+}
+
+.datepicker-nav:hover:not(:disabled) {
+  border-color: var(--c-amber-light);
+  color: var(--c-amber-hover);
+}
+
+.datepicker-nav:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.datepicker-grid {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  /* Day numbers sit in a column; ragged digit widths make the grid wobble. */
+  font-variant-numeric: tabular-nums;
+}
+
+.datepicker-grid th {
+  padding: 6px 0;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--c-text-muted);
+}
+
+.datepicker-grid th abbr {
+  text-decoration: none;
+  cursor: help;
+}
+
+.datepicker-day {
+  height: 34px;
+  text-align: center;
+  font-size: var(--fs-body-sm);
+  color: var(--c-text-light);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+
+.datepicker-day.is-outside,
+.datepicker-day[aria-disabled='true'] {
+  color: rgba(196, 180, 154, 0.3);
+  cursor: default;
+}
+
+.datepicker-day:not([aria-disabled='true']):hover {
+  background: rgba(196, 180, 154, 0.16);
+}
+
+.datepicker-day.is-selected {
+  background: var(--c-amber-light);
+  color: var(--c-earth-deep);
+  font-weight: 600;
+}
+
+.datepicker-day:focus-visible {
+  outline: 2px solid var(--c-focus-ring);
+  outline-offset: -2px;
+}
+
+.datepicker-foot {
+  margin: var(--sp-1) 0 0;
+  font-size: var(--fs-xs);
+  color: var(--c-text-muted);
+}
+
+/* On a phone the field is narrower than the calendar, so an edge-anchored popup
+   hangs off the screen whichever edge you pick. Centre it on the field instead
+   and let it shrink: seven columns still clear the 24px target size at 300px. */
+@media (max-width: 480px) {
+  .datepicker-popup {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    min-width: 0;
+    max-width: none;
+    width: min(300px, calc(100vw - 24px));
+  }
+}
