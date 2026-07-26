@@ -43,14 +43,14 @@ $WP post meta update $FRONT_ID historia_stat_3_label "Odmian"
 $WP post meta update $FRONT_ID exp_show 1
 $WP post meta update $FRONT_ID exp_label "Doświadczenia"
 $WP post meta update $FRONT_ID exp_title "Poczuj charakter winnicy"
-$WP post meta update $FRONT_ID exp_card_1_title "Degustacja premium"
-$WP post meta update $FRONT_ID exp_card_1_desc "5 win z komentarzem sommeliera, ser i oliwki"
+$WP post meta update $FRONT_ID exp_card_1_title "Degustacja w piwnicy"
+$WP post meta update $FRONT_ID exp_card_1_desc "Degustacja 5 rodzajów wina w zabytkowej piwnicy z 1891 roku"
 $WP post meta update $FRONT_ID exp_card_2_title "Spacer po winnicy"
 $WP post meta update $FRONT_ID exp_card_2_desc "Oprowadzanie po winnicy z historią terroir"
-$WP post meta update $FRONT_ID exp_card_3_title "Warsztaty winiarskie"
-$WP post meta update $FRONT_ID exp_card_3_desc "Stwórz własną kupażę pod okiem winiarza"
-$WP post meta update $FRONT_ID exp_card_4_title "Piknik w winnicy"
-$WP post meta update $FRONT_ID exp_card_4_desc "Kosz piknikowy, koc i wino z widokiem na Pogórze"
+$WP post meta update $FRONT_ID exp_card_3_title "Karmienie danieli"
+$WP post meta update $FRONT_ID exp_card_3_desc "Bliskie spotkanie ze zwierzętami podczas wizyty w winnicy"
+$WP post meta update $FRONT_ID exp_card_4_title "Park linowy"
+$WP post meta update $FRONT_ID exp_card_4_desc "Trasa z tyrolką dla dzieci w wieku 3–10 lat"
 
 # Wina
 $WP post meta update $FRONT_ID wines_show 1
@@ -75,7 +75,7 @@ $WP post meta update $FRONT_ID galeria_title "Chwile w winnicy"
 
 # Opinia
 $WP post meta update $FRONT_ID opinia_show 1
-$WP post meta update $FRONT_ID opinia_quote "Wina z Winnicy Nowizny to odkrycie — smak, który opowiada historię Pogórza Rożnowskiego w każdym kieliszku."
+$WP post meta update $FRONT_ID opinia_quote "Wina z Winnicy Nowizny to odkrycie – smak, który opowiada historię Pogórza Rożnowskiego w każdym kieliszku."
 $WP post meta update $FRONT_ID opinia_author "Magazyn Wino & Styl"
 
 # Terroir
@@ -94,11 +94,13 @@ $WP post meta update $FRONT_ID terroir_3_icon '<svg width="24" height="24" viewB
 
 # Wizyta
 $WP post meta update $FRONT_ID wizyta_show 1
-$WP post meta update $FRONT_ID wizyta_label "Zaplanuj wizytę"
+$WP post meta update $FRONT_ID wizyta_label "Pozostańmy w kontakcie"
 $WP post meta update $FRONT_ID wizyta_title "Odwiedź nas"
 $WP post meta update $FRONT_ID wizyta_address "Połom Mały 60<br>32-862 Porąbka Iwkowska"
 $WP post meta update $FRONT_ID wizyta_contact '<a href="mailto:winnicanowizny@op.pl">winnicanowizny@op.pl</a><br><a href="tel:+48607578156">tel. 607 578 156</a>'
-# Godziny otwarcia i informacje o dojeździe należy uzupełnić po ich potwierdzeniu.
+$WP post meta update $FRONT_ID wizyta_hours "Poza sezonem wakacyjnym<br>Sobota–niedziela: 11:00–20:00<br><br>Lipiec–sierpień<br>Poniedziałek–sobota: 11:00–20:00<br>Niedziela: 14:00–20:00"
+$WP post meta update $FRONT_ID wizyta_hours_note "Nasze wina są dostępne w sprzedaży przez cały rok."
+# Informacje o dojeździe należy uzupełnić po ich potwierdzeniu.
 $WP post meta update $FRONT_ID wizyta_form_title "Rezerwacja wizyty"
 $WP post meta update $FRONT_ID wizyta_form_subtitle "Wypełnij formularz, odezwiemy się w ciągu 24h"
 $WP post meta update $FRONT_ID wizyta_show_map 1

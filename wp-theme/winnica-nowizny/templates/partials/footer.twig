@@ -20,7 +20,7 @@
           <a href="{{ function('home_url', '/') }}#wizyta">Zaplanuj wizytę</a>
           {% set privacy_url = function('get_privacy_policy_url') %}
           <a href="{{ privacy_url ?: function('home_url', '/polityka-prywatnosci/') }}">Polityka prywatności</a>
-          {% if analytics_id %}<button class="footer-consent-settings" type="button" data-open-consent>Ustawienia cookies</button>{% endif %}
+          {% if analytics_id %}<button class="footer-consent-settings" type="button" data-open-consent aria-controls="consentPanel" aria-expanded="false">Ustawienia cookies</button>{% endif %}
         </div>
       </div>
       <div>

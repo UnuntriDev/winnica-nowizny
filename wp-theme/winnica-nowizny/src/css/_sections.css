@@ -35,15 +35,14 @@
 }
 
 .historia .historia-signature {
-  width: min(100%, 440px);
-  margin: var(--sp-4) 0 0;
-  padding-top: var(--sp-2);
-  border-top: 1px solid var(--c-parchment-mid);
-  color: var(--c-oak);
-  font-family: var(--ff-display);
-  font-size: var(--fs-md);
-  font-style: italic;
-  line-height: 1.4;
+  width: min(100%, 360px);
+  margin: 36px auto 0;
+}
+
+.historia-signature img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .historia-visual {
@@ -332,11 +331,30 @@
   .wines-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
+/* The wine list takes keyboard focus (it scrolls on phones), so the ring has to
+   be visible at every width. */
+.wines-grid:focus-visible {
+  outline: 2px solid var(--c-amber);
+  outline-offset: 8px;
+}
+
+/* Spelled-out swipe hint for the phone slider; the peeking next card is the
+   visual cue, this is the explicit one. Desktop grids need neither. */
+.wines-swipe-hint { display: none; }
+
 /* Phones: one-row slider. Cards are narrow enough that the next bottle peeks in,
    which is the whole affordance — scroll-snap does the rest, no JS. The track
    bleeds to the screen edges and re-adds the section padding as its own, so the
    first card still lines up with the heading and the last one can reach the edge. */
 @media (max-width: 640px) {
+  .wines-swipe-hint {
+    display: block;
+    margin: 0 0 var(--sp-2);
+    color: var(--c-amber-text);
+    font-size: var(--fs-sm);
+    letter-spacing: 0.4px;
+  }
+
   .wines-grid {
     --edge: var(--sp-3);
     display: flex;
@@ -516,24 +534,30 @@
   text-align: center;
 }
 
-.testimonial-line {
-  width: 40px;
-  height: 1px;
-  background: var(--c-amber);
-  margin: 0 auto var(--sp-5);
+.testimonial-mark {
+  display: block;
+  width: 68px;
+  aspect-ratio: 232 / 180;
+  margin: 0 auto var(--sp-4);
+  background: var(--c-amber-text);
+  opacity: 0.82;
+  -webkit-mask: url("../../assets/images/logo-nowizny-nav.webp") center / contain no-repeat;
+  mask: url("../../assets/images/logo-nowizny-nav.webp") center / contain no-repeat;
 }
 
 .testimonial blockquote {
   font-family: var(--ff-display);
   font-size: var(--fs-2xl);
   font-weight: 400;
-  font-style: italic;
+  font-style: normal;
   line-height: 1.5;
-  color: var(--c-earth-dark);
+  color: var(--c-earth-deep);
   margin: 0 0 var(--sp-4) 0;
   border: none;
   padding: 0;
 }
+
+.testimonial-quote-tail { font-style: italic; }
 
 .testimonial-divider {
   width: 40px;
@@ -602,10 +626,11 @@
 
 .visit-grid > .reveal { height: 100%; }
 
-.visit-grid .form-container {
-  width: 100%;
-  height: 100%;
-}
+/* No height here on purpose. Stretching the card to the column's height only
+   stretches its background: the fields keep their own size, so the surplus lands
+   as dead space under the submit button. The card ends where the form ends and
+   the map column, which can actually use spare height, takes up the slack. */
+.visit-grid .form-container { width: 100%; }
 
 .visit-sidebar {
   min-height: 100%;

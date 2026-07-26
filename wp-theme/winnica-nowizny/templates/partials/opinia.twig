@@ -1,10 +1,17 @@
 {% set quote = post.meta('opinia_quote') %}
 {% set author = post.meta('opinia_author') %}
 {% if quote %}
+  {% set quote_parts = quote | split(' – ', 2) %}
   <section class="testimonial">
     <div class="testimonial-inner reveal">
-      <div class="testimonial-line"></div>
-      <blockquote>{{ quote }}</blockquote>
+      <span class="testimonial-mark" aria-hidden="true"></span>
+      <blockquote>
+        {% if quote_parts | length == 2 %}
+          <span class="testimonial-quote-lead">{{ quote_parts[0] }}</span><span class="testimonial-pause"> – </span><em class="testimonial-quote-tail">{{ quote_parts[1] }}</em>
+        {% else %}
+          {{ quote }}
+        {% endif %}
+      </blockquote>
       {% if author %}
         <div class="testimonial-divider"></div>
         <p class="testimonial-author">{{ author }}</p>

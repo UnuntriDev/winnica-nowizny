@@ -16,10 +16,11 @@ add_action('after_setup_theme', function () {
         'footer'  => __('Menu stopka', 'winnica-nowizny'),
     ]);
 
-    // Cut-out bottle canvas is 520×1400 with transparency — resize proportionally,
-    // never hard-crop (that would clip the bottle). Small variant feeds srcset.
+    // Transparent bottle cut-outs use different, tightly cropped proportions.
+    // Resize proportionally and never hard-crop, so no bottle edge is clipped.
     add_image_size('bottle', 520, 1400, false);
     add_image_size('bottle-sm', 320, 9999, false);
+    add_image_size('bottle-xs', 160, 9999, false);
     add_image_size('gallery-square', 600, 600, true);
     add_image_size('gallery-tall', 600, 1200, true);
     add_image_size('gallery-wide', 1200, 600, true);

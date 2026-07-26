@@ -89,6 +89,10 @@
 
   .historia h2 { font-size: var(--fs-3xl); }
   .historia-grid { grid-template-columns: 1fr; gap: var(--sp-5); }
+  .historia .historia-signature {
+    width: min(100%, 260px);
+    margin-top: 32px;
+  }
   .historia-visual { padding: 0 0 var(--sp-6); }
   .historia-image { aspect-ratio: 4 / 3; }
   .historia-stats {
@@ -195,14 +199,19 @@
     color: var(--c-earth-deep);
   }
 
-  .consent-banner {
+  .consent-widget {
     left: 12px;
-    right: 12px;
     bottom: 76px;
-    width: auto;
+  }
+
+  .consent-panel {
+    max-height: calc(100vh - 164px);
+    overflow-y: auto;
     padding: var(--sp-2);
   }
 
+  .consent-toggle { width: 54px; height: 54px; }
+  .consent-toggle svg { width: 28px; height: 28px; }
   .consent-actions { display: grid; grid-template-columns: 1fr 1fr; }
 }
 
