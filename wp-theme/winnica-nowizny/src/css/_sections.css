@@ -164,8 +164,11 @@
 .exp-card-body {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   flex: 1;
   padding: var(--sp-3);
+  text-align: center;
 }
 
 .exp-card h3 {
@@ -522,58 +525,7 @@
   .gallery-item--interactive:hover::after { opacity: 1; }
 }
 
-/* ── Testimonial ── */
-.testimonial {
-  padding: var(--section-pad-dark) var(--sp-6);
-  background: var(--c-parchment-warm);
-}
-
-.testimonial-inner {
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.testimonial-mark {
-  display: block;
-  width: 68px;
-  aspect-ratio: 232 / 180;
-  margin: 0 auto var(--sp-4);
-  background: var(--c-amber-text);
-  opacity: 0.82;
-  -webkit-mask: url("../../assets/images/logo-nowizny-nav.webp") center / contain no-repeat;
-  mask: url("../../assets/images/logo-nowizny-nav.webp") center / contain no-repeat;
-}
-
-.testimonial blockquote {
-  font-family: var(--ff-display);
-  font-size: var(--fs-2xl);
-  font-weight: 400;
-  font-style: normal;
-  line-height: 1.5;
-  color: var(--c-earth-deep);
-  margin: 0 0 var(--sp-4) 0;
-  border: none;
-  padding: 0;
-}
-
-.testimonial-quote-tail { font-style: italic; }
-
-.testimonial-divider {
-  width: 40px;
-  height: 1px;
-  background: var(--c-amber-light);
-  margin: 0 auto var(--sp-2);
-}
-
-.testimonial-author {
-  font-size: var(--fs-meta);
-  font-weight: 500;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--c-amber-text);
-  margin: 0;
-}
+/* Sekcja opinii ma wlasny plik: src/css/_opinie.css */
 
 /* ── Terroir ── */
 .terroir-grid {
@@ -706,56 +658,6 @@
   position: absolute;
   inset: 0;
 }
-
-/* Consent facade: shown until the visitor chooses to pull the map from Google. */
-.map-facade {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  padding: var(--sp-3);
-  text-align: center;
-  background:
-    radial-gradient(circle at 50% 38%, rgba(139, 109, 75, 0.22), transparent 62%),
-    rgba(26, 21, 16, 0.92);
-}
-
-.map-facade-pin {
-  width: 34px;
-  height: 34px;
-  fill: none;
-  stroke: var(--c-amber-light);
-  stroke-width: 1.4;
-  opacity: 0.85;
-}
-
-.map-facade-text {
-  margin: 0;
-  max-width: 34ch;
-  font-size: var(--fs-body-sm);
-  line-height: 1.5;
-  color: var(--c-text-soft);
-}
-
-.map-facade-btn {
-  padding: 12px var(--sp-4);
-  min-height: 44px;
-}
-
-.map-facade-link {
-  font-size: var(--fs-label);
-  letter-spacing: 1.4px;
-  text-transform: uppercase;
-  color: var(--c-amber-light);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  padding: 6px 4px;
-}
-
-.map-facade-link:hover { color: var(--c-amber-hover); }
 
 .visit-map-frame iframe {
   width: 100%;

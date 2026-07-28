@@ -27,6 +27,29 @@ function winnica_tel_href(string $phone): string
     return 'tel:+48' . $digits;
 }
 
+/**
+ * Shorten a review signature to a first name and a surname initial.
+ *
+ * Google publishes full names, this page does not need them. The shortening
+ * happens here rather than in the stored field on purpose: the saved value stays
+ * exactly what the person signed with, so it can still be matched against the
+ * review it was copied from. A one-word signature has no surname to shorten and
+ * passes through untouched.
+ */
+function winnica_short_author(string $name): string
+{
+    $name  = trim($name);
+    $parts = preg_split('/\s+/u', $name, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+
+    if (count($parts) < 2) {
+        return $name;
+    }
+
+    $surname = array_pop($parts);
+
+    return implode(' ', $parts) . ' ' . mb_strtoupper(mb_substr($surname, 0, 1)) . '.';
+}
+
 if (!class_exists('Timber')) {
     add_action('admin_notices', function () {
         echo '<div class="error"><p>Timber nie jest zainstalowany. Zainstaluj plugin Timber.</p></div>';

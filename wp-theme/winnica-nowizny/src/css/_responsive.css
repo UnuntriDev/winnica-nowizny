@@ -133,9 +133,6 @@
     white-space: normal;
   }
 
-  .testimonial { padding: var(--sp-7) var(--sp-3); }
-  .testimonial blockquote { font-size: var(--fs-xl); }
-
   .form-row { grid-template-columns: 1fr; }
   .form-container { padding: var(--sp-4) var(--sp-3); }
   .visit-header { margin-bottom: var(--sp-5); }
@@ -233,7 +230,7 @@
   .section-light,
   .section-dark,
   .cellar-inner,
-  .testimonial { padding-left: 20px; padding-right: 20px; }
+  .reviews { padding-left: 20px; padding-right: 20px; }
   .exp-card { grid-template-columns: 96px minmax(0, 1fr); }
   .exp-card-body { padding: var(--sp-2); }
   .exp-card h3 { font-size: var(--fs-lg); }

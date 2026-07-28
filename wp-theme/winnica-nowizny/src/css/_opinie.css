@@ -1,0 +1,319 @@
+/* ── Opinie gości (Google) ──
+   Wlasny warm band miedzy dwiema jasnymi sekcjami, tak jak wczesniej robil to
+   pojedynczy cytat. Karty sa jasniejsze od tla, zeby odcinaly sie bez cienia. */
+.reviews {
+  padding: var(--section-pad-dark) var(--sp-6);
+  background: var(--c-parchment-warm);
+}
+
+.reviews-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.reviews-heading {
+  margin-bottom: var(--sp-4);
+  text-align: center;
+}
+
+/* ── Ocena ──
+   Liczba i gwiazdki to jedna informacja i stoja razem w jednej linii. Skad ona
+   pochodzi, to informacja druga, wiec schodzi nizej i mniejszym stopniem. */
+.reviews-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  margin: var(--sp-3) 0 0;
+}
+
+.reviews-score {
+  font-family: var(--ff-display);
+  font-size: var(--fs-3xl);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--c-earth-deep);
+}
+
+.reviews-count {
+  margin: var(--sp-1) 0 0;
+  font-size: var(--fs-meta);
+  letter-spacing: 0.4px;
+  color: var(--c-text-body);
+}
+
+.reviews-stars {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.review-star {
+  width: 14px;
+  height: 14px;
+  fill: var(--c-amber-text);
+}
+
+.reviews-stars-lg { gap: 4px; }
+
+.reviews-stars-lg .review-star {
+  width: 20px;
+  height: 20px;
+}
+
+/* ── Pasek nad torem ──
+   Strzalki naleza do toru, nie do tytulu, wiec stoja tuz nad jego prawym rogiem.
+   Podpowiedz o przesuwaniu zajmuje lewa strone tego samego wiersza. */
+.reviews-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-2);
+}
+
+.reviews-nav {
+  display: flex;
+  gap: var(--sp-1);
+  margin-left: auto;
+}
+
+.reviews-nav[hidden] { display: none; }
+
+.reviews-arrow {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-lg);
+  line-height: 1;
+  color: var(--c-amber-text);
+  background: none;
+  border: 1px solid rgba(139, 109, 75, 0.28);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--duration-fast), color var(--duration-fast), background var(--duration-fast);
+}
+
+.reviews-arrow:hover:not(:disabled) {
+  border-color: var(--c-amber);
+  background: rgba(139, 109, 75, 0.08);
+}
+
+.reviews-arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* Slowna podpowiedz dla telefonu; tam strzalek nie ma, a wystajaca kolejna karta
+   jest wskazowka wizualna. Na desktopie zbedna, bo sa strzalki. */
+.reviews-swipe-hint {
+  display: none;
+  margin: 0;
+  color: var(--c-amber-text);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.4px;
+}
+
+/* ── Tor ──
+   Sam przewija sie palcem i gladzikiem, scroll-snap ustawia karty na miejsce.
+   Na desktopie tor konczy sie dokladnie tam, gdzie trzecia karta: --edge zostaje
+   zerem, wiec nie ma paska paddingu, w ktorym pokazywalby sie skrawek czwartej. */
+.reviews-track {
+  --edge: 0px;
+  list-style: none;
+  margin: 0;
+  margin-inline: calc(-1 * var(--edge));
+  padding: 0;
+  padding-inline: var(--edge);
+  display: flex;
+  gap: var(--sp-3);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline-start: var(--edge);
+  scrollbar-width: none;
+}
+
+.reviews-track::-webkit-scrollbar { display: none; }
+
+/* Lapka pojawia sie dopiero, gdy JS naprawde podpial przeciaganie. Kursor, ktory
+   obiecuje chwyt, a nic nie robi, jest gorszy niz brak kursora. */
+.reviews-track.has-drag { cursor: grab; }
+
+.reviews-track.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+  /* Snap w trakcie gestu szarpie torem pod kursorem; wraca po puszczeniu
+     i dopiero wtedy ustawia karty na miejsce. */
+  scroll-snap-type: none;
+}
+
+/* Tor przyjmuje fokus klawiatury, bo sie przewija; pierscien musi byc widoczny. */
+.reviews-track:focus-visible {
+  outline: 2px solid var(--c-amber);
+  outline-offset: 4px;
+}
+
+.review-slide {
+  flex: 0 0 calc((100% - 2 * var(--sp-3)) / 3);
+  scroll-snap-align: start;
+}
+
+.review-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin: 0;
+  padding: var(--sp-3);
+  background: var(--c-parchment);
+  border: 1px solid rgba(139, 109, 75, 0.16);
+  border-radius: var(--radius-md);
+}
+
+.review-card-top {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+}
+
+.review-google-mark {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+.review-source {
+  font-size: var(--fs-meta);
+  font-weight: 500;
+  color: var(--c-text-body);
+}
+
+/* Gwiazdki na prawy skraj karty, zeby wszystkie trzymaly jedna linie. */
+.review-card-top .reviews-stars { margin-left: auto; }
+
+.review-text {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-size: var(--fs-body-sm);
+  font-style: normal;
+  line-height: 1.75;
+  color: var(--c-text-body);
+}
+
+/* Cudzyslowy sa dekoracja: <blockquote> juz mowi czytnikowi ekranu, ze to cytat,
+   a w polu ACF ich nie ma, wiec nikt ich przypadkiem nie zdubluje. */
+.review-text::before { content: '\201E'; }
+.review-text::after { content: '\201D'; }
+
+/* Przyciecie wlacza dopiero JS, bo tylko on potrafi dolozyc "Czytaj wiecej".
+   Bez skryptu opinie pokazuja sie w calosci: karta bedzie wyzsza, ale nikomu
+   nie zniknie tekst, ktorego nie ma jak rozwinac. */
+.reviews.has-clamp .review-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  overflow: hidden;
+}
+
+.reviews.has-clamp .review-card.is-expanded .review-text {
+  display: block;
+  overflow: visible;
+}
+
+.review-more {
+  align-self: flex-start;
+  /* Padding, nie wiekszy stopien pisma: sam napis ma zostac dyskretny, ale cel
+     dotkniecia musi miec 24px z WCAG 2.5.8. Ujemny margines oddaje te wysokosc
+     z powrotem odstepowi nad przyciskiem, zeby karta nie urosla. */
+  margin-top: calc(-1 * var(--sp-2));
+  padding: 4px 0;
+  font-family: var(--ff-body);
+  font-size: var(--fs-meta);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  color: var(--c-amber-text);
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(139, 109, 75, 0.4);
+  cursor: pointer;
+  transition: color var(--duration-fast), border-color var(--duration-fast);
+}
+
+.review-more:hover {
+  color: var(--c-amber);
+  border-bottom-color: var(--c-amber);
+}
+
+.review-more[hidden] { display: none; }
+
+/* margin-top: auto zamiast rozciaganego tekstu. Tekst ma teraz staly wzrost
+   (piec linii), wiec to podpis zbiera nadmiar wysokosci i siada na dnie karty. */
+/* Bez text-transform: podpisy z wielka litera w srodku slowa zmienilyby sie w
+   krzyk. Ludzie podpisuja sie tak, jak chca, i to nie jest miejsce na
+   poprawianie im pisowni. */
+.review-author {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--sp-1);
+  margin: auto 0 0;
+  padding-top: var(--sp-2);
+  border-top: 1px solid rgba(139, 109, 75, 0.14);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--c-amber-text);
+}
+
+.review-date {
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--c-text-body);
+}
+
+.review-date::before {
+  content: '\00B7';
+  margin-right: var(--sp-1);
+}
+
+.reviews-cta {
+  margin: var(--sp-3) 0 0;
+  text-align: center;
+}
+
+/* btn-text jest pisany pod ciemne tla; tutaj ground jest jasny, wiec kolor
+   schodzi na ciemniejszy amber (5,4:1 zamiast 1,4:1). */
+.reviews-link,
+.reviews-link:hover { color: var(--c-amber-text); }
+
+.reviews-link:hover { color: var(--c-amber); }
+
+/* Ponizej 1024px trzy karty robia sie za waskie na czytelny akapit, wiec dwie. */
+@media (max-width: 1024px) {
+  .review-slide { flex-basis: calc((100% - var(--sp-3)) / 2); }
+}
+
+/* Strzalki znikaja razem z myszka: na tej szerokosci steruje sie palcem,
+   a podpowiedz slowna zajmuje ich miejsce w pasku. */
+@media (max-width: 900px) {
+  .reviews-nav,
+  .reviews-nav:not([hidden]) { display: none; }
+
+  .reviews-swipe-hint { display: block; }
+}
+
+/* Telefon: jedna karta, a tor wraca do wychodzenia poza sekcje. Tutaj skrawek
+   kolejnej karty jest potrzebny, bo to on mowi, ze jest co przesuwac. */
+@media (max-width: 768px) {
+  .reviews { padding: var(--sp-8) var(--sp-3); }
+  .reviews-track { --edge: var(--sp-3); }
+  .review-slide { flex-basis: min(85%, 320px); }
+}
+
+/* Najmniejsze telefony schodza z paddingiem sekcji do 20px; tor idzie za nim. */
+@media (max-width: 360px) {
+  .reviews-track { --edge: 20px; }
+}

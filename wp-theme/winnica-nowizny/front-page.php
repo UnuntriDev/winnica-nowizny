@@ -28,7 +28,7 @@ $context['contact_status'] = in_array(
 // exist yet, and an unset key is not a decision to hide the section, so treat
 // missing as visible and let only an explicit 0 switch a section off.
 $context['show'] = [];
-foreach (['hero', 'historia', 'exp', 'wines', 'cellar', 'galeria', 'opinia', 'terroir', 'wizyta'] as $section) {
+foreach (['hero', 'historia', 'exp', 'wines', 'cellar', 'galeria', 'opinie', 'terroir', 'wizyta'] as $section) {
     $flag = get_post_meta($post->ID, $section . '_show', true);
     $context['show'][$section] = $flag === '' ? true : (bool) $flag;
 }

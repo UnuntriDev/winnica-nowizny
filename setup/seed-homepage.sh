@@ -73,10 +73,28 @@ $WP post meta update $FRONT_ID galeria_show 1
 $WP post meta update $FRONT_ID galeria_label "Galeria"
 $WP post meta update $FRONT_ID galeria_title "Chwile w winnicy"
 
-# Opinia
-$WP post meta update $FRONT_ID opinia_show 1
-$WP post meta update $FRONT_ID opinia_quote "Wina z Winnicy Nowizny to odkrycie – smak, który opowiada historię Pogórza Rożnowskiego w każdym kieliszku."
-$WP post meta update $FRONT_ID opinia_author "Magazyn Wino & Styl"
+# Opinie gości
+# Teksty przepisane z profilu Google winnicy. Autorzy podpisani dokładnie tak,
+# jak podpisali się sami. Opinia 1 jest skrócona, stąd wielokropek na końcu.
+$WP post meta update $FRONT_ID opinie_show 1
+$WP post meta update $FRONT_ID opinie_label "Opinie gości"
+$WP post meta update $FRONT_ID opinie_title "Co mówią nasi goście"
+$WP post meta update $FRONT_ID opinie_rating "5,0"
+# Zaokrąglona w dół: "ponad 160" pozostaje prawdą, kiedy opinii przybywa.
+$WP post meta update $FRONT_ID opinie_count "160"
+$WP post meta update $FRONT_ID opinie_url "https://www.google.com/maps/place/?q=place_id:ChIJQz77EMr1PUcRwi-it-NhdWc"
+$WP post meta update $FRONT_ID opinie_1_text "Winnicę Nowizny odwiedziliśmy już jakiś czas temu zupełnie przypadkowo, gdy zauważyliśmy drewniany drogowskaz przy drodze i zdecydowanie warto było zajechać :). Od tego miejsca zaczęło się nasze zainteresowanie polskim winem. Nigdy nie sądziliśmy, że u nas może powstawać tak smaczne wino, które w niczym nie ustępuje producentom z Włoch, Francji czy Hiszpanii…"
+$WP post meta update $FRONT_ID opinie_1_author "Radek S."
+$WP post meta update $FRONT_ID opinie_2_text "Polecam z całego serca!! Pierogi z dziczyzną top, ale pozostałe też nie odbiegają. Cisza spokój, przepyszne wino idealne do obiadu lub na prezent. Atrakcje dla każdego, degustacja, pyszne jedzenie, przestrzeń dla dzieci, park linowy, daniele. Atmosfera rodzinna, a właściciele do serca przyłóż, na pewno wrócimy ❤️"
+$WP post meta update $FRONT_ID opinie_2_author "Ania E."
+$WP post meta update $FRONT_ID opinie_3_text "Przepiękne miejsce na mapie okolic Nowego Sącza. Można tu usiąść i delektować się winem w wyjątkowych okolicznościach przyrody. Dodatkowym atutem jest to, że można również spróbować bardzo dobrych pierogów."
+$WP post meta update $FRONT_ID opinie_3_author "Katarzyna G."
+$WP post meta update $FRONT_ID opinie_4_text "Bardzo sympatyczni właściciele, potrafią zadbać o przyjemną atmosferę, ciekawie opowiedzieć o winie. Mieliśmy przyjemność przetestować białe półsłodkie- było pyszne!"
+$WP post meta update $FRONT_ID opinie_4_author "Agnieszka K."
+$WP post meta update $FRONT_ID opinie_5_text "Pyszne pierogi, świetne widoki oraz dodatkowe atrakcje (hodowla danieli, park linowy). Winnica oferuje 6 rodzajów win (3 wytrawne, 3 półsłodkie) z winogron rosnących na stoku. Można przejść się po winnicy i zobaczyć jak rosną winogrona. Zdecydowanie polecam w trakcie urlopu/wakacji w Iwkowej lub okolicy!"
+$WP post meta update $FRONT_ID opinie_5_author "Łukasz P."
+$WP post meta update $FRONT_ID opinie_6_text "Pierogi ze śliwkami. I wszystko jasne. Ci, którzy byli, wiedzą. A Ci, którzy jeszcze nie byli powinni to szybko zmienić. Z wielu garnków i pieców miałem okazję pierogi jeść. Ale te tutaj, a w szczególności te ze śliwką były wyjątkowe, aromatyczne i nie obyło się bez drugiej porcji. Do tego piękny widok na winnicę. Świetne miejsce na obiad w drodze."
+$WP post meta update $FRONT_ID opinie_6_author "Szymon S."
 
 # Terroir
 $WP post meta update $FRONT_ID terroir_show 1

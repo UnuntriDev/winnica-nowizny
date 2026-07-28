@@ -1,0 +1,85 @@
+{# Opinie przepisane z profilu Google Winnicy Nowizny. Kazda jest prawdziwa i
+   podpisana tak, jak podpisal ja autor: bez dopisywania nazwisk i miast.
+   Zrodlo i pelne teksty: link "Zobacz wszystkie opinie" na dole sekcji. #}
+{% set profile_url = post.meta('opinie_url') | default('https://www.google.com/maps/place/?q=place_id:ChIJQz77EMr1PUcRwi-it-NhdWc') %}
+{% set rating = post.meta('opinie_rating') | default('5,0') %}
+{% set total = post.meta('opinie_count') | default('160') | trim %}
+
+{# "1 opinia", "164 opinie", "165 opinii": po polsku rzeczownik idzie za
+   koncowka liczby, a 12-14 sa wyjatkiem. Klient wpisuje sama liczbe. #}
+{# Liczba jest wpisana recznie, wiec z kazdym tygodniem jest bardziej nieaktualna.
+   Zaokraglona w dol i poprzedzona "ponad" starzeje sie w bezpieczna strone:
+   opinii przybywa, wiec zdanie zostaje prawdziwe samo z siebie. #}
+{% set last_one = total|slice(-1) %}
+{% set last_two = total|slice(-2) %}
+{% set noun = total == '1' ? 'opinia' : (last_one in ['2', '3', '4'] and last_two not in ['12', '13', '14'] ? 'opinie' : 'opinii') %}
+
+{% set star %}<svg class="review-star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.6l2.9 5.88 6.5.94-4.7 4.58 1.11 6.46L12 17.4l-5.81 3.06 1.11-6.46-4.7-4.58 6.5-.94z"/></svg>{% endset %}
+
+{% set google_mark %}<svg class="review-google-mark" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>{% endset %}
+
+<section class="reviews" id="opinie" data-reviews>
+  <div class="reviews-inner">
+    <div class="reviews-heading reveal">
+      <p class="section-label">{{ post.meta('opinie_label') | default('Opinie gości') }}</p>
+      <h2 class="section-title section-title-light">{{ function('wp_kses_post', post.meta('opinie_title') | default('Co mówią nasi goście')) | raw }}</h2>
+      {% if rating %}
+        <p class="reviews-summary">
+          <span class="reviews-score">{{ rating }}</span>
+          <span class="reviews-stars reviews-stars-lg" aria-hidden="true">{% for n in 1..5 %}{{ star | raw }}{% endfor %}</span>
+          <span class="sr-only">Średnia ocena {{ rating }} na 5</span>
+        </p>
+        <p class="reviews-count">ponad {{ total }} {{ noun }} w Google</p>
+      {% endif %}
+    </div>
+
+    {# Pasek steruje torem, wiec siedzi tuz nad nim, a nie przy tytule. #}
+    <div class="reviews-bar">
+      <p class="reviews-swipe-hint">Przesuń w bok, aby przeczytać kolejne <span aria-hidden="true">&rarr;</span></p>
+      {# Strzalki odslania JS dopiero, gdy tor faktycznie ma sie dokad przewinac.
+         Bez skryptu zostaje sam tor, ktory nadal przewija sie palcem i kolkiem. #}
+      <div class="reviews-nav" data-reviews-nav hidden>
+        <button type="button" class="reviews-arrow" data-reviews-prev aria-label="Poprzednie opinie">&lsaquo;</button>
+        <button type="button" class="reviews-arrow" data-reviews-next aria-label="Następne opinie">&rsaquo;</button>
+      </div>
+    </div>
+
+    {# tabindex: tor sie przewija, a Safari nie daje fokusu przewijanym
+       kontenerom samo z siebie; aria-label juz go nazywa #}
+    <ul class="reviews-track reveal" data-reviews-track role="list" tabindex="0" aria-label="Opinie gości z Google">
+      {% for i in 1..6 %}
+        {% set text = post.meta('opinie_' ~ i ~ '_text') %}
+        {% if text %}
+          {% set author = post.meta('opinie_' ~ i ~ '_author') %}
+          {% set date = post.meta('opinie_' ~ i ~ '_date') %}
+          <li class="review-slide" role="listitem">
+            <figure class="review-card">
+              <div class="review-card-top">
+                {{ google_mark | raw }}
+                <span class="review-source">Google</span>
+                <span class="reviews-stars" aria-hidden="true">{% for n in 1..5 %}{{ star | raw }}{% endfor %}</span>
+                <span class="sr-only">Ocena: 5 na 5</span>
+              </div>
+              <blockquote class="review-text" id="review-text-{{ i }}">{{ text }}</blockquote>
+              {% if author %}
+                {# Skracanie tylko na wyjsciu: w bazie zostaje podpis z Google,
+                   zeby dalo sie opinie odnalezc u zrodla. #}
+                <figcaption class="review-author">
+                  {{ function('winnica_short_author', author) }}{% if date %}<span class="review-date">{{ date }}</span>{% endif %}
+                </figcaption>
+              {% endif %}
+            </figure>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+
+    {% if profile_url %}
+      <p class="reviews-cta reveal">
+        <a class="btn-text reviews-link" href="{{ profile_url }}" target="_blank" rel="noopener noreferrer">
+          Zobacz wszystkie opinie w Google<span class="sr-only"> (otwiera się w nowej karcie)</span>
+        </a>
+      </p>
+    {% endif %}
+  </div>
+</section>

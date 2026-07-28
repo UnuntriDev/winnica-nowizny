@@ -5,6 +5,7 @@ import { initConsent } from './modules/consent.js';
 import { initLightbox } from './modules/lightbox.js';
 import { initMap } from './modules/map.js';
 import { initDatepicker } from './modules/datepicker.js';
+import { initReviews } from './modules/reviews.js';
 
 const modules = [
   ['nav', initNav],
@@ -13,6 +14,7 @@ const modules = [
   ['lightbox', initLightbox],
   ['map', initMap],
   ['datepicker', initDatepicker],
+  ['reviews', initReviews],
 ];
 
 document.addEventListener('DOMContentLoaded', () => {

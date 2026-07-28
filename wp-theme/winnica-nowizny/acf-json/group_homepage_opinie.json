@@ -1,0 +1,689 @@
+{
+    "key": "group_homepage_opinie",
+    "title": "Strona główna — Opinie gości",
+    "fields": [
+        {
+            "key": "field_opinie_show",
+            "label": "Pokaż sekcję Opinie gości",
+            "name": "opinie_show",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 1,
+            "ui": 1,
+            "message": "",
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_opinie_label",
+            "label": "Nadtytuł",
+            "name": "opinie_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Opinie gości",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_opinie_title",
+            "label": "Tytuł sekcji",
+            "name": "opinie_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Co mówią nasi goście",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_opinie_rating",
+            "label": "Średnia ocena",
+            "name": "opinie_rating",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Tak jak pokazuje ją Google, np. 5,0. Puste pole ukrywa cały wiersz z podsumowaniem.",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": 4,
+            "placeholder": "5,0",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_opinie_count",
+            "label": "Liczba opinii",
+            "name": "opinie_count",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Zaokrąglona w dół do dziesiątek, np. przy 164 opiniach w Google wpisz 160. Na stronie wyświetli się „ponad 160 opinii”, więc liczba zostaje prawdziwa mimo że nikt jej nie odświeża. Odmianę słowa „opinia” szablon dobiera sam.",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": 6,
+            "placeholder": "164",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_opinie_url",
+            "label": "Link do profilu w Google",
+            "name": "opinie_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "Adres, pod którym można sprawdzić wszystkie opinie.",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_opinie_1_text",
+            "label": "Opinia 1 — treść",
+            "name": "opinie_1_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Przepisana z Google. Skracać wolno, ale bez zmiany wymowy: uciętą opinię kończ wielokropkiem. Nie poprawiaj cudzych literówek, bo to już nie jest cytat.",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 4,
+            "default_value": "",
+            "new_lines": "",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_opinie_1_author",
+            "label": "Opinia 1 — autor",
+            "name": "opinie_1_author",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Dokładnie tak, jak podpisał się w Google. Bez dopisywania nazwisk i miast.",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_opinie_1_date",
+            "label": "Opinia 1 — kiedy",
+            "name": "opinie_1_date",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Zwykle zostaw puste: rok znika z karty, gdy pole jest puste. Wpisz go tylko wtedy, gdy opinia jest wyraźnie starsza od pozostałych i data coś tłumaczy.",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "2025",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_opinie_2_text",
+            "label": "Opinia 2 — treść",
+            "name": "opinie_2_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 4,
+            "default_value": "",
+            "new_lines": "",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_opinie_2_author",
+            "label": "Opinia 2 — autor",
+            "name": "opinie_2_author",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_opinie_2_date",
+            "label": "Opinia 2 — kiedy",
+            "name": "opinie_2_date",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "2025",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_opinie_3_text",
+            "label": "Opinia 3 — treść",
+            "name": "opinie_3_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 4,
+            "default_value": "",
+            "new_lines": "",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_opinie_3_author",
+            "label": "Opinia 3 — autor",
+            "name": "opinie_3_author",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_opinie_3_date",
+            "label": "Opinia 3 — kiedy",
+            "name": "opinie_3_date",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "2025",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_opinie_4_text",
+            "label": "Opinia 4 — treść",
+            "name": "opinie_4_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 4,
+            "default_value": "",
+            "new_lines": "",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_opinie_4_author",
+            "label": "Opinia 4 — autor",
+            "name": "opinie_4_author",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_opinie_4_date",
+            "label": "Opinia 4 — kiedy",
+            "name": "opinie_4_date",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "2025",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_opinie_5_text",
+            "label": "Opinia 5 — treść",
+            "name": "opinie_5_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 4,
+            "default_value": "",
+            "new_lines": "",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_opinie_5_author",
+            "label": "Opinia 5 — autor",
+            "name": "opinie_5_author",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_opinie_5_date",
+            "label": "Opinia 5 — kiedy",
+            "name": "opinie_5_date",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "2025",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_opinie_6_text",
+            "label": "Opinia 6 — treść",
+            "name": "opinie_6_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 4,
+            "default_value": "",
+            "new_lines": "",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_opinie_6_author",
+            "label": "Opinia 6 — autor",
+            "name": "opinie_6_author",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_opinie_6_date",
+            "label": "Opinia 6 — kiedy",
+            "name": "opinie_6_date",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_opinie_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "2025",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_type",
+                "operator": "==",
+                "value": "front_page"
+            }
+        ]
+    ],
+    "menu_order": 6,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [],
+    "active": true,
+    "description": "",
+    "show_in_rest": false,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1785283201
+}
