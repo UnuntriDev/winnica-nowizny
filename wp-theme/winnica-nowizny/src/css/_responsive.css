@@ -202,9 +202,10 @@
   }
 
   .consent-panel {
+    width: min(360px, calc(100vw - 24px));
     max-height: calc(100vh - 164px);
     overflow-y: auto;
-    padding: var(--sp-2);
+    padding: 20px;
   }
 
   .consent-toggle { width: 54px; height: 54px; }
