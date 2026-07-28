@@ -120,5 +120,24 @@ function winnica_kses_map_embed(string $html): string
     $allowed = $host === 'www.google.com' || $host === 'google.com' || $host === 'maps.google.com'
         || str_ends_with($host, '.google.com');
 
-    return $allowed ? $filtered : '';
+    if (!$allowed) {
+        return '';
+    }
+
+    // ACF may contain an embed copied from Google without modern loading or
+    // referrer attributes. Normalise them here so every accepted iframe has the
+    // same privacy and performance baseline as the theme fallback.
+    if (class_exists('WP_HTML_Tag_Processor')) {
+        $processor = new WP_HTML_Tag_Processor($filtered);
+        if ($processor->next_tag('iframe')) {
+            $processor->set_attribute('loading', 'lazy');
+            $processor->set_attribute('referrerpolicy', 'strict-origin-when-cross-origin');
+            if (!$processor->get_attribute('title')) {
+                $processor->set_attribute('title', 'Winnica Nowizny, Połom Mały 60');
+            }
+            return $processor->get_updated_html();
+        }
+    }
+
+    return $filtered;
 }
