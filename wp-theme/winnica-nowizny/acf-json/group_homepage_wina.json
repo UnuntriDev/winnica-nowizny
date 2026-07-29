@@ -100,9 +100,9 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": 6,
+            "default_value": 5,
             "min": 1,
-            "max": 6,
+            "max": 5,
             "step": "",
             "placeholder": "",
             "prepend": "",

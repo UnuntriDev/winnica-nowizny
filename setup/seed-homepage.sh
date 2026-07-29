@@ -31,7 +31,6 @@ $WP post meta update $FRONT_ID historia_label "Nasza historia"
 $WP post meta update $FRONT_ID historia_title "Rodzinna pasja<br><em>zakwita w winorośli</em>"
 $WP post meta update $FRONT_ID historia_text_1 "Winnica Nowizny to rodzinne przedsięwzięcie Urszuli i Bogusława Kamińskich, rozwijane od 2005 roku w Połomiu Małym na malowniczym Pogórzu Rożnowskim. Na południe od Krakowa, w miejscu, gdzie klimat, gleba i pasja spotykają się w jednym miejscu."
 $WP post meta update $FRONT_ID historia_text_2 "Nasze wino jest wyrazem tego terenu, jego historii, mikroklimatu i charakteru. Każda butelka opowiada historię tego wzgórza, tych winorośli i naszej rodziny."
-$WP post meta update $FRONT_ID historia_signature "Urszula i Bogusław Kamińscy"
 $WP post meta update $FRONT_ID historia_stat_1_number "2005"
 $WP post meta update $FRONT_ID historia_stat_1_label "Rok założenia"
 $WP post meta update $FRONT_ID historia_stat_2_number "1,5 ha"
@@ -56,7 +55,7 @@ $WP post meta update $FRONT_ID exp_card_4_desc "Trasa z tyrolką dla dzieci w wi
 $WP post meta update $FRONT_ID wines_show 1
 $WP post meta update $FRONT_ID wines_label "Nasze wina"
 $WP post meta update $FRONT_ID wines_title "Smak Pogórza"
-$WP post meta update $FRONT_ID wines_archive_label "Zobacz wszystkie wina →"
+$WP post meta update $FRONT_ID wines_count "5"
 $WP post meta update $FRONT_ID wines_count 6
 
 # Piwnica

@@ -135,34 +135,6 @@
             "placeholder": ""
         },
         {
-            "key": "field_hist_signature",
-            "label": "Podpis",
-            "name": "historia_signature",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": false,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_hist_show",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Urszula i Bogusław Kamińscy",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
             "key": "field_hist_image",
             "label": "Zdjęcie",
             "name": "historia_image",

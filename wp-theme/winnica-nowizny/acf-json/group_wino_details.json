@@ -1,6 +1,6 @@
 {
     "key": "group_wino_details",
-    "title": "Wino — Szczegóły",
+    "title": "Wino — Szczegóły prezentacji",
     "fields": [
         {
             "key": "field_wino_rodzaj",
@@ -8,7 +8,7 @@
             "name": "rodzaj",
             "aria-label": "",
             "type": "select",
-            "instructions": "",
+            "instructions": "Etykieta widoczna nad nazwą wina na stronie głównej.",
             "required": false,
             "conditional_logic": false,
             "wrapper": {
@@ -21,6 +21,7 @@
                 "Białe półwytrawne": "Białe półwytrawne",
                 "Białe półsłodkie": "Białe półsłodkie",
                 "Różowe": "Różowe",
+                "Różowe półsłodkie": "Różowe półsłodkie",
                 "Czerwone wytrawne": "Czerwone wytrawne",
                 "Czerwone półwytrawne": "Czerwone półwytrawne",
                 "Musujące": "Musujące",
@@ -38,11 +39,11 @@
         },
         {
             "key": "field_wino_szczepy",
-            "label": "Szczepy",
+            "label": "Szczep",
             "name": "szczep",
             "aria-label": "",
             "type": "text",
-            "instructions": "np. Solaris, Johanniter, Rondo",
+            "instructions": "np. Solaris, Bianca, Marechal Foch",
             "required": false,
             "conditional_logic": false,
             "wrapper": {
@@ -51,278 +52,9 @@
                 "id": ""
             },
             "default_value": "",
-            "maxlength": "",
+            "maxlength": 120,
             "placeholder": "",
             "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_wino_rocznik",
-            "label": "Rocznik",
-            "name": "rocznik",
-            "aria-label": "",
-            "type": "number",
-            "instructions": "",
-            "required": false,
-            "conditional_logic": false,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "min": 2000,
-            "max": 2030,
-            "default_value": "",
-            "step": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_wino_alkohol",
-            "label": "Alkohol (%)",
-            "name": "alkohol",
-            "aria-label": "",
-            "type": "number",
-            "instructions": "",
-            "required": false,
-            "conditional_logic": false,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "min": 0,
-            "max": 20,
-            "step": 0.1,
-            "append": "%",
-            "default_value": "",
-            "placeholder": "",
-            "prepend": ""
-        },
-        {
-            "key": "field_wino_pojemnosc",
-            "label": "Pojemność",
-            "name": "pojemnosc",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": false,
-            "conditional_logic": false,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "375": "375 ml",
-                "750": "750 ml",
-                "1500": "1500 ml (Magnum)"
-            },
-            "default_value": 750,
-            "multiple": 0,
-            "allow_null": 0,
-            "ui": 0,
-            "ajax": 0,
-            "placeholder": "",
-            "return_format": "value",
-            "create_options": 0,
-            "save_options": 0
-        },
-        {
-            "key": "field_wino_temperatura",
-            "label": "Temperatura serwowania",
-            "name": "temperatura",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "np. 8-10°C",
-            "required": false,
-            "conditional_logic": false,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_wino_smak_tab",
-            "label": "Profil smakowy",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": false,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_wino_aromat",
-            "label": "Aromat",
-            "name": "aromat",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "",
-            "required": false,
-            "conditional_logic": false,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "rows": 2,
-            "default_value": "",
-            "new_lines": "",
-            "maxlength": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_wino_smak",
-            "label": "Smak",
-            "name": "smak",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "",
-            "required": false,
-            "conditional_logic": false,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "rows": 2,
-            "default_value": "",
-            "new_lines": "",
-            "maxlength": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_wino_parowanie",
-            "label": "Parowanie z potrawami",
-            "name": "parowanie",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "Sugestie dań",
-            "required": false,
-            "conditional_logic": false,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "rows": 2,
-            "default_value": "",
-            "new_lines": "",
-            "maxlength": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_wino_nagrody_tab",
-            "label": "Nagrody",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": false,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_wino_nagrody",
-            "label": "Nagrody i wyróżnienia",
-            "name": "nagrody",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "Jedna nagroda per linia, format: Nazwa nagrody (rok)",
-            "required": false,
-            "conditional_logic": false,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "rows": 4,
-            "default_value": "",
-            "new_lines": "",
-            "maxlength": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_wino_dostepnosc_tab",
-            "label": "Dostępność",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": false,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_wino_dostepne",
-            "label": "Dostępne w sprzedaży",
-            "name": "dostepne",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "",
-            "required": false,
-            "conditional_logic": false,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": 1,
-            "ui": 1,
-            "message": "",
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
-            "key": "field_wino_cena",
-            "label": "Cena (PLN)",
-            "name": "cena",
-            "aria-label": "",
-            "type": "number",
-            "instructions": "",
-            "required": false,
-            "conditional_logic": false,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "min": 0,
-            "step": 0.01,
-            "prepend": "PLN",
-            "default_value": "",
-            "max": "",
-            "placeholder": "",
             "append": ""
         }
     ],
@@ -342,10 +74,10 @@
     "instruction_placement": "label",
     "hide_on_screen": [],
     "active": true,
-    "description": "",
+    "description": "Pola używane przez karty win na stronie głównej. Strona ma charakter prezentacyjny, nie sprzedażowy.",
     "show_in_rest": false,
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1784744156
+    "modified": 1785362400
 }
