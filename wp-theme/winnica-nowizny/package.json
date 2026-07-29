@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "node tests/lint.mjs",
+    "test": "npm run lint && npm run build",
+    "test:smoke": "node tests/smoke.mjs"
   },
   "devDependencies": {
     "vite": "^6.0.0"

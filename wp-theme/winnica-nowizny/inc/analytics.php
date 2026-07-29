@@ -14,7 +14,7 @@ function winnica_analytics_id(): string
     return preg_match('/^G-[A-Z0-9]{6,16}$/', $id) ? $id : '';
 }
 
-add_filter('timber_context', function (array $context): array {
+add_filter('timber/context', function (array $context): array {
     $context['analytics_id'] = winnica_analytics_id();
     return $context;
 });

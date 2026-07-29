@@ -6,5 +6,6 @@ plugins
 uploads
 setup/backups
 wp-theme/winnica-nowizny/node_modules
+wp-theme/winnica-nowizny/vendor
 wp-theme/winnica-nowizny/assets/dist
 /*.md

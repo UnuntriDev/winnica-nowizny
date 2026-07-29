@@ -36,7 +36,8 @@ $WP core install \
 
 echo "📦 Installing pinned plugin versions..."
 $WP plugin install advanced-custom-fields --version=6.8.6 --activate
-$WP plugin install timber-library --version=1.23.4 --activate
+$WP plugin deactivate timber-library 2>/dev/null || true
+$WP plugin delete timber-library 2>/dev/null || true
 
 echo "🎨 Activating theme..."
 $WP theme activate winnica-nowizny

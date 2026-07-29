@@ -1,6 +1,6 @@
 services:
   wordpress:
-    image: wordpress:7.0.2-php8.1-apache
+    image: wordpress:7.0.2-php8.2-apache
     container_name: winnica-wp
     restart: unless-stopped
     ports:
@@ -62,8 +62,11 @@ services:
       retries: 5
 
   wpcli:
-    image: wordpress:cli-php8.1
+    image: wordpress:cli-php8.2
     container_name: winnica-cli
+    # The Apache image stores the shared volume as Debian www-data (33).
+    # The Alpine CLI image uses a different www-data UID, so align it explicitly.
+    user: "33:33"
     volumes:
       - wp_data:/var/www/html
       - ./wp-theme/winnica-nowizny:/var/www/html/wp-content/themes/winnica-nowizny
@@ -79,6 +82,7 @@ services:
       WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL:-admin@winnicanowizny.local}
       WP_URL: ${WP_URL:-http://localhost:8080}
       WP_ENVIRONMENT_TYPE: ${WP_ENVIRONMENT_TYPE:-local}
+      WP_CLI_CACHE_DIR: /tmp/wp-cli-cache
     depends_on:
       db:
         condition: service_healthy

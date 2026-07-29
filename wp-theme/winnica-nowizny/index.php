@@ -6,7 +6,7 @@
 defined('ABSPATH') || exit;
 winnica_require_timber();
 
-$context = Timber::context();
-$context['posts'] = Timber::get_posts();
+$context = \Timber\Timber::context();
+$context['posts'] = \Timber\Timber::get_posts();
 
-Timber::render('index.twig', $context);
+\Timber\Timber::render('index.twig', $context);

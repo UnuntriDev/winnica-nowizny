@@ -11,6 +11,13 @@ unset($winnica_theme_version);
 define('WINNICA_DIR', get_template_directory());
 define('WINNICA_URI', get_template_directory_uri());
 
+// Timber 2 is a Composer dependency of the theme, not a WordPress plugin.
+$winnica_autoloader = WINNICA_DIR . '/vendor/autoload.php';
+if (is_readable($winnica_autoloader)) {
+    require_once $winnica_autoloader;
+}
+unset($winnica_autoloader);
+
 // ── Timber ──
 require_once WINNICA_DIR . '/inc/timber-setup.php';
 

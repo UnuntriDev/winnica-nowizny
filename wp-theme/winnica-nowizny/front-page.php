@@ -6,12 +6,12 @@
 defined('ABSPATH') || exit;
 winnica_require_timber();
 
-$context = Timber::context();
-$post = Timber::get_post();
+$context = \Timber\Timber::context();
+$post = \Timber\Timber::get_post();
 $context['post'] = $post;
 
-$wines_count = (int) (get_field('wines_count', $post->ID) ?: 5);
-$context['wines'] = Timber::get_posts([
+$wines_count = (int) (get_field('wines_count', $post?->ID) ?: 5);
+$context['wines'] = \Timber\Timber::get_posts([
     'post_type'      => 'wino',
     'posts_per_page' => $wines_count,
     'orderby'        => 'menu_order',
@@ -32,7 +32,7 @@ $context['contact_status'] = in_array(
 // missing as visible and let only an explicit 0 switch a section off.
 $context['show'] = [];
 foreach (['hero', 'historia', 'exp', 'wines', 'cellar', 'galeria', 'opinie', 'terroir', 'wizyta'] as $section) {
-    $flag = get_post_meta($post->ID, $section . '_show', true);
+    $flag = get_post_meta($post?->ID ?? 0, $section . '_show', true);
     $context['show'][$section] = $flag === '' ? true : (bool) $flag;
 }
 
@@ -40,4 +40,4 @@ $contact_old = winnica_contact_old_input();
 $context['contact_old']    = $contact_old['values'];
 $context['contact_errors'] = $contact_old['errors'];
 
-Timber::render('front-page.twig', $context);
+\Timber\Timber::render('front-page.twig', $context);
