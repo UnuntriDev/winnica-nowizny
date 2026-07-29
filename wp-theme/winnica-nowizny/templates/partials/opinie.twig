@@ -20,22 +20,25 @@
 
 <section class="reviews" id="opinie" data-reviews>
   <div class="reviews-inner">
+    {# Naglowek jest siatka, nie stosem wysrodkowanych akapitow: tytul i ocena
+       trzymaja lewa kolumne, strzalki siedza w prawej i laduja dokladnie nad
+       prawa krawedzia trzeciej karty. #}
     <div class="reviews-heading reveal">
-      <p class="section-label">{{ post.meta('opinie_label') | default('Opinie gości') }}</p>
-      <h2 class="section-title section-title-light">{{ function('wp_kses_post', post.meta('opinie_title') | default('Co mówią nasi goście')) | raw }}</h2>
-      {% if rating %}
-        <p class="reviews-summary">
-          <span class="reviews-score">{{ rating }}</span>
-          <span class="reviews-stars reviews-stars-lg" aria-hidden="true">{% for n in 1..5 %}{{ star | raw }}{% endfor %}</span>
-          <span class="sr-only">Średnia ocena {{ rating }} na 5</span>
-        </p>
-        <p class="reviews-count">ponad {{ total }} {{ noun }} w Google</p>
-      {% endif %}
-    </div>
+      <div class="reviews-intro">
+        <p class="section-label">{{ post.meta('opinie_label') | default('Opinie gości') }}</p>
+        <h2 class="section-title section-title-light">{{ function('wp_kses_post', post.meta('opinie_title') | default('Co mówią nasi goście')) | raw }}</h2>
+        {% if rating %}
+          <p class="reviews-summary">
+            <span class="reviews-score">{{ rating }}</span>
+            <span class="reviews-stars reviews-stars-lg" aria-hidden="true">{% for n in 1..5 %}{{ star | raw }}{% endfor %}</span>
+            <span class="sr-only">Średnia ocena {{ rating }} na 5</span>
+          </p>
+          {# Jedyne logo Google w calej sekcji. W kazdej karcie z osobna bylo
+             szesc razy ta sama informacja i szesc razy ten sam znaczek. #}
+          <p class="reviews-count">{{ google_mark | raw }}ponad {{ total }} {{ noun }} w Google</p>
+        {% endif %}
+      </div>
 
-    {# Pasek steruje torem, wiec siedzi tuz nad nim, a nie przy tytule. #}
-    <div class="reviews-bar">
-      <p class="reviews-swipe-hint">Przesuń w bok, aby przeczytać kolejne <span aria-hidden="true">&rarr;</span></p>
       {# Strzalki odslania JS dopiero, gdy tor faktycznie ma sie dokad przewinac.
          Bez skryptu zostaje sam tor, ktory nadal przewija sie palcem i kolkiem. #}
       <div class="reviews-nav" data-reviews-nav hidden>
@@ -43,6 +46,8 @@
         <button type="button" class="reviews-arrow" data-reviews-next aria-label="Następne opinie">&rsaquo;</button>
       </div>
     </div>
+
+    <p class="reviews-swipe-hint">Przesuń w bok, aby przeczytać kolejne <span aria-hidden="true">&rarr;</span></p>
 
     {# tabindex: tor sie przewija, a Safari nie daje fokusu przewijanym
        kontenerom samo z siebie; aria-label juz go nazywa #}
@@ -53,19 +58,18 @@
           {% set author = post.meta('opinie_' ~ i ~ '_author') %}
           {% set date = post.meta('opinie_' ~ i ~ '_date') %}
           <li class="review-slide" role="listitem">
+            {# Karta zaczyna sie od cytatu. Naglowek z logo i rzedem gwiazdek
+               spychal tresc na drugi plan i we wszystkich szesciu wygladal
+               identycznie, bo niosl te sama informacje. #}
             <figure class="review-card">
-              <div class="review-card-top">
-                {{ google_mark | raw }}
-                <span class="review-source">Google</span>
-                <span class="reviews-stars" aria-hidden="true">{% for n in 1..5 %}{{ star | raw }}{% endfor %}</span>
-                <span class="sr-only">Ocena: 5 na 5</span>
-              </div>
-              <blockquote class="review-text" id="review-text-{{ i }}">{{ text }}</blockquote>
+              <blockquote class="review-text">{{ text }}</blockquote>
               {% if author %}
                 {# Skracanie tylko na wyjsciu: w bazie zostaje podpis z Google,
                    zeby dalo sie opinie odnalezc u zrodla. #}
+                {# Bez gwiazdek przy podpisie: ocena stoi raz u gory sekcji, a szesc
+                   identycznych piatek pod cytatami nic do niej nie dodawalo. #}
                 <figcaption class="review-author">
-                  {{ function('winnica_short_author', author) }}{% if date %}<span class="review-date">{{ date }}</span>{% endif %}
+                  <span class="review-name">{{ function('winnica_short_author', author) }}</span>{% if date %}<span class="review-date">{{ date }}</span>{% endif %}
                 </figcaption>
               {% endif %}
             </figure>

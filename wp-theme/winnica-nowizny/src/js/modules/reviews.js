@@ -2,9 +2,10 @@
  * Reviews slider.
  *
  * The track scrolls on its own: scroll-snap does the positioning, a finger or a
- * trackpad does the moving. This module only adds what a mouse alone cannot do,
- * which is a pair of arrows, and it adds them at runtime so a visitor without
- * JavaScript never sees controls that would do nothing.
+ * trackpad does the moving. This module adds the two things markup alone cannot
+ * do, a pair of arrows and the fold on longer reviews, and it adds both at
+ * runtime so a visitor without JavaScript never sees a control that would do
+ * nothing: no arrows, and every review shown whole.
  */
 
 const setup = (root) => {
@@ -112,50 +113,100 @@ const setup = (root) => {
     track.addEventListener('pointercancel', stop);
   };
 
-  // ── Clamp ──
-  // Reviews run from four lines to eight. Left alone the longest one sets the
-  // height of every card and the short ones fill the difference with nothing, so
-  // the text is capped at five lines and the rest goes behind a toggle.
-  const clampSetup = () => {
+  // ── Longer reviews ──
+  // Six lines by default, the rest folded away and opened in place. The cut and
+  // the ellipsis are line-clamp's; nothing here touches the text node, so a
+  // visitor still selects, copies and finds the whole review.
+  const excerptSetup = () => {
     const texts = [...track.querySelectorAll('.review-text')];
     if (!texts.length) return () => {};
 
-    // The cap is a class rather than a default so that a visitor without
-    // JavaScript keeps the whole review: taller cards beat unreachable text.
-    root.classList.add('has-clamp');
+    root.classList.add('has-excerpt');
 
-    const toggles = texts.map((text) => {
-      const card = text.closest('.review-card');
+    // line-clamp itself cannot be animated, so the height travels on max-height
+    // between two measured ends. Setting it back to '' at the finish hands the
+    // box back to layout, which matters because a resize rewraps the lines.
+    const resize = (item, open, instant) => {
+      const { text } = item;
+      const from = text.getBoundingClientRect().height;
+
+      item.open = open;
+      text.style.maxHeight = '';
+
+      // Both ends, measured: with the clamp on the box is six lines, with it off
+      // it is the whole review. Two forced layouts on a click, which is nothing.
+      text.classList.remove('is-open');
+      const closed = text.clientHeight;
+      text.classList.add('is-open');
+      const to = open ? text.clientHeight : closed;
+
+      if (instant || motion.matches || Math.abs(to - from) < 1) {
+        text.classList.toggle('is-open', open);
+        return;
+      }
+
+      // The clamp stays off for the whole gesture, collapsing included. Putting
+      // it back first would shrink the box to six lines before the animation
+      // started, leaving max-height nothing to travel over and the fold
+      // snapping shut. It goes back on at the finish instead.
+      text.style.maxHeight = `${from}px`;
+      void text.offsetHeight;
+      text.style.maxHeight = `${to}px`;
+    };
+
+    const items = texts.map((text) => {
+      const author = text.closest('.review-card').querySelector('.review-name');
+      const name = author ? author.textContent.trim() : 'gość';
       const button = document.createElement('button');
+      const item = { text, button, open: false };
 
       button.type = 'button';
       button.className = 'review-more';
       button.textContent = 'Czytaj więcej';
-      button.setAttribute('aria-expanded', 'false');
-      button.setAttribute('aria-controls', text.id);
+      item.label = () => {
+        button.textContent = item.open ? 'Zwiń' : 'Czytaj więcej';
+        button.setAttribute('aria-expanded', String(item.open));
+        // Sam napis powtarza sie pod kazda kolumna, wiec etykieta niesie autora:
+        // czytnik ekranu wymienia przyciski jeden po drugim, poza kontekstem.
+        button.setAttribute('aria-label', item.open ? `Zwiń opinię, ${name}` : `Czytaj całą opinię, ${name}`);
+      };
+      item.label();
 
       button.addEventListener('click', () => {
-        const open = card.classList.toggle('is-expanded');
-        button.textContent = open ? 'Zwiń' : 'Czytaj więcej';
-        button.setAttribute('aria-expanded', String(open));
+        resize(item, !item.open, false);
+        item.label();
+      });
+
+      // Only the animation runs on max-height, so any transition ending here is
+      // that one. Reading item.open rather than a captured direction keeps a
+      // late event from a double click landing on the state that won.
+      text.addEventListener('transitionend', (event) => {
+        if (event.propertyName !== 'max-height') return;
+        text.classList.toggle('is-open', item.open);
+        text.style.maxHeight = '';
       });
 
       text.after(button);
-      return { text, card, button };
+      return item;
     });
 
-    // Narrower cards wrap the same review into more lines, so which reviews need
-    // a toggle changes with the viewport. An open card is left alone: the reader
-    // asked for it, and re-measuring would mean collapsing it under their eyes.
+    // Narrower cards wrap the same review into more lines, so which reviews are
+    // long enough to fold changes with the viewport. Measuring needs the text
+    // clamped, so an open one is closed and reopened without animating.
     return () => {
-      toggles.forEach(({ text, card, button }) => {
-        if (card.classList.contains('is-expanded')) return;
-        button.hidden = text.scrollHeight <= text.clientHeight + 1;
+      items.forEach((item) => {
+        const wasOpen = item.open;
+        if (wasOpen) resize(item, false, true);
+
+        item.button.hidden = item.text.scrollHeight <= item.text.clientHeight + 1;
+
+        if (wasOpen && !item.button.hidden) resize(item, true, true);
+        item.label();
       });
     };
   };
 
-  const refreshClamp = clampSetup();
+  const refreshExcerpts = excerptSetup();
 
   prev.addEventListener('click', () => step(-1));
   next.addEventListener('click', () => step(1));
@@ -163,10 +214,10 @@ const setup = (root) => {
   ['wheel', 'touchstart', 'keydown'].forEach((event) => {
     track.addEventListener(event, release, { passive: true });
   });
-  window.addEventListener('resize', () => { release(); refreshClamp(); sync(); });
+  window.addEventListener('resize', () => { release(); refreshExcerpts(); sync(); });
 
   dragSetup();
-  refreshClamp();
+  refreshExcerpts();
   sync();
 };
 

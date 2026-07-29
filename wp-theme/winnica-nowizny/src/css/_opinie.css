@@ -1,8 +1,10 @@
 /* ── Opinie gości (Google) ──
-   Wlasny warm band miedzy dwiema jasnymi sekcjami, tak jak wczesniej robil to
-   pojedynczy cytat. Karty sa jasniejsze od tla, zeby odcinaly sie bez cienia. */
+   Ciepły pas między dwiema jasnymi sekcjami. Cala sekcja jest wyrownana do lewej
+   i asymetryczna: tresc po lewej, sterowanie po prawej, zadnego centrowania. */
+/* Dol lzejszy od gory: pod torem stoi juz tylko jednolinijkowy link, wiec
+   osiemdziesiat pikseli oddechu bylo tam nadmiarem. */
 .reviews {
-  padding: var(--section-pad-dark) var(--sp-6);
+  padding: var(--sp-8) var(--sp-6) var(--sp-7);
   background: var(--c-parchment-warm);
 }
 
@@ -11,35 +13,52 @@
   margin: 0 auto;
 }
 
+/* ── Naglowek ──
+   Siatka zamiast stosu: lewa kolumna bierze cala wolna szerokosc, prawa tyle,
+   ile potrzebuja strzalki. align-items: end sadza je na tej samej linii co dol
+   bloku tekstowego, czyli tuz nad krawedzia kart. */
 .reviews-heading {
-  margin-bottom: var(--sp-4);
-  text-align: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-3);
 }
 
-/* ── Ocena ──
-   Liczba i gwiazdki to jedna informacja i stoja razem w jednej linii. Skad ona
-   pochodzi, to informacja druga, wiec schodzi nizej i mniejszym stopniem. */
+/* Bez max-width. Jednostka ch liczy sie od fontu tego bloku, czyli 16px, wiec
+   kazda sensownie wygladajaca wartosc lamala tytul zlozony 52 punktami. Tresc
+   naglowka jest krotka z natury, a siatka i tak nie pozwala mu wejsc pod strzalki. */
+.reviews-intro { min-width: 0; }
+
 .reviews-summary {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: var(--sp-2);
-  margin: var(--sp-3) 0 0;
+  margin: var(--sp-2) 0 0;
 }
 
 .reviews-score {
   font-family: var(--ff-display);
-  font-size: var(--fs-3xl);
+  font-size: var(--fs-2xl);
   font-weight: 400;
   line-height: 1;
   color: var(--c-earth-deep);
 }
 
 .reviews-count {
-  margin: var(--sp-1) 0 0;
-  font-size: var(--fs-meta);
-  letter-spacing: 0.4px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 8px 0 0;
+  font-size: var(--fs-body-sm);
+  letter-spacing: 0.3px;
   color: var(--c-text-body);
+}
+
+.reviews-count .review-google-mark {
+  width: 15px;
+  height: 15px;
+  flex: none;
 }
 
 .reviews-stars {
@@ -53,54 +72,55 @@
   fill: var(--c-amber-text);
 }
 
-.reviews-stars-lg { gap: 4px; }
+.reviews-stars-lg { gap: 3px; }
 
 .reviews-stars-lg .review-star {
-  width: 20px;
-  height: 20px;
+  width: 17px;
+  height: 17px;
 }
 
-/* ── Pasek nad torem ──
-   Strzalki naleza do toru, nie do tytulu, wiec stoja tuz nad jego prawym rogiem.
-   Podpowiedz o przesuwaniu zajmuje lewa strone tego samego wiersza. */
-.reviews-bar {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-2);
-  margin-bottom: var(--sp-2);
-}
-
+/* ── Strzalki ── */
 .reviews-nav {
   display: flex;
   gap: var(--sp-1);
-  margin-left: auto;
+  /* Skrzynka przycisku jest znacznie szersza od samego znaku, wiec zlicowanie
+     ramek zostawia strzalke wyraznie wcieta wzgledem krawedzi kart. Przesuniecie
+     w prawo o polowe tego luzu lituje optycznie znak, a nie pudelko. */
+  margin-right: -20px;
+  /* Blizej opinii: ujemny margines na dole zabiera polowe odstepu, ktory
+     naglowek zostawia nad torem. */
+  margin-bottom: calc(-1 * var(--sp-1));
 }
 
 .reviews-nav[hidden] { display: none; }
 
+/* Bez ramki i tla: to nie sa przyciski akcji, tylko przewijanie. Kwadrat 48px
+   zostaje jako obszar dotkniecia, widoczna jest sama strzalka. */
 .reviews-arrow {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--fs-lg);
+  font-size: var(--fs-2xl);
   line-height: 1;
-  color: var(--c-amber-text);
+  color: var(--c-earth-dark);
   background: none;
-  border: 1px solid rgba(139, 109, 75, 0.28);
-  border-radius: var(--radius-sm);
+  border: none;
   cursor: pointer;
-  transition: border-color var(--duration-fast), color var(--duration-fast), background var(--duration-fast);
+  transition: color var(--duration-fast), opacity var(--duration-fast);
 }
 
 .reviews-arrow:hover:not(:disabled) {
-  border-color: var(--c-amber);
-  background: rgba(139, 109, 75, 0.08);
+  color: var(--c-amber-text);
 }
 
+/* Wylaczona strzalka blednie, ale zostaje widoczna. Amber dawal 1,7:1 i znikal
+   z tla, przez co nie bylo wiadomo, ze przycisk w ogole tam jest. Ten sam kolor
+   co aktywna, przygaszony do 2,6:1: rozroznialne na pierwszy rzut oka, a przy
+   nieaktywnym sterowaniu WCAG 1.4.3 nie stawia progu. */
 .reviews-arrow:disabled {
-  opacity: 0.35;
+  opacity: 0.45;
   cursor: default;
 }
 
@@ -108,7 +128,7 @@
    jest wskazowka wizualna. Na desktopie zbedna, bo sa strzalki. */
 .reviews-swipe-hint {
   display: none;
-  margin: 0;
+  margin: 0 0 var(--sp-2);
   color: var(--c-amber-text);
   font-size: var(--fs-sm);
   letter-spacing: 0.4px;
@@ -120,13 +140,16 @@
    zerem, wiec nie ma paska paddingu, w ktorym pokazywalby sie skrawek czwartej. */
 .reviews-track {
   --edge: 0px;
+  /* Odstep miedzy kolumnami trzymany w jednym miejscu, bo szerokosc karty liczy
+     sie z niego, a JS czyta go z computed style, zeby wiedziec o ile przewijac. */
+  --reviews-gap: var(--sp-5);
   list-style: none;
   margin: 0;
   margin-inline: calc(-1 * var(--edge));
   padding: 0;
   padding-inline: var(--edge);
   display: flex;
-  gap: var(--sp-3);
+  gap: var(--reviews-gap);
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
@@ -155,50 +178,33 @@
 }
 
 .review-slide {
-  flex: 0 0 calc((100% - 2 * var(--sp-3)) / 3);
+  flex: 0 0 calc((100% - 2 * var(--reviews-gap)) / 3);
   scroll-snap-align: start;
 }
 
+/* Zadnego pudelka: tlo, ramka dookola i zaokraglone rogi w kazdej z szesciu kart
+   to najszybszy sposob, zeby sekcja wygladala na wygenerowana. Zostaje jedna
+   kreska u gory, jak linia miedzy szpaltami w gazecie. */
 .review-card {
   height: 100%;
   display: flex;
   flex-direction: column;
   gap: var(--sp-2);
   margin: 0;
-  padding: var(--sp-3);
-  background: var(--c-parchment);
-  border: 1px solid rgba(139, 109, 75, 0.16);
-  border-radius: var(--radius-md);
+  padding: var(--sp-3) 0 0;
+  border-top: 1px solid rgba(139, 109, 75, 0.28);
 }
-
-.review-card-top {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-1);
-}
-
-.review-google-mark {
-  width: 16px;
-  height: 16px;
-  flex: none;
-}
-
-.review-source {
-  font-size: var(--fs-meta);
-  font-weight: 500;
-  color: var(--c-text-body);
-}
-
-/* Gwiazdki na prawy skraj karty, zeby wszystkie trzymaly jedna linie. */
-.review-card-top .reviews-stars { margin-left: auto; }
 
 .review-text {
   margin: 0;
   padding: 0;
   border: none;
-  font-size: var(--fs-body-sm);
+  /* 14px bylo rozmiarem podpisu, nie akapitu. Szesnascie czyta sie w kolumnie
+     szerokiej na trzydziesci kilka znakow zauwazalnie lzej, a interlinia moze
+     przy tym zejsc: przy wiekszym stopniu 1,75 zaczyna rozjezdzac wersy. */
+  font-size: var(--fs-base);
   font-style: normal;
-  line-height: 1.75;
+  line-height: 1.65;
   color: var(--c-text-body);
 }
 
@@ -207,22 +213,36 @@
 .review-text::before { content: '\201E'; }
 .review-text::after { content: '\201D'; }
 
-/* Przyciecie wlacza dopiero JS, bo tylko on potrafi dolozyc "Czytaj wiecej".
-   Bez skryptu opinie pokazuja sie w calosci: karta bedzie wyzsza, ale nikomu
-   nie zniknie tekst, ktorego nie ma jak rozwinac. */
-.reviews.has-clamp .review-text {
+/* Skladanie wlacza dopiero JS, bo tylko on doklada przelacznik. Bez skryptu
+   opinie stoja w calosci: karta bedzie wyzsza, ale nikomu nie zniknie tekst,
+   ktorego nie ma jak rozwinac.
+
+   Ciecie i wielokropek robi przegladarka. Skrypt nie rusza tresci wezla, wiec
+   zaznaczenie, kopiowanie i wyszukiwanie w stronie biora cala opinie. */
+.reviews.has-excerpt .review-text {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
-  line-clamp: 5;
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
   overflow: hidden;
+  /* Samego line-clamp nie da sie animowac, wiec wysokosc jedzie na max-height,
+     ktora skrypt wylicza na oba konce. overflow zostaje wlaczony takze po
+     rozwinieciu, inaczej tekst wystawalby poza animowane pudelko. */
+  transition: max-height var(--duration-mid) var(--ease-out);
 }
 
-.reviews.has-clamp .review-card.is-expanded .review-text {
-  display: block;
-  overflow: visible;
+.reviews.has-excerpt .review-text.is-open {
+  -webkit-line-clamp: none;
+  line-clamp: none;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .reviews.has-excerpt .review-text { transition: none; }
+}
+
+/* Wyglada jak odnosnik, ale to przelacznik stanu tej samej kolumny, wiec zostaje
+   <button>: daje Enter i spacje z klawiatury oraz aria-expanded, czego <a> bez
+   celu nawigacji nie ma jak uczciwie zaniesc. */
 .review-more {
   align-self: flex-start;
   /* Padding, nie wiekszy stopien pisma: sam napis ma zostac dyskretny, ale cel
@@ -249,30 +269,27 @@
 
 .review-more[hidden] { display: none; }
 
-/* margin-top: auto zamiast rozciaganego tekstu. Tekst ma teraz staly wzrost
-   (piec linii), wiec to podpis zbiera nadmiar wysokosci i siada na dnie karty. */
+/* Kolumny tekstu maja rozna dlugosc, od czterech wersow do szesciu, a po
+   rozwinieciu do dziesieciu. margin-top: auto sciaga podpis na dno karty, wiec
+   szesc szpalt konczy sie rowno mimo nierownej tresci, jak w gazecie. */
 /* Bez text-transform: podpisy z wielka litera w srodku slowa zmienilyby sie w
    krzyk. Ludzie podpisuja sie tak, jak chca, i to nie jest miejsce na
    poprawianie im pisowni. */
 .review-author {
   display: flex;
-  flex-wrap: wrap;
   align-items: baseline;
   gap: var(--sp-1);
   margin: auto 0 0;
-  padding-top: var(--sp-2);
-  border-top: 1px solid rgba(139, 109, 75, 0.14);
   font-size: var(--fs-meta);
-  font-weight: 600;
   letter-spacing: 0.3px;
+}
+
+.review-name {
+  font-weight: 600;
   color: var(--c-amber-text);
 }
 
-.review-date {
-  font-weight: 400;
-  letter-spacing: 1px;
-  color: var(--c-text-body);
-}
+.review-date { color: var(--c-text-body); }
 
 .review-date::before {
   content: '\00B7';
@@ -280,8 +297,7 @@
 }
 
 .reviews-cta {
-  margin: var(--sp-3) 0 0;
-  text-align: center;
+  margin: var(--sp-4) 0 0;
 }
 
 /* btn-text jest pisany pod ciemne tla; tutaj ground jest jasny, wiec kolor
@@ -293,23 +309,27 @@
 
 /* Ponizej 1024px trzy karty robia sie za waskie na czytelny akapit, wiec dwie. */
 @media (max-width: 1024px) {
-  .review-slide { flex-basis: calc((100% - var(--sp-3)) / 2); }
+  .review-slide { flex-basis: calc((100% - var(--reviews-gap)) / 2); }
 }
 
 /* Strzalki znikaja razem z myszka: na tej szerokosci steruje sie palcem,
-   a podpowiedz slowna zajmuje ich miejsce w pasku. */
+   a podpowiedz slowna zajmuje ich miejsce. */
 @media (max-width: 900px) {
   .reviews-nav,
   .reviews-nav:not([hidden]) { display: none; }
 
+  .reviews-heading { grid-template-columns: minmax(0, 1fr); }
   .reviews-swipe-hint { display: block; }
 }
 
 /* Telefon: jedna karta, a tor wraca do wychodzenia poza sekcje. Tutaj skrawek
    kolejnej karty jest potrzebny, bo to on mowi, ze jest co przesuwac. */
 @media (max-width: 768px) {
-  .reviews { padding: var(--sp-8) var(--sp-3); }
-  .reviews-track { --edge: var(--sp-3); }
+  .reviews { padding: var(--sp-7) var(--sp-3) var(--sp-6); }
+  .reviews-track {
+    --edge: var(--sp-3);
+    --reviews-gap: var(--sp-4);
+  }
   .review-slide { flex-basis: min(85%, 320px); }
 }
 
