@@ -8,35 +8,35 @@
       <div>
         <p class="footer-col-title">Nawigacja</p>
         <div class="footer-links">
-          <a href="{{ function('home_url', '/') }}#historia">Historia</a>
-          <a href="{{ function('home_url', '/') }}#wina">Nasze wina</a>
-          <a href="{{ function('home_url', '/') }}#doswiadczenia">Doświadczenia</a>
-          <a href="{{ function('home_url', '/') }}#galeria">Galeria</a>
+          <a href="{{ function('esc_url', function('home_url', '/#historia')) }}">Historia</a>
+          <a href="{{ function('esc_url', function('home_url', '/#wina')) }}">Nasze wina</a>
+          <a href="{{ function('esc_url', function('home_url', '/#doswiadczenia')) }}">Doświadczenia</a>
+          <a href="{{ function('esc_url', function('home_url', '/#galeria')) }}">Galeria</a>
         </div>
       </div>
       <div>
         <p class="footer-col-title">Wizyta</p>
         <div class="footer-links">
-          <a href="{{ function('home_url', '/') }}#wizyta">Zaplanuj wizytę</a>
+          <a href="{{ function('esc_url', function('home_url', '/#wizyta')) }}">Zaplanuj wizytę</a>
           {% set privacy_url = function('get_privacy_policy_url') %}
-          <a href="{{ privacy_url ?: function('home_url', '/polityka-prywatnosci/') }}">Polityka prywatności</a>
+          <a href="{{ function('esc_url', privacy_url ?: function('home_url', '/polityka-prywatnosci/')) }}">Polityka prywatności</a>
           {% if analytics_id %}<button class="footer-consent-settings" type="button" data-open-consent aria-controls="consentPanel" aria-expanded="false">Ustawienia cookies</button>{% endif %}
         </div>
       </div>
       <div>
         <p class="footer-col-title">Kontakt</p>
         <div class="footer-links">
-          {% if site_email %}<a href="mailto:{{ site_email }}">{{ site_email }}</a>{% endif %}
-          {% if site_phone_href %}<a href="{{ site_phone_href }}">tel. {{ site_phone }}</a>{% endif %}
+          {% if site_email %}<a href="{{ function('esc_url', 'mailto:' ~ site_email) }}">{{ site_email }}</a>{% endif %}
+          {% if site_phone_href %}<a href="{{ function('esc_url', site_phone_href) }}">tel. {{ site_phone }}</a>{% endif %}
         </div>
         <div class="footer-social">
           {% if site_instagram %}
-            <a href="{{ site_instagram }}" class="footer-social-icon" aria-label="Instagram Winnicy Nowizny" target="_blank" rel="noopener noreferrer">
+            <a href="{{ function('esc_url', site_instagram) }}" class="footer-social-icon" aria-label="Instagram Winnicy Nowizny" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" class="social-dot"></circle></svg>
             </a>
           {% endif %}
           {% if site_facebook %}
-            <a href="{{ site_facebook }}" class="footer-social-icon" aria-label="Facebook Winnicy Nowizny" target="_blank" rel="noopener noreferrer">
+            <a href="{{ function('esc_url', site_facebook) }}" class="footer-social-icon" aria-label="Facebook Winnicy Nowizny" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" aria-hidden="true" class="facebook-icon"><path d="M14 8h3V4.2c-.5-.1-2.2-.2-4.1-.2C9 4 6.3 6.4 6.3 10.8V14H2v4.3h4.3V24h5.2v-5.7h4.1l.7-4.3h-4.8v-2.8C11.5 9.9 11.9 8 14 8Z"></path></svg>
             </a>
           {% endif %}

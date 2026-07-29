@@ -3,7 +3,10 @@
  * Generic page template.
  */
 
-$context = Timber::get_context();
-$context['post'] = new Timber\Post();
+defined('ABSPATH') || exit;
+winnica_require_timber();
+
+$context = Timber::context();
+$context['post'] = Timber::get_post();
 
 Timber::render('page.twig', $context);

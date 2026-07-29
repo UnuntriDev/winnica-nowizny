@@ -5,7 +5,9 @@
 
 defined('ABSPATH') || exit;
 
-define('WINNICA_VERSION', '1.4.0');
+$winnica_theme_version = wp_get_theme()->get('Version');
+define('WINNICA_VERSION', $winnica_theme_version !== '' ? $winnica_theme_version : '1.5.0');
+unset($winnica_theme_version);
 define('WINNICA_DIR', get_template_directory());
 define('WINNICA_URI', get_template_directory_uri());
 

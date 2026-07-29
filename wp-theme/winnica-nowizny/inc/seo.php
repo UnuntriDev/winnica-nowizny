@@ -180,45 +180,9 @@ function winnica_schema_organization(): void {
         $winery['sameAs'] = array_values($same_as);
     }
 
-    // Plain openingHours cannot say "weekends only, except daily in high summer",
-    // and a search result promising Tuesday in April sends someone up the hill to
-    // a closed gate. The seasons go in one by one instead.
-    //
-    // Same fact as the "Godziny otwarcia" block on the front page (ACF field
-    // wizyta_hours), written for machines. Change one, change the other.
-    //
-    // The windows must not overlap. Sunday opens at 11:00 in spring and autumn
-    // but at 14:00 in high summer, so one April-to-November range would state
-    // both and leave a crawler to pick.
-    $seasons = [
-        ['04-01', '06-30', ['Saturday', 'Sunday'], '11:00', '20:00'],
-        ['07-01', '08-31', ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], '11:00', '20:00'],
-        ['07-01', '08-31', ['Sunday'], '14:00', '20:00'],
-        ['09-01', '11-30', ['Saturday', 'Sunday'], '11:00', '20:00'],
-    ];
-
-    $today = current_time('Y-m-d');
-    $year  = (int) current_time('Y');
-
-    $winery['openingHoursSpecification'] = array_map(
-        static function (array $season) use ($today, $year): array {
-            [$from, $through, $days, $opens, $closes] = $season;
-            // Once this year's season is over the dates describe the past, so the
-            // window rolls forward to the next one rather than going stale in
-            // December and staying that way until somebody notices.
-            $season_year = ($year . '-' . $through) < $today ? $year + 1 : $year;
-
-            return [
-                '@type'        => 'OpeningHoursSpecification',
-                'dayOfWeek'    => $days,
-                'opens'        => $opens,
-                'closes'       => $closes,
-                'validFrom'    => $season_year . '-' . $from,
-                'validThrough' => $season_year . '-' . $through,
-            ];
-        },
-        $seasons
-    );
+    // Opening hours are intentionally omitted until the owner confirms whether
+    // the weekend schedule also applies from December through March. Publishing
+    // incomplete machine-readable hours would contradict the visible ACF text.
 
     $schema = [
         '@context' => 'https://schema.org',

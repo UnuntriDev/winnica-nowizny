@@ -19,6 +19,11 @@ add_action('template_redirect', function (): void {
     ];
 
     if (isset($targets[$path])) {
+        $page = get_page_by_path($path, OBJECT, 'page');
+        if ($page instanceof WP_Post && $page->post_status === 'publish') {
+            return;
+        }
+
         wp_safe_redirect(home_url('/' . $targets[$path]), 301);
         exit;
     }

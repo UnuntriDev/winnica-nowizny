@@ -3,11 +3,14 @@
  * Front page template — renders homepage sections from individual ACF groups.
  */
 
-$context = Timber::get_context();
-$post = new Timber\Post();
+defined('ABSPATH') || exit;
+winnica_require_timber();
+
+$context = Timber::context();
+$post = Timber::get_post();
 $context['post'] = $post;
 
-$wines_count = (int) (get_field('wines_count', $post->ID) ?: 6);
+$wines_count = (int) (get_field('wines_count', $post->ID) ?: 5);
 $context['wines'] = Timber::get_posts([
     'post_type'      => 'wino',
     'posts_per_page' => $wines_count,

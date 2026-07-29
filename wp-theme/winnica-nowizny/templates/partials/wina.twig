@@ -6,10 +6,7 @@
     </div>
   </div>
 
-  <p class="wines-swipe-hint">Przesuń w bok, aby zobaczyć wszystkie wina <span aria-hidden="true">&rarr;</span></p>
-  {# tabindex: ponizej 640px lista jest przewijana, a Safari nie daje fokusu
-     scrollowanym kontenerom samo z siebie; aria-label juz ja nazywa #}
-  <ul class="wines-grid reveal" role="list" tabindex="0" aria-label="Kolekcja win Winnicy Nowizny">
+  <ul class="wines-grid reveal" role="list" aria-label="Kolekcja win Winnicy Nowizny">
     {% for wine in wines %}
       <li class="wine-slide" role="listitem">
         <div class="wine-stage">

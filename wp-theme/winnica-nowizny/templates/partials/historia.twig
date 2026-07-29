@@ -14,7 +14,7 @@
 
       <div class="historia-signature reveal reveal-delay-3">
         <img
-          src="{{ theme.link }}/assets/images/podpis-urszula-boguslaw-kaminscy.png"
+          src="{{ function('esc_url', theme.link ~ '/assets/images/podpis-urszula-boguslaw-kaminscy.png') }}"
           alt="Podpis Urszuli i Bogusława Kamińskich"
           width="760"
           height="119"
@@ -36,8 +36,8 @@
         {% else %}
           {% set historia_sizes = '(max-width: 768px) calc(100vw - 48px), (max-width: 1400px) 50vw, 650px' %}
           <picture>
-            <source srcset="{{ theme.link }}/assets/images/historia-winnica-480.avif 480w, {{ theme.link }}/assets/images/historia-winnica.avif 900w" sizes="{{ historia_sizes }}" type="image/avif">
-            <img src="{{ theme.link }}/assets/images/historia-winnica.webp" srcset="{{ theme.link }}/assets/images/historia-winnica-480.webp 480w, {{ theme.link }}/assets/images/historia-winnica.webp 900w" sizes="{{ historia_sizes }}" alt="Rzędy winorośli Winnicy Nowizny na tle Pogórza Rożnowskiego" width="900" height="1200" loading="lazy" decoding="async">
+            <source srcset="{{ function('esc_url', theme.link ~ '/assets/images/historia-winnica-480.avif') }} 480w, {{ function('esc_url', theme.link ~ '/assets/images/historia-winnica.avif') }} 900w" sizes="{{ historia_sizes }}" type="image/avif">
+            <img src="{{ function('esc_url', theme.link ~ '/assets/images/historia-winnica.webp') }}" srcset="{{ function('esc_url', theme.link ~ '/assets/images/historia-winnica-480.webp') }} 480w, {{ function('esc_url', theme.link ~ '/assets/images/historia-winnica.webp') }} 900w" sizes="{{ historia_sizes }}" alt="Rzędy winorośli Winnicy Nowizny na tle Pogórza Rożnowskiego" width="900" height="1200" loading="lazy" decoding="async">
           </picture>
         {% endif %}
       </div>

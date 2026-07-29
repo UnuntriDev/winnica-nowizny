@@ -14,7 +14,7 @@
         <button type="button" data-consent="denied" aria-pressed="false">Tylko niezbędne</button>
         <button type="button" class="consent-accept" data-consent="granted" aria-pressed="false">Akceptuję</button>
       </div>
-      <a class="consent-policy" href="{{ function('get_privacy_policy_url') ?: function('home_url', '/polityka-prywatnosci/') }}">Polityka prywatności</a>
+      <a class="consent-policy" href="{{ function('esc_url', function('get_privacy_policy_url') ?: function('home_url', '/polityka-prywatnosci/')) }}">Polityka prywatności</a>
     </aside>
 
     <button class="consent-toggle" type="button" data-open-consent data-consent-toggle aria-label="Otwórz ustawienia cookies" aria-controls="consentPanel" aria-expanded="false">

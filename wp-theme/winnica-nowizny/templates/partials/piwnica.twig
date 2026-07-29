@@ -12,7 +12,10 @@
         }) | raw }}
       {% else %}
         {% set cellar_sizes = '(max-width: 768px) calc(100vw - 48px), 50vw' %}
-        <img src="{{ theme.link }}/assets/images/piwnica-1891.webp" srcset="{{ theme.link }}/assets/images/piwnica-1891-480.webp 480w, {{ theme.link }}/assets/images/piwnica-1891-960.webp 960w, {{ theme.link }}/assets/images/piwnica-1891.webp 1280w" sizes="{{ cellar_sizes }}" alt="Zabytkowa kamienna piwnica Winnicy Nowizny z 1891 roku" width="1280" height="1707" loading="lazy" decoding="async">
+        <picture>
+          <source srcset="{{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891-480.avif') }} 480w, {{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891-960.avif') }} 960w, {{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891.avif') }} 1280w" sizes="{{ cellar_sizes }}" type="image/avif">
+          <img src="{{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891.webp') }}" srcset="{{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891-480.webp') }} 480w, {{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891-960.webp') }} 960w, {{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891.webp') }} 1280w" sizes="{{ cellar_sizes }}" alt="Zabytkowa kamienna piwnica Winnicy Nowizny z 1891 roku" width="1280" height="1707" loading="lazy" decoding="async">
+        </picture>
       {% endif %}
     </div>
     <div class="cellar-content">
@@ -25,7 +28,7 @@
         <p class="reveal reveal-delay-2">{{ post.meta('cellar_text_2') }}</p>
       {% endif %}
       {% if post.meta('cellar_cta_text') %}
-        <a href="{{ post.meta('cellar_cta_url') | default('#wizyta') }}" class="btn-outline-light reveal reveal-delay-3">{{ post.meta('cellar_cta_text') }}</a>
+        <a href="{{ function('esc_url', post.meta('cellar_cta_url') | default('#wizyta')) }}" class="btn-outline-light reveal reveal-delay-3">{{ post.meta('cellar_cta_text') }}</a>
       {% endif %}
     </div>
   </div>

@@ -13,12 +13,12 @@
     {% else %}
       <picture>
         <source
-          srcset="{{ theme.link }}/assets/images/hero-winnica-768.avif 768w, {{ theme.link }}/assets/images/hero-winnica-1280.avif 1280w, {{ theme.link }}/assets/images/hero-winnica.avif 1920w"
+          srcset="{{ function('esc_url', theme.link ~ '/assets/images/hero-winnica-768.avif') }} 768w, {{ function('esc_url', theme.link ~ '/assets/images/hero-winnica-1280.avif') }} 1280w, {{ function('esc_url', theme.link ~ '/assets/images/hero-winnica.avif') }} 1920w"
           sizes="100vw"
           type="image/avif">
         <img
-          src="{{ theme.link }}/assets/images/hero-winnica.webp"
-          srcset="{{ theme.link }}/assets/images/hero-winnica-768.webp 768w, {{ theme.link }}/assets/images/hero-winnica-1280.webp 1280w, {{ theme.link }}/assets/images/hero-winnica.webp 1920w"
+          src="{{ function('esc_url', theme.link ~ '/assets/images/hero-winnica.webp') }}"
+          srcset="{{ function('esc_url', theme.link ~ '/assets/images/hero-winnica-768.webp') }} 768w, {{ function('esc_url', theme.link ~ '/assets/images/hero-winnica-1280.webp') }} 1280w, {{ function('esc_url', theme.link ~ '/assets/images/hero-winnica.webp') }} 1920w"
           sizes="100vw"
           alt="Widok Winnicy Nowizny i Pogórza Rożnowskiego o zachodzie słońca"
           class="hero-bg-img"
@@ -46,10 +46,10 @@
     {% endif %}
     <div class="hero-buttons">
       {% if post.meta('hero_cta_primary_text') %}
-        <a href="{{ post.meta('hero_cta_primary_url') | default('#wizyta') }}" class="btn-primary">{{ post.meta('hero_cta_primary_text') }}</a>
+        <a href="{{ function('esc_url', post.meta('hero_cta_primary_url') | default('#wizyta')) }}" class="btn-primary">{{ post.meta('hero_cta_primary_text') }}</a>
       {% endif %}
       {% if post.meta('hero_cta_secondary_text') %}
-        <a href="{{ post.meta('hero_cta_secondary_url') | default('#wina') }}" class="btn-text hero-cta-text">{{ post.meta('hero_cta_secondary_text') }}</a>
+        <a href="{{ function('esc_url', post.meta('hero_cta_secondary_url') | default('#wina')) }}" class="btn-text hero-cta-text">{{ post.meta('hero_cta_secondary_text') }}</a>
       {% endif %}
     </div>
   </div>

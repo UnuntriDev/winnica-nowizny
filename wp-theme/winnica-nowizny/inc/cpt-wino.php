@@ -28,7 +28,7 @@ add_action('init', function () {
         'query_var'           => false,
         'menu_icon'           => 'dashicons-carrot',
         'supports'            => ['title', 'editor', 'thumbnail', 'excerpt'],
-        'show_in_rest'        => true,
+        'show_in_rest'        => false,
     ]);
 
     register_taxonomy('rodzaj-wina', 'wino', [
@@ -41,7 +41,7 @@ add_action('init', function () {
         'show_ui'      => true,
         'hierarchical' => true,
         'rewrite'      => false,
-        'show_in_rest' => true,
+        'show_in_rest' => false,
     ]);
 });
 

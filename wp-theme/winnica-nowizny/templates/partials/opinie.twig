@@ -80,7 +80,7 @@
 
     {% if profile_url %}
       <p class="reviews-cta reveal">
-        <a class="btn-text reviews-link" href="{{ profile_url }}" target="_blank" rel="noopener noreferrer">
+        <a class="btn-text reviews-link" href="{{ function('esc_url', profile_url) }}" target="_blank" rel="noopener noreferrer">
           Zobacz wszystkie opinie w Google<span class="sr-only"> (otwiera się w nowej karcie)</span>
         </a>
       </p>

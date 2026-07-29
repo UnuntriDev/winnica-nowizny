@@ -50,6 +50,21 @@ function winnica_short_author(string $name): string
     return implode(' ', $parts) . ' ' . mb_strtoupper(mb_substr($surname, 0, 1)) . '.';
 }
 
+function winnica_require_timber(): void
+{
+    if (class_exists('Timber')) {
+        return;
+    }
+
+    status_header(503);
+    nocache_headers();
+    wp_die(
+        esc_html__('Strona jest chwilowo niedostępna. Spróbuj ponownie za kilka minut.', 'winnica-nowizny'),
+        esc_html__('Przerwa techniczna', 'winnica-nowizny'),
+        ['response' => 503]
+    );
+}
+
 if (!class_exists('Timber')) {
     add_action('admin_notices', function () {
         echo '<div class="error"><p>Timber nie jest zainstalowany. Zainstaluj plugin Timber.</p></div>';
@@ -57,6 +72,9 @@ if (!class_exists('Timber')) {
     return;
 }
 
+// Timber 1.x disables Twig autoescaping by default. Keep it enabled globally
+// and opt into |raw only for markup already produced or sanitised by WordPress.
+Timber::$autoescape = 'html';
 Timber::$dirname = ['templates', 'templates/partials'];
 
 add_filter('timber_context', function (array $context): array {

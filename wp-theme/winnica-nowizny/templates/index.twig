@@ -4,7 +4,7 @@
 <div class="section-light">
   {% for post in posts %}
     <article>
-      <h2><a href="{{ post.link }}">{{ post.title }}</a></h2>
+      <h2><a href="{{ function('esc_url', post.link) }}">{{ post.title }}</a></h2>
       <p>{{ post.excerpt }}</p>
     </article>
   {% endfor %}
