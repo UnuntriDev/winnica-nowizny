@@ -30,11 +30,11 @@ function winnica_tel_href(string $phone): string
 /**
  * Shorten a review signature to a first name and a surname initial.
  *
- * Google publishes full names, this page does not need them. The shortening
- * happens here rather than in the stored field on purpose: the saved value stays
- * exactly what the person signed with, so it can still be matched against the
- * review it was copied from. A one-word signature has no surname to shorten and
- * passes through untouched.
+ * Google publishes full names, this page does not need them. The shortening runs
+ * on output so that a signature typed in full in the admin panel still renders
+ * short; the seed script stores the short form from the start, because the
+ * repository has no business carrying full names of real people. A one-word
+ * signature has no surname to shorten and passes through untouched.
  */
 function winnica_short_author(string $name): string
 {

@@ -74,8 +74,10 @@ $WP post meta update $FRONT_ID galeria_label "Galeria"
 $WP post meta update $FRONT_ID galeria_title "Chwile w winnicy"
 
 # Opinie gości
-# Teksty przepisane z profilu Google winnicy. Autorzy podpisani dokładnie tak,
-# jak podpisali się sami. Opinia 1 jest skrócona, stąd wielokropek na końcu.
+# Teksty przepisane z profilu Google winnicy. Podpisy zapisane od razu w formie
+# skroconej (imie i inicjal nazwiska), zeby repozytorium nie przechowywalo pelnych
+# danych autorow. winnica_short_author() przepuszcza taka forme bez zmian.
+# Opinia 1 jest skrocona, stad wielokropek na koncu.
 $WP post meta update $FRONT_ID opinie_show 1
 $WP post meta update $FRONT_ID opinie_label "Opinie gości"
 $WP post meta update $FRONT_ID opinie_title "Co mówią nasi goście"
