@@ -1,0 +1,17 @@
+{
+  "name": "winnica-nowizny/theme",
+  "description": "Zależności PHP motywu Winnicy Nowizny.",
+  "license": "proprietary",
+  "type": "wordpress-theme",
+  "require": {
+    "php": "^8.2",
+    "timber/timber": "^2.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    },
+    "optimize-autoloader": true,
+    "sort-packages": true
+  }
+}

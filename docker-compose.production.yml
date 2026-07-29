@@ -36,8 +36,8 @@ services:
         define('FORCE_SSL_ADMIN', true);
         define('WINNICA_RELEASE', getenv('WINNICA_RELEASE'));
         define('WINNICA_TRUSTED_PROXY_CIDRS', getenv('WINNICA_TRUSTED_PROXY_CIDRS'));
-        if (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https') {
-            $_SERVER['HTTPS'] = 'on';
+        if (($$_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https') {
+            $$_SERVER['HTTPS'] = 'on';
         }
     volumes:
       - uploads_data:/var/www/html/wp-content/uploads
