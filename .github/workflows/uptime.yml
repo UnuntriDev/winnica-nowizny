@@ -1,8 +1,11 @@
 name: Uptime
 
+# Harmonogram jest wylaczony do czasu wdrozenia: dopoki winnicanowizny.pl nie
+# odpowiada, co kwadrans powstawalby nieudany przebieg. Po uruchomieniu strony
+# odkomentuj oba wiersze schedule ponizej.
 on:
-  schedule:
-    - cron: "*/15 * * * *"
+  # schedule:
+  #   - cron: "*/15 * * * *"
   workflow_dispatch:
 
 permissions:
