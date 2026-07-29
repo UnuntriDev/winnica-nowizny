@@ -13,6 +13,46 @@ const WINNICA_MESSAGE_STATUSES = [
     'spam'      => 'Spam',
 ];
 
+function winnica_message_capabilities(): array
+{
+    return [
+        'edit_winnica_message',
+        'read_winnica_message',
+        'delete_winnica_message',
+        'edit_winnica_messages',
+        'edit_others_winnica_messages',
+        'publish_winnica_messages',
+        'read_private_winnica_messages',
+        'delete_winnica_messages',
+        'delete_private_winnica_messages',
+        'delete_published_winnica_messages',
+        'delete_others_winnica_messages',
+        'edit_private_winnica_messages',
+        'edit_published_winnica_messages',
+    ];
+}
+
+function winnica_install_message_capabilities(): void
+{
+    $role = get_role('administrator');
+    if (!$role) {
+        return;
+    }
+
+    foreach (winnica_message_capabilities() as $capability) {
+        $role->add_cap($capability);
+    }
+
+    update_option('winnica_message_caps_version', '1', false);
+}
+
+add_action('after_switch_theme', 'winnica_install_message_capabilities');
+add_action('admin_init', function (): void {
+    if (get_option('winnica_message_caps_version') !== '1' && current_user_can('manage_options')) {
+        winnica_install_message_capabilities();
+    }
+});
+
 add_action('init', function (): void {
     register_post_type('winnica_message', [
         'labels' => [
@@ -29,7 +69,7 @@ add_action('init', function (): void {
         'show_in_menu'        => true,
         'menu_icon'           => 'dashicons-calendar-alt',
         'supports'            => ['title', 'editor'],
-        'capability_type'     => 'post',
+        'capability_type'     => ['winnica_message', 'winnica_messages'],
         'map_meta_cap'        => true,
         'show_in_rest'        => false,
         'exclude_from_search' => true,
@@ -63,7 +103,7 @@ function winnica_contact_token_is_valid(string $token): bool
 
 function winnica_contact_fingerprint(): string
 {
-    $ip = sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'] ?? 'unknown'));
+    $ip = function_exists('winnica_client_ip') ? winnica_client_ip() : 'unknown';
     return hash_hmac('sha256', $ip, wp_salt('auth'));
 }
 
@@ -217,8 +257,8 @@ function winnica_handle_contact_form(): void
         $parsed = $date !== ''
             ? DateTimeImmutable::createFromFormat('!Y-m-d', $date, wp_timezone())
             : false;
-        $today = new DateTimeImmutable('today', wp_timezone());
-        if (!$parsed || $parsed < $today || $parsed > $today->modify('+2 years')) {
+        $tomorrow = new DateTimeImmutable('tomorrow', wp_timezone());
+        if (!$parsed || $parsed < $tomorrow || $parsed > $tomorrow->modify('+2 years')) {
             $errors[] = 'date';
         }
     }
@@ -310,6 +350,10 @@ add_action('add_meta_boxes_winnica_message', function (): void {
 
 function winnica_message_meta_box(WP_Post $post): void
 {
+    if (!current_user_can('edit_post', $post->ID)) {
+        return;
+    }
+
     $status = get_post_meta($post->ID, '_contact_status', true) ?: 'new';
     $email  = get_post_meta($post->ID, '_contact_email', true);
     $phone  = get_post_meta($post->ID, '_contact_phone', true);
@@ -401,7 +445,15 @@ add_action('pre_get_posts', function (WP_Query $query): void {
 });
 
 add_action('wp_dashboard_setup', function (): void {
+    if (!current_user_can('edit_winnica_messages')) {
+        return;
+    }
+
     wp_add_dashboard_widget('winnica_messages_widget', 'Winnica — wiadomości i rezerwacje', function (): void {
+        if (!current_user_can('edit_winnica_messages')) {
+            return;
+        }
+
         $counts = [];
         foreach (WINNICA_MESSAGE_STATUSES as $status => $label) {
             $counts[$status] = (int) (new WP_Query([

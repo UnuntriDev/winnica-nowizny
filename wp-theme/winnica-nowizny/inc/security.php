@@ -27,9 +27,89 @@ add_filter('login_errors', function (): string {
     return 'Nieprawidłowe dane logowania.';
 });
 
+/**
+ * Compare an IP address with an IPv4 or IPv6 CIDR range.
+ */
+function winnica_ip_in_cidr(string $ip, string $cidr): bool
+{
+    [$network, $prefix] = array_pad(explode('/', trim($cidr), 2), 2, null);
+    $ip_binary = @inet_pton($ip);
+    $network_binary = @inet_pton($network);
+
+    if ($ip_binary === false || $network_binary === false || strlen($ip_binary) !== strlen($network_binary)) {
+        return false;
+    }
+
+    $bits = $prefix === null ? strlen($ip_binary) * 8 : (int) $prefix;
+    if ($bits < 0 || $bits > strlen($ip_binary) * 8) {
+        return false;
+    }
+
+    $full_bytes = intdiv($bits, 8);
+    $remaining_bits = $bits % 8;
+
+    if ($full_bytes > 0 && substr($ip_binary, 0, $full_bytes) !== substr($network_binary, 0, $full_bytes)) {
+        return false;
+    }
+
+    if ($remaining_bits === 0) {
+        return true;
+    }
+
+    $mask = (0xff << (8 - $remaining_bits)) & 0xff;
+    return (ord($ip_binary[$full_bytes]) & $mask) === (ord($network_binary[$full_bytes]) & $mask);
+}
+
+/**
+ * Return the visitor IP without trusting spoofable forwarding headers.
+ *
+ * WINNICA_TRUSTED_PROXY_CIDRS is a comma-separated allow-list of the reverse
+ * proxy addresses that are permitted to supply CF-Connecting-IP,
+ * X-Forwarded-For or X-Real-IP. With no allow-list REMOTE_ADDR is used.
+ */
+function winnica_client_ip(): string
+{
+    $remote = filter_var(wp_unslash($_SERVER['REMOTE_ADDR'] ?? ''), FILTER_VALIDATE_IP);
+    if ($remote === false) {
+        return 'unknown';
+    }
+
+    $configured = defined('WINNICA_TRUSTED_PROXY_CIDRS')
+        ? (string) WINNICA_TRUSTED_PROXY_CIDRS
+        : (string) (getenv('WINNICA_TRUSTED_PROXY_CIDRS') ?: '');
+    $trusted = array_filter(array_map('trim', explode(',', $configured)));
+
+    $remote_is_trusted = false;
+    foreach ($trusted as $cidr) {
+        if (winnica_ip_in_cidr($remote, $cidr)) {
+            $remote_is_trusted = true;
+            break;
+        }
+    }
+
+    if (!$remote_is_trusted) {
+        return $remote;
+    }
+
+    $forwarded = [
+        wp_unslash($_SERVER['HTTP_CF_CONNECTING_IP'] ?? ''),
+        trim(explode(',', wp_unslash($_SERVER['HTTP_X_FORWARDED_FOR'] ?? ''), 2)[0]),
+        wp_unslash($_SERVER['HTTP_X_REAL_IP'] ?? ''),
+    ];
+
+    foreach ($forwarded as $candidate) {
+        $valid = filter_var(trim((string) $candidate), FILTER_VALIDATE_IP);
+        if ($valid !== false) {
+            return $valid;
+        }
+    }
+
+    return $remote;
+}
+
 function winnica_login_key(string $username): string
 {
-    $ip = sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'] ?? 'unknown'));
+    $ip = winnica_client_ip();
     return 'winnica_login_' . substr(hash_hmac('sha256', strtolower($username) . '|' . $ip, wp_salt('auth')), 0, 36);
 }
 

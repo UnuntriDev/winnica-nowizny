@@ -35,11 +35,8 @@ add_action('rest_api_init', function (): void {
             $healthy = $database_ok && !winnica_indexing_misconfigured($environment, $indexable);
 
             return new WP_REST_Response([
-                'status'      => $healthy ? 'ok' : 'degraded',
-                'service'     => 'winnica-nowizny',
-                'environment' => $environment,
-                'indexable'   => $indexable,
-                'time'        => gmdate('c'),
+                'status'  => $healthy ? 'ok' : 'degraded',
+                'service' => 'winnica-nowizny',
             ], $healthy ? 200 : 503);
         },
     ]);

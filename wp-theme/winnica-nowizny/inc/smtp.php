@@ -18,7 +18,19 @@ function winnica_config_value(string $name, string $default = ''): string
 
 function winnica_smtp_is_configured(): bool
 {
-    return winnica_config_value('WINNICA_SMTP_HOST') !== '';
+    $host = winnica_config_value('WINNICA_SMTP_HOST');
+    $port = (int) winnica_config_value('WINNICA_SMTP_PORT', '587');
+    $user = winnica_config_value('WINNICA_SMTP_USER');
+    $pass = winnica_config_value('WINNICA_SMTP_PASS');
+    $from = sanitize_email(winnica_config_value('WINNICA_SMTP_FROM_EMAIL', $user));
+    $encryption = strtolower(winnica_config_value('WINNICA_SMTP_ENCRYPTION', 'tls'));
+
+    return $host !== ''
+        && $port > 0
+        && $port <= 65535
+        && $from !== ''
+        && in_array($encryption, ['', 'tls', 'ssl', 'smtps'], true)
+        && (($user === '' && $pass === '') || ($user !== '' && $pass !== ''));
 }
 
 add_action('phpmailer_init', function (PHPMailer\PHPMailer\PHPMailer $mailer): void {

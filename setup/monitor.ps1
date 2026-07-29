@@ -7,4 +7,4 @@ $response = Invoke-RestMethod -Uri $Url -Method Get -TimeoutSec 15
 if ($response.status -ne 'ok') {
     throw "Monitoring zgłosił stan: $($response.status)"
 }
-Write-Host "OK — $($response.service) — $($response.time)"
+Write-Host "OK — $($response.service)"
