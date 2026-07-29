@@ -5,6 +5,7 @@ set -eu
 
 : "${OLD_WP_URL:?set OLD_WP_URL, for example http://localhost:8080}"
 : "${WP_URL:?set the final HTTPS WP_URL}"
+: "${WP_ADMIN_EMAIL:?set the confirmed administrative email}"
 
 case "$WP_URL" in
   https://*) ;;
@@ -17,6 +18,7 @@ echo "Replacing the local URL with the production URL..."
 $WP search-replace "$OLD_WP_URL" "$WP_URL" --all-tables-with-prefix --precise --skip-columns=guid
 $WP option update home "$WP_URL"
 $WP option update siteurl "$WP_URL"
+$WP option update admin_email "$WP_ADMIN_EMAIL"
 $WP option update blog_public 1
 $WP rewrite flush --hard
 $WP transient delete --all

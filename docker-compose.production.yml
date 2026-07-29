@@ -16,6 +16,7 @@ services:
       WP_ENVIRONMENT_TYPE: production
       WP_HOME: ${WP_URL:?ustaw produkcyjny adres HTTPS w WP_URL}
       WP_SITEURL: ${WP_URL:?ustaw produkcyjny adres HTTPS w WP_URL}
+      WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL:?ustaw potwierdzony WP_ADMIN_EMAIL}
       WINNICA_RELEASE: ${WINNICA_RELEASE:?ustaw WINNICA_RELEASE}
       WINNICA_TRUSTED_PROXY_CIDRS: ${WINNICA_TRUSTED_PROXY_CIDRS:?ustaw adresy zaufanego reverse proxy}
       WINNICA_SMTP_HOST: ${WINNICA_SMTP_HOST:?ustaw WINNICA_SMTP_HOST}
