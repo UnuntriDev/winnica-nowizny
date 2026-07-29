@@ -1,0 +1,118 @@
+# Winnica Nowizny
+
+Strona wizytówka rodzinnej winnicy na Pogórzu Rożnowskim. Jedna strona z sekcjami
+o historii gospodarstwa, oferowanych doświadczeniach, winach, piwnicy z 1891 roku,
+galerii i formularzem rezerwacji wizyty. Nie jest to sklep: wina są prezentowane,
+ale nie sprzedawane online.
+
+Repozytorium zawiera własny motyw WordPress razem z całym środowiskiem: lokalnym
+stosem Docker, obrazem produkcyjnym, skryptami instalacyjnymi i migracyjnymi.
+
+![Strona główna](wp-theme/winnica-nowizny/screenshot.jpg)
+
+## Stack
+
+- WordPress 7.0 jako Classic Theme, PHP 8.1
+- Timber 1.23 i Twig na warstwę szablonów
+- Advanced Custom Fields 6.8 (wersja darmowa, synchronizacja przez `acf-json`)
+- Vite 6 do budowania CSS i JavaScriptu
+- MariaDB 11, Apache, wszystko w Dockerze
+
+Wersje ACF i Timbera są przypięte w `Dockerfile.wordpress`, żeby obraz produkcyjny
+budował się powtarzalnie.
+
+## Uruchomienie lokalne
+
+Potrzebny jest Docker i plik `.env` utworzony na podstawie `.env.example`. Bez
+haseł w `.env` compose przerwie start z komunikatem, która zmienna jest pusta.
+
+```bash
+docker compose up -d
+docker compose run --rm wpcli sh /setup/install.sh
+docker compose run --rm wpcli sh /setup/seed-homepage.sh
+```
+
+Strona stanie na `http://localhost:8080`. Instalator zakłada stronę główną,
+politykę prywatności, pięć prezentowanych win i menu. Hasło administratora bierze
+z `WP_ADMIN_PASSWORD`, a jeśli zmienna jest pusta, generuje je jednorazowo i
+wypisuje na końcu.
+
+Frontend buduje się osobno:
+
+```bash
+cd wp-theme/winnica-nowizny
+npm ci
+npm run build
+```
+
+Skompilowane pliki lądują w `assets/dist` i są śledzone przez Gita, więc serwer
+docelowy nie potrzebuje Node. Motyw czyta manifest Vite i odmawia załadowania
+niekompletnego builda.
+
+## Co jest w środku
+
+**Treść w panelu.** Wszystkie teksty, zdjęcia i opinie siedzą w polach ACF
+przypiętych do strony głównej. Wina są osobnym typem wpisu (`wino`) z własnym
+zestawem pól. Definicje grup leżą w `acf-json` i synchronizują się automatycznie.
+
+**Formularz kontaktowy.** Własna obsługa w `inc/contact-form.php`, bez wtyczki.
+Nonce, honeypot, token czasowy podpisany HMAC i limit czterech wysyłek na
+kwadrans liczony po zahashowanym adresie IP. Wiadomości zapisują się jako wpisy,
+a wysyłka idzie przez SMTP skonfigurowany zmiennymi środowiskowymi.
+
+**Zgody i analityka.** Panel zgód działa w modelu Consent Mode v2. Google
+Analytics ładuje się dopiero po zgodzie, a jej cofnięcie usuwa ciasteczka `_ga`,
+`_gid` i `_gat`. Dopóki identyfikator GA4 nie zostanie podany w `WINNICA_GA_ID`
+albo w Personalizacji motywu, analityka i panel zgód w ogóle się nie renderują.
+
+**SEO.** Motyw sam generuje tytuły, opisy, canonicale, Open Graph i dane
+strukturalne schema.org typu `LocalBusiness` z rozszerzeniem `Winery`, razem z
+sezonowymi godzinami otwarcia. Bez wtyczki SEO.
+
+**Wydajność.** Strona główna cache'uje się w transiencie na godzinę i unieważnia
+przy zapisie wpisu, zmianie motywu lub menu. Zdjęcia mają warianty AVIF i WebP z
+`srcset`, fonty są hostowane lokalnie, a te potrzebne do pierwszego renderu
+dostają `preload`.
+
+**Bezpieczeństwo.** Ukryta wersja WordPressa, ogólny komunikat błędu logowania,
+limit prób logowania, wyłączony XML-RPC. Adres klienta bierze się z nagłówków
+przekierowań tylko wtedy, gdy żądanie przyszło z zakresu wpisanego w
+`WINNICA_TRUSTED_PROXY_CIDRS`, więc limitów nie da się obejść podrobionym
+`X-Forwarded-For`. Apache i PHP nie zdradzają wersji i nie serwują plików `.log`,
+`.sql`, `.bak` ani kropkowych.
+
+**Monitoring.** Endpoint `/wp-json/winnica/v1/health` zwraca 200 albo 503 razem z
+lakonicznym statusem. Korzysta z niego healthcheck kontenera i workflow w
+`.github/workflows`, na razie wyłączony z harmonogramu do czasu wdrożenia.
+
+## Struktura
+
+```
+wp-theme/winnica-nowizny/   motyw: PHP, szablony Twig, źródła CSS i JS, obrazy
+├── inc/                    logika podzielona na moduły ładowane z functions.php
+├── templates/partials/     sekcje strony głównej, jedna sekcja na plik
+├── acf-json/               definicje pól ACF pod kontrolą wersji
+└── src/                    źródła przed budowaniem przez Vite
+setup/                      instalacja, seed treści, migracja, backup, hardening
+scripts/                    przygotowanie zdjęć i zasobów produkcyjnych
+```
+
+## Wdrożenie
+
+`Dockerfile.wordpress` buduje obraz wieloetapowo: kompiluje motyw, pobiera
+przypięte wtyczki i składa je z bazowym WordPressem. `docker-compose.production.yml`
+trzyma bazę w sieci wewnętrznej, wymaga kompletu sekretów ze środowiska i
+podłącza się do zewnętrznej sieci reverse proxy, który obsługuje TLS. Kontener
+WordPressa nie publikuje portu bezpośrednio.
+
+Po imporcie bazy `setup/migrate-production.sh` podmienia adres lokalny na
+produkcyjny i czyści cache. `setup/backup-production.sh` robi szyfrowany backup
+bazy i uploadów przez `age` i `rclone`.
+
+Pełna instrukcja krok po kroku znajduje się w [setup/SETUP.md](setup/SETUP.md).
+
+## Uwagi
+
+Timber 1.x nie jest już rozwijany, dlatego stos stoi na PHP 8.1. Migracja motywu
+do Timbera 2 jest zaplanowana jako osobna, przetestowana zmiana, a nie przy okazji
+wdrożenia.
