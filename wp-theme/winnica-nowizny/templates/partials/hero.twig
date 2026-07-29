@@ -33,7 +33,10 @@
   <div class="hero-overlay"></div>
 
   <div class="hero-content">
-    <div class="hero-line"></div>
+    {# Bez ozdobnej kreski nad nadtytulem. Nad jednolitym tlem sekcji dziala, bo
+       tlo jest przewidywalne; nad fotografia nieba dawala kontrast 1,3:1 i czytala
+       sie jak smuga na zdjeciu, a nie jak swiadomy element. Sam nadtytul jest
+       rozstrzelony i wersalikami, wiec zapowiada sie bez pomocy. #}
     {% if post.meta('hero_label') %}
       <p class="hero-label">{{ post.meta('hero_label') }}</p>
     {% endif %}
