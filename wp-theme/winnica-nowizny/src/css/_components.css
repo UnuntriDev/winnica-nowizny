@@ -149,10 +149,20 @@
   border-radius: var(--radius-md);
 }
 
+/* Tytul ma zostac w jednej linii. "Rezerwacja wizyty grupowej" zajmuje 11,06px
+   szerokosci na kazdy 1px stopnia pisma, a kontener na telefonie daje szerokosc
+   okna mniej 98px, wiec stopien musi zejsc ponizej jednej jedenastej szerokosci
+   okna. Stad srodkowy czlon: pokrywa to z zapasem okolo 5%, a gorna granica
+   trzyma desktop dokladnie na --fs-2xl, bo powyzej 462px okna miejsca juz nie
+   brakuje. Dolna granica pilnuje, zeby na bardzo waskich ekranach tytul nie
+   zrobil sie drobniejszy od tekstu pod nim.
+
+   Celowo bez white-space: nowrap. Gdyby klient wpisal kiedys dluzszy tytul,
+   zawinie sie on na drugi wers zamiast wyjechac poza karte. */
 .form-title {
   margin: 0 0 8px;
   font-family: var(--ff-display);
-  font-size: var(--fs-2xl);
+  font-size: clamp(1.125rem, 8.5vw - 8px, var(--fs-2xl));
   font-weight: 400;
 }
 

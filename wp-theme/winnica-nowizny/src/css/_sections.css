@@ -567,12 +567,22 @@
 }
 
 /* ── Visit / Contact ── */
+/* Kolejnosc w HTML idzie za jedna kolumna: naglowek, kontakt, formularz, mapa.
+   Dwie kolumny na desktopie skladaja te bloki z powrotem jawnym umiejscowieniem,
+   wiec obraz nie rozjezdza sie z kolejnoscia fokusu na wezszych ekranach. */
 .visit-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--sp-8);
+  /* Wiersz waski jak dawny margines pod naglowkiem, kolumny szerokie jak dotad. */
+  row-gap: var(--sp-6);
+  column-gap: var(--sp-8);
   align-items: stretch;
 }
+
+.visit-grid > .visit-header { grid-area: 1 / 1; margin-bottom: 0; }
+.visit-grid > .visit-sidebar { grid-area: 2 / 1; }
+.visit-grid > .visit-map { grid-area: 3 / 1; margin-top: 0; }
+.visit-grid > .visit-form { grid-area: 1 / 2 / span 3; }
 
 .visit-grid > * { min-width: 0; }
 
@@ -590,9 +600,9 @@
   flex-direction: column;
 }
 
+/* Dotyczy juz tylko naglowka z galezi bez danych kontaktowych, ktory stoi nad
+   siatka. Ten w siatce odstep bierze z row-gap. */
 .visit-header { margin-bottom: var(--sp-8); }
-
-.visit-sidebar .visit-header { margin-bottom: var(--sp-6); }
 
 .visit-grid-form-only {
   grid-template-columns: minmax(0, 760px);

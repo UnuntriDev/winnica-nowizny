@@ -11,13 +11,22 @@
   .historia-visual { padding-left: var(--sp-2); }
 
   .exp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4); }
+  /* Zdjecie po prawej, tekst po lewej. Kolejnosc w HTML zostaje ta sama, bo
+     zdjecie ma opis alternatywny i czytnik ekranu ma je uslyszec przed nazwa
+     doswiadczenia tak samo jak na desktopie; przestawiamy same kolumny. */
   .exp-card {
     display: grid;
-    grid-template-columns: 150px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) 150px;
     align-items: stretch;
   }
-  .exp-card-image { aspect-ratio: 3 / 4; }
-  .exp-card-body { padding: var(--sp-3); }
+  .exp-card-body { grid-area: 1 / 1; padding: var(--sp-3); }
+  /* max-width dlatego, ze przy align-items: stretch zdjecie dostaje wysokosc
+     wiersza, a aspect-ratio dolicza sobie do niej szerokosc. Gdy tekst jest
+     wyzszy niz cztery trzecie kolumny, wychodzi z niej: na 375px bylo to 134px
+     w kolumnie 120px. Wczesniej nadmiar chowal sie pod tekstem po prawej, po
+     zamianie kolumn wystawalby poza karte i obcinalby go overflow. Sama proporcja
+     zostaje, bo trzyma zdjecia w pionie i wyznacza minimalna wysokosc karty. */
+  .exp-card-image { grid-area: 1 / 2; aspect-ratio: 3 / 4; max-width: 100%; }
 
   .cellar-inner { padding: 88px var(--sp-6); gap: var(--sp-5); }
   .terroir-grid { gap: var(--sp-4); }
@@ -32,6 +41,15 @@
     gap: var(--sp-5);
   }
   .visit-grid .form-container { padding: var(--sp-4); }
+}
+
+/* Jedna kolumna: jawne umiejscowienie z desktopu musi ustapic. Bloki wracaja
+   do kolejnosci z HTML: naglowek, adres/godziny/kontakt, formularz i mapa. */
+@media (max-width: 899px) {
+  .visit-grid > .visit-header,
+  .visit-grid > .visit-sidebar,
+  .visit-grid > .visit-form,
+  .visit-grid > .visit-map { grid-area: auto; }
 }
 
 @media (min-width: 769px) and (max-width: 899px) {
@@ -77,6 +95,13 @@
   }
   .hero-buttons .btn-text { font-size: var(--fs-body-sm); }
 
+  /* Strzalka "Odkryj" znika razem z myszka. Hero ma wysokosc calego okna, a pasek
+     kontaktowy lezy przyklejony do jego dolu i zakrywal 24 z 58 pikseli wskaznika.
+     Na ekranie dotykowym podpowiedz "przewin" i tak niesie mniej niz na desktopie,
+     wiec zamiast ja przesuwac w ciasne miejsce nad paskiem, po prostu jej tu nie
+     ma. Przy okazji milknie animacja, ktora chodzila w petli bez konca. */
+  .scroll-indicator { display: none; }
+
   .section-light { padding: var(--sp-7) var(--sp-3); }
   .section-dark { padding: var(--sp-7) var(--sp-3); }
   .section-title { font-size: var(--fs-3xl); }
@@ -107,13 +132,8 @@
   .historia .stat-label { font-size: var(--fs-label); letter-spacing: 0.75px; }
 
   .exp-grid { grid-template-columns: 1fr; gap: var(--sp-3); }
-  .exp-card {
-    display: grid;
-    grid-template-columns: 120px minmax(0, 1fr);
-    align-items: stretch;
-  }
-  .exp-card-image { aspect-ratio: 3 / 4; }
-  .exp-card-body { padding: var(--sp-3); }
+  /* Uklad kolumn dziedziczy sie z bloku 1024px, tu zmienia sie sama szerokosc. */
+  .exp-card { grid-template-columns: minmax(0, 1fr) 120px; }
   .exp-card h3 { margin: 0 0 6px; }
   .wines-header { flex-direction: column; align-items: flex-start; gap: var(--sp-2); margin-bottom: var(--sp-4); }
 
@@ -163,7 +183,12 @@
     left: 0;
     right: 0;
     bottom: 0;
-    height: 64px;
+    /* min-height, nie height. Przy box-sizing: border-box sztywna wysokosc nie
+       rosla o env(safe-area-inset-bottom), tylko oddawala mu miejsce z wnetrza:
+       na iPhonie z paskiem gestow obszar tresci schodzil z 50 do 16 pikseli,
+       przyciski z 49 do 31 i wychodzily poza pudelko. Teraz pasek rosnie o ten
+       margines i zgadza sie z rezerwacja, ktora robi mu body ponizej. */
+    min-height: 64px;
     padding: 7px max(8px, env(safe-area-inset-right)) calc(7px + env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
     display: grid;
     grid-template-columns: 0.85fr 0.85fr 1.2fr;
@@ -176,6 +201,12 @@
 
   .mobile-contact-bar a {
     min-width: 0;
+    /* Bez tego przycisk ma tylko tyle, ile jego wlasna tresc. Dopoki pasek mial
+       sztywna wysokosc, siatka rozciagala go do 49px i nikt tego nie potrzebowal;
+       odkad pasek rosnie o margines bezpieczny, nie ma juz nadmiaru do rozdania
+       i przyciski schodzily do 31px. 44px to prog celu dotkniecia z WCAG 2.5.5
+       i z wytycznych Apple. */
+    min-height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -232,10 +263,9 @@
   .section-dark,
   .cellar-inner,
   .reviews { padding-left: 20px; padding-right: 20px; }
-  .exp-card { grid-template-columns: 96px minmax(0, 1fr); }
+  .exp-card { grid-template-columns: minmax(0, 1fr) 96px; }
   .exp-card-body { padding: var(--sp-2); }
   .exp-card h3 { font-size: var(--fs-lg); }
   .exp-card p { font-size: var(--fs-meta); line-height: 1.5; }
-  .form-title { font-size: var(--fs-2xl); }
   .mobile-contact-bar a { font-size: var(--fs-label); letter-spacing: 0.4px; }
 }

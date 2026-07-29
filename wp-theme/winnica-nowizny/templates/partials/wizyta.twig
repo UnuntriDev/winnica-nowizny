@@ -1,45 +1,53 @@
+{# Kolejnosc w HTML odpowiada widokowi jednej kolumny: naglowek, dane
+   kontaktowe, formularz i mapa. Desktop sklada te bloki w dwie kolumny
+   przez jawne obszary siatki, bez zmiany kolejnosci dla czytnika ekranu. #}
 <section class="section-dark" id="wizyta">
   <div class="section-dark-inner">
     {% set has_visit_info = post.meta('wizyta_address') or post.meta('wizyta_hours') or post.meta('wizyta_contact') or post.meta('wizyta_directions') or post.meta('wizyta_show_map') %}
     {% if has_visit_info %}
       <div class="visit-grid">
-        <div class="visit-sidebar">
-          <div class="visit-header reveal">
-            <p class="section-label">{{ post.meta('wizyta_label') | default('Pozostańmy w kontakcie') }}</p>
-            <h2 class="section-title section-title-dark">{{ function('wp_kses_post', post.meta('wizyta_title') | default('Odwiedź nas')) | raw }}</h2>
-          </div>
-        <div class="visit-info reveal">
-        {% if post.meta('wizyta_address') %}
-          <div class="visit-block">
-            <p class="visit-block-label">Adres</p>
-            <p class="visit-block-text">{{ function('wp_kses_post', post.meta('wizyta_address')) | raw }}</p>
-          </div>
-        {% endif %}
-        {% if post.meta('wizyta_hours') %}
-          <div class="visit-block">
-            <p class="visit-block-label">Godziny otwarcia</p>
-            <p class="visit-block-text">{{ function('wp_kses_post', post.meta('wizyta_hours')) | raw }}</p>
-            {% if post.meta('wizyta_hours_note') %}
-              <p class="visit-block-text-small">{{ post.meta('wizyta_hours_note') }}</p>
-            {% endif %}
-          </div>
-        {% endif %}
-        {% if post.meta('wizyta_contact') %}
-          <div class="visit-block">
-            <p class="visit-block-label">Kontakt</p>
-            <p class="visit-block-text">{{ function('wp_kses_post', post.meta('wizyta_contact')) | raw }}</p>
-          </div>
-        {% endif %}
-        {% if post.meta('wizyta_directions') %}
-          <div class="visit-block">
-            <p class="visit-block-label">Dojazd</p>
-            <p class="visit-block-text">{{ function('wp_kses_post', post.meta('wizyta_directions')) | raw }}</p>
-            {% if post.meta('wizyta_directions_note') %}
-              <p class="visit-block-text-small">{{ post.meta('wizyta_directions_note') }}</p>
-            {% endif %}
-          </div>
-        {% endif %}
+        <div class="visit-header reveal">
+          <p class="section-label">{{ post.meta('wizyta_label') | default('Pozostańmy w kontakcie') }}</p>
+          <h2 class="section-title section-title-dark">{{ function('wp_kses_post', post.meta('wizyta_title') | default('Odwiedź nas')) | raw }}</h2>
         </div>
+
+        <div class="visit-sidebar">
+          <div class="visit-info reveal">
+            {% if post.meta('wizyta_address') %}
+              <div class="visit-block">
+                <p class="visit-block-label">Adres</p>
+                <p class="visit-block-text">{{ function('wp_kses_post', post.meta('wizyta_address')) | raw }}</p>
+              </div>
+            {% endif %}
+            {% if post.meta('wizyta_hours') %}
+              <div class="visit-block">
+                <p class="visit-block-label">Godziny otwarcia</p>
+                <p class="visit-block-text">{{ function('wp_kses_post', post.meta('wizyta_hours')) | raw }}</p>
+                {% if post.meta('wizyta_hours_note') %}
+                  <p class="visit-block-text-small">{{ post.meta('wizyta_hours_note') }}</p>
+                {% endif %}
+              </div>
+            {% endif %}
+            {% if post.meta('wizyta_contact') %}
+              <div class="visit-block">
+                <p class="visit-block-label">Kontakt</p>
+                <p class="visit-block-text">{{ function('wp_kses_post', post.meta('wizyta_contact')) | raw }}</p>
+              </div>
+            {% endif %}
+            {% if post.meta('wizyta_directions') %}
+              <div class="visit-block">
+                <p class="visit-block-label">Dojazd</p>
+                <p class="visit-block-text">{{ function('wp_kses_post', post.meta('wizyta_directions')) | raw }}</p>
+                {% if post.meta('wizyta_directions_note') %}
+                  <p class="visit-block-text-small">{{ post.meta('wizyta_directions_note') }}</p>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        {% include 'partials/wizyta-formularz.twig' %}
+
         {% if post.meta('wizyta_show_map') %}
           <div class="visit-map reveal" role="region" aria-label="Mapa dojazdu do Winnicy Nowizny">
             <div class="visit-map-frame">
@@ -59,119 +67,15 @@
             </div>
           </div>
         {% endif %}
-        </div>
+      </div>
     {% else %}
       <div class="visit-header reveal">
         <p class="section-label">{{ post.meta('wizyta_label') | default('Pozostańmy w kontakcie') }}</p>
         <h2 class="section-title section-title-dark">{{ function('wp_kses_post', post.meta('wizyta_title') | default('Odwiedź nas')) | raw }}</h2>
       </div>
       <div class="visit-grid visit-grid-form-only">
-    {% endif %}
-      <div class="reveal reveal-delay-2">
-        <div class="form-container">
-          <h3 class="form-title">{{ post.meta('wizyta_form_title') | default('Rezerwacja') }}</h3>
-          <p class="form-subtitle">{{ post.meta('wizyta_form_subtitle') | default('Wypełnij formularz, odezwiemy się w ciągu 24h') }}</p>
-          {% set old = contact_old | default({}) %}
-          {% set errs = contact_errors | default([]) %}
-          {% if contact_status == 'success' %}
-            <div class="form-notice form-notice-success" role="status">
-              Dziękujemy! Wiadomość została zapisana. Odpowiemy najszybciej, jak to możliwe.
-            </div>
-          {% elseif contact_status in ['validation', 'security'] %}
-            <div class="form-notice form-notice-error" role="alert">
-              {% if errs %}
-                Popraw zaznaczone pola. Pozostałe dane zostały zachowane.
-              {% else %}
-                Sprawdź wymagane pola i spróbuj ponownie.
-              {% endif %}
-            </div>
-          {% elseif contact_status == 'rate_limit' %}
-            <div class="form-notice form-notice-error" role="alert">
-              Wysłano zbyt wiele wiadomości. Spróbuj ponownie za kilkanaście minut.
-            </div>
-          {% elseif contact_status == 'error' %}
-            <div class="form-notice form-notice-error" role="alert">
-              Nie udało się zapisać wiadomości. Skontaktuj się z nami telefonicznie lub mailowo.
-            </div>
-          {% endif %}
-
-          <form class="contact-form" action="{{ function('admin_url', 'admin-post.php') }}" method="post">
-            <input type="hidden" name="action" value="winnica_contact">
-            <input type="hidden" name="contact_started" value="{{ old.started | default(function('winnica_contact_token')) }}">
-            {{ function('wp_nonce_field', 'winnica_contact', 'winnica_contact_nonce', true, false) | raw }}
-
-            <div class="form-honeypot" aria-hidden="true">
-              <label for="contact-website">Strona internetowa</label>
-              <input id="contact-website" type="text" name="website" tabindex="-1" autocomplete="off">
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="contact-name">Imię i nazwisko *</label>
-                <input class="form-input" id="contact-name" name="contact_name" type="text" value="{{ old.name | default('') }}" autocomplete="name" minlength="2" required{% if 'name' in errs %} aria-invalid="true"{% endif %}>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="contact-email">E-mail *</label>
-                <input class="form-input" id="contact-email" name="contact_email" type="email" value="{{ old.email | default('') }}" autocomplete="email" required{% if 'email' in errs %} aria-invalid="true"{% endif %}>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="contact-phone">Telefon</label>
-                <input class="form-input" id="contact-phone" name="contact_phone" type="tel" value="{{ old.phone | default('') }}" autocomplete="tel">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="contact-topic">W czym możemy pomóc? *</label>
-                {% set topic = old.topic | default('') %}
-                <select class="form-input form-select" id="contact-topic" name="contact_topic" required{% if 'topic' in errs %} aria-invalid="true"{% endif %}>
-                  <option value="" disabled{% if not topic %} selected{% endif %}>Wybierz temat</option>
-                  {% for value, label in {
-                    'degustacja': 'Degustacja',
-                    'grupa': 'Oferta dla grupy',
-                    'szkola': 'Szkoła lub przedszkole',
-                    'wydarzenie': 'Wydarzenie lub warsztaty',
-                    'inne': 'Inne pytanie'
-                  } %}
-                    <option value="{{ value }}"{% if topic == value %} selected{% endif %}>{{ label }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="contact-date">Preferowana data wizyty</label>
-                {# Zwykly text, nie type="date": natywny picker rysuje sie w jezyku
-                   przegladarki, wiec na polskiej stronie potrafi pokazac 08/15/2026.
-                   Kalendarz dokleja datepicker.js, a bez JS wystarczy wpisac date. #}
-                <div class="datepicker" data-datepicker>
-                  <input class="form-input" id="contact-date" name="contact_date" type="text" value="{{ old.date | default('') }}" placeholder="DD.MM.RRRR" inputmode="numeric" maxlength="10" autocomplete="off" aria-describedby="contact-date-format"{% if 'date' in errs %} aria-invalid="true"{% endif %}>
-                </div>
-                {# Placeholder niesie format dla patrzacych, ale znika po pierwszym
-                   znaku i czytniki ekranu go nie ogłaszają; ten opis zostaje. #}
-                <span class="sr-only" id="contact-date-format">Format daty: dzień, miesiąc, rok, na przykład 15.08.2026</span>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="contact-guests">Liczba osób (min. 8 osób)</label>
-                <input class="form-input" id="contact-guests" name="contact_guests" type="number" value="{{ old.guests | default('') }}" inputmode="numeric" min="8" max="60"{% if 'guests' in errs %} aria-invalid="true"{% endif %}>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="contact-message">Wiadomość *</label>
-              <textarea class="form-textarea" id="contact-message" name="contact_message" rows="6" minlength="10" required{% if 'message' in errs %} aria-invalid="true"{% endif %}>{{ old.message | default('') }}</textarea>
-            </div>
-
-            <label class="form-consent{% if 'consent' in errs %} form-consent-error{% endif %}">
-              <input type="checkbox" name="contact_consent" value="1" required{% if old.consent | default(false) %} checked{% endif %}>
-              <span>Wyrażam zgodę na wykorzystanie podanych danych w celu odpowiedzi na wiadomość. Zapoznałem(-am) się z <a href="{{ function('get_privacy_policy_url') ?: function('home_url', '/polityka-prywatnosci/') }}">polityką prywatności</a>. *</span>
-            </label>
-
-            <button class="form-submit" type="submit">Wyślij wiadomość</button>
-          </form>
-        </div>
+        {% include 'partials/wizyta-formularz.twig' %}
       </div>
-    </div>
+    {% endif %}
   </div>
 </section>
