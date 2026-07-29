@@ -6,10 +6,10 @@
     </div>
     <div class="exp-grid">
       {% set fallback_images = {
-        1: {name: 'doswiadczenie-degustacja', w: 750, h: 1000},
-        2: {name: 'doswiadczenie-spacer', w: 750, h: 1000},
-        3: {name: 'doswiadczenie-daniele', w: 750, h: 1000},
-        4: {name: 'doswiadczenie-park-linowy', w: 675, h: 900}
+        1: {name: 'doswiadczenie-degustacja', w: 750, h: 1000, avif: true},
+        2: {name: 'doswiadczenie-spacer', w: 750, h: 1000, avif: false, version: '20260729'},
+        3: {name: 'doswiadczenie-daniele', w: 750, h: 1000, avif: true},
+        4: {name: 'doswiadczenie-park-linowy', w: 675, h: 900, avif: true}
       } %}
       {% set exp_sizes = '(max-width: 360px) 96px, (max-width: 768px) 112px, (max-width: 1024px) 140px, 25vw' %}
       {% for i in 1..4 %}
@@ -28,10 +28,15 @@
               {% else %}
                 {% set fb = fallback_images[i] %}
                 {% set img_base = theme.link ~ '/assets/images/' ~ fb.name %}
-                <picture>
-                  <source srcset="{{ img_base }}-480.avif 480w, {{ img_base }}.avif {{ fb.w }}w" sizes="{{ exp_sizes }}" type="image/avif">
-                  <img src="{{ img_base }}.webp" srcset="{{ img_base }}-480.webp 480w, {{ img_base }}.webp {{ fb.w }}w" sizes="{{ exp_sizes }}" alt="{{ title }} w Winnicy Nowizny" width="{{ fb.w }}" height="{{ fb.h }}" loading="lazy" decoding="async">
-                </picture>
+                {% set asset_version = fb.version ? '?v=' ~ fb.version : '' %}
+                {% if fb.avif %}
+                  <picture>
+                    <source srcset="{{ img_base }}-480.avif 480w, {{ img_base }}.avif {{ fb.w }}w" sizes="{{ exp_sizes }}" type="image/avif">
+                {% endif %}
+                  <img src="{{ img_base }}.webp{{ asset_version }}" srcset="{{ img_base }}-480.webp{{ asset_version }} 480w, {{ img_base }}.webp{{ asset_version }} {{ fb.w }}w" sizes="{{ exp_sizes }}" alt="{{ title }} w Winnicy Nowizny" width="{{ fb.w }}" height="{{ fb.h }}" loading="lazy" decoding="async">
+                {% if fb.avif %}
+                  </picture>
+                {% endif %}
               {% endif %}
               <div class="exp-card-gradient"></div>
             </div>
