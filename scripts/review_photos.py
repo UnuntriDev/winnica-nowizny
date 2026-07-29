@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import os
 from pathlib import Path
 
 # Load-bearing: puts .review-deps on sys.path and explains itself when the
@@ -13,7 +14,16 @@ from pillow_heif import register_heif_opener
 
 register_heif_opener()
 
-SOURCE = Path("zdjecia-zrodlowe")
+# Katalog ze zdjeciami zrodlowymi jest prywatny i lezy poza repozytorium, wiec
+# sciezke podaje sie w zmiennej srodowiskowej zamiast wpisywac ja tutaj.
+SOURCE = Path(os.environ.get("WINNICA_PHOTO_SOURCE", "")).expanduser()
+if not SOURCE.is_dir():
+    raise SystemExit(
+        "Ustaw WINNICA_PHOTO_SOURCE na katalog ze zdjeciami zrodlowymi, np.\n"
+        '  PowerShell: $env:WINNICA_PHOTO_SOURCE = "D:\\zdjecia"\n'
+        '  bash:       export WINNICA_PHOTO_SOURCE="/d/zdjecia"'
+    )
+
 OUTPUT = Path(__file__).resolve().parents[1] / "photo-review"
 OUTPUT.mkdir(exist_ok=True)
 
