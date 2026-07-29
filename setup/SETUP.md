@@ -1,115 +1,111 @@
-# Winnica Nowizny — Setup Guide
+# Winnica Nowizny — uruchomienie i wdrożenie
 
-## Wymagania
-- Docker Desktop (Windows/Mac)
-- Node.js 18+ (dla Vite build)
+## Wymagania lokalne
 
-## Szybki start
+- Docker Desktop,
+- Node.js 18+,
+- plik `.env` utworzony na podstawie `.env.example`.
 
-### 1. Uruchom Docker
+## Środowisko lokalne
+
 ```bash
-cd winnica-nowizny
 docker compose up -d
-```
-WordPress dostępny na `http://localhost:8080`
-
-Przed uruchomieniem produkcyjnym skopiuj `.env.example` do `.env` i ustaw silne hasła bazy, administratora oraz dane SMTP. Plik `.env` jest ignorowany przez Git.
-
-### 2. Zainstaluj WordPress + demo content
-```bash
 docker compose run --rm wpcli sh /setup/install.sh
-```
-
-## Utrzymanie i bezpieczeństwo
-
-- Formularz zapisuje wiadomości w panelu **Wiadomości** i obsługuje statusy: Nowa, Skontaktowano się, Zarezerwowano, Zamknięta i Spam.
-- SMTP korzysta wyłącznie ze zmiennych `WINNICA_SMTP_*` w `.env`; hasło nie trafia do WordPressa ani repozytorium.
-- Endpoint monitoringu: `/wp-json/winnica/v1/health`.
-- Automatyczne aktualizacje rdzenia bezpieczeństwa, pluginów i motywu są włączone. Przed większymi zmianami wykonaj `setup/backup.ps1`.
-- Logowanie jest blokowane na 30 minut po pięciu błędnych próbach z tego samego adresu i loginu.
-- Analityka GA4 pozostaje wyłączona bez poprawnego `WINNICA_GA_ID` i uruchamia się dopiero po zgodzie użytkownika.
-Instaluje WP (pl_PL), aktywuje motyw, tworzy strony, 6 win, menu.
-Pluginy wymagane przez motyw: ACF (free) i Timber. Metadane SEO oraz schema.org obsługuje motyw.
-
-### 3. Seed danych
-```bash
-docker compose run --rm wpcli sh /setup/seed-acf-meta.sh
 docker compose run --rm wpcli sh /setup/seed-homepage.sh
 ```
 
-### 4. Vite (CSS/JS development)
+Strona: `http://localhost:8080`. Instalator tworzy stronę główną, politykę
+prywatności, pięć prezentowanych win i menu. Hasło administratora pochodzi z
+`WP_ADMIN_PASSWORD`; jeśli go nie podano, instalator generuje je jednorazowo.
+
+ACF 6.8.6 i Timber 1.23.4 są instalowane w wersjach przypiętych. Timber 1.x jest
+rozwiązaniem przejściowym; stos produkcyjny pozostaje na PHP 8.1 do czasu
+osobnej, przetestowanej migracji motywu do Timber 2.
+
+## Frontend
+
 ```bash
 cd wp-theme/winnica-nowizny
-npm install
-npm run dev    # development
-npm run build  # production build → assets/dist/
+npm ci
+npm run build
 ```
 
-## Logowanie
-- **URL:** http://localhost:8080/wp-admin
-- **Login:** admin
-- **Hasło:** ustaw `WP_ADMIN_PASSWORD` przed instalacją lub zachowaj hasło wygenerowane przez instalator
+`assets/dist` jest częścią artefaktu wdrożeniowego. Produkcja bez kompletnego
+manifestu Vite odpowiada kontrolowanym błędem 503. Lokalnie motyw może skorzystać
+z modułowego fallbacku źródłowego.
 
-## Checklista przed publikacją
+## Wdrożenie produkcyjne
 
-- Ustaw `WP_ENVIRONMENT_TYPE=production`.
-- W **Ustawienia → Czytanie** wyłącz opcję „Proś wyszukiwarki o nieindeksowanie tej witryny” (`blog_public=1`).
-- Sprawdź, czy `/wp-json/winnica/v1/health` zwraca `status: ok` i `indexable: true`.
-- Zweryfikuj tytuł, opis, canonical, Open Graph i pojedynczy blok schema.org na stronie głównej.
-- Przetestuj formularz oraz SMTP na docelowym adresie odbiorczym.
-- Wygeneruj ponownie sitemapę WordPressa i zgłoś ją w Google Search Console.
-- Zablokuj `/xmlrpc.php` na poziomie serwera (Apache/nginx), jeśli integracje zewnętrzne go nie wymagają.
-- Wykonaj kopię zapasową przed przełączeniem DNS.
+1. Uzupełnij wszystkie wymagane zmienne w `.env`: hasła bazy, `WP_URL` z HTTPS,
+   `WINNICA_RELEASE`, SMTP, adres administratora i adresy zaufanego reverse proxy.
+2. Utwórz sieć reverse proxy i skonfiguruj na nim certyfikat TLS oraz przekierowanie
+   HTTP → HTTPS. Kontener WordPressa nie publikuje portu bezpośrednio.
+3. Zbuduj i uruchom obraz:
 
-## Architektura (bez ACF PRO)
-
-| Potrzeba | Rozwiązanie |
-|----------|-------------|
-| Sekcje homepage | 9 osobnych grup ACF z toggle show/hide |
-| Listy (stats, karty) | Stałe numerowane pola (stat_1, card_1...) |
-| Ustawienia globalne | WordPress Customizer (Wygląd → Dostosuj → Winnica) |
-| Pola CPT Wino | ACF field group z Tabs |
-
-## Struktura projektu
-```
-winnica-nowizny/
-├── docker-compose.yml
-├── setup/              # Skrypty instalacyjne
-├── plugins/            # Pluginy WP (gitignored)
-├── uploads/            # Media (gitignored)
-└── wp-theme/
-    └── winnica-nowizny/  # ← Motyw WordPress
-        ├── acf-json/     # 10 grup ACF (auto-sync)
-        ├── inc/          # PHP modules (7 plików)
-        ├── src/css/      # 12 plików CSS z tokenami
-        ├── src/js/       # ES modules
-        ├── templates/    # Twig (base + partials)
-        └── vite.config.js
-```
-
-## Customizer (ustawienia globalne)
-Wygląd → Dostosuj → Winnica Nowizny:
-- **Dane kontaktowe** — telefon, email, adres, GPS, godziny
-- **Social Media** — Facebook, Instagram, TikTok, YouTube
-- **Stopka** — opis
-
-## Przydatne komendy
 ```bash
-# WP-CLI
-docker compose run --rm wpcli wp cache flush
-docker compose run --rm wpcli wp db export /setup/backup.sql
+docker compose -f docker-compose.production.yml build --pull
+docker compose -f docker-compose.production.yml up -d
+```
 
-# Pełna kopia bazy, motywu, uploadów i pluginów (PowerShell)
+4. Po imporcie lokalnej bazy wykonaj serializacyjnie bezpieczną migrację URL:
+
+```bash
+docker compose -f docker-compose.production.yml exec \
+  -e OLD_WP_URL=http://localhost:8080 wordpress winnica-migrate
+```
+
+Skrypt wymaga produkcyjnego `WP_URL`, aktualizuje `home`/`siteurl`, włącza
+indeksowanie, odświeża rewrite rules właściwym mechanizmem WordPressa oraz czyści
+cache. Nie wpisuj docelowej domeny ręcznie w dumpie SQL.
+
+## Bezpieczeństwo i dane
+
+- `WP_DEBUG`, wyświetlanie błędów i publiczny `debug.log` są wyłączone na produkcji.
+- Logi PHP trafiają do stderr kontenera; Apache blokuje dostęp do `*.log`,
+  `*.sql`, `*.bak`, plików ukrytych i nie ujawnia wersji PHP/Apache.
+- Wiadomości formularza mają oddzielne capabilities przyznawane administratorowi,
+  a nie standardowym redaktorom.
+- SMTP korzysta tylko ze zmiennych `WINNICA_SMTP_*`. Po uruchomieniu wyślij jedno
+  kontrolowane zgłoszenie i potwierdź dostarczenie oraz SPF/DKIM/DMARC.
+- `WINNICA_TRUSTED_PROXY_CIDRS` może zawierać wyłącznie adresy rzeczywistego
+  reverse proxy/CDN. Bez tej listy nagłówki przekazujące IP są ignorowane.
+
+## Backup i monitoring
+
+`backup.ps1` służy wyłącznie do kopii lokalnej. Produkcja musi mieć automatyczny
+backup bazy i wolumenu uploads poza serwerem, szyfrowanie, retencję po stronie
+storage i cykliczny test odtworzenia. Skrypt `backup-production.sh` tworzy
+zaszyfrowaną kopię i wysyła ją przez `rclone`; uruchamiaj go z cron/systemd timer.
+
+Workflow `.github/workflows/uptime.yml` sprawdza publiczny endpoint zdrowia.
+Alerty GitHub nie zastępują alertów operatora hostingu — przypisz odbiorcę
+powiadomień przed publikacją.
+
+## Checklista po migracji
+
+- `WP_ENVIRONMENT_TYPE=production`, `blog_public=1`,
+- `home`, `siteurl`, canonicale, sitemap i schema używają docelowego HTTPS,
+- `/wp-content/debug.log` zwraca 403/404,
+- nagłówki nie zawierają wersji PHP/Apache,
+- endpoint `/wp-json/winnica/v1/health` zwraca `{"status":"ok"}`,
+- formularz zapisuje wiadomość i wysyła e-mail przez SMTP,
+- GA4 nie ładuje się przed zgodą,
+- favikona, dane administratora i godziny otwarcia są potwierdzone,
+- testy 320, 375, 768 i 1440 px oraz klawiatura/czytnik ekranu przechodzą,
+- wykonano i odtworzono pierwszą kopię zapasową.
+
+## Utrzymanie
+
+```bash
+# Lokalna kopia
 .\setup\backup.ps1
 
-# Test endpointu monitoringu
+# Lokalny health check
 .\setup\monitor.ps1
 
-# Warianty WebP/AVIF statycznych obrazów
-docker compose run --rm --entrypoint wp wpcli eval-file /setup/optimize-images.php --allow-root
-
-# Reset
-docker compose down -v
-docker compose up -d
-docker compose run --rm wpcli sh /setup/install.sh
+# Obrazy AVIF i favikona
+python scripts/generate_production_assets.py
 ```
+
+Przed aktualizacją WordPressa, ACF, Timbera lub PHP wykonaj kopię i test na
+stagingu. Nie aktualizuj Timbera do wersji 2 bez migracji API motywu.
