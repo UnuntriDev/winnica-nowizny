@@ -1,0 +1,22 @@
+name: Uptime
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check Winnica health endpoint
+        run: |
+          curl --fail --silent --show-error \
+            --max-time 20 \
+            --retry 2 \
+            https://winnicanowizny.pl/wp-json/winnica/v1/health \
+            | grep -q '"status":"ok"'
