@@ -84,14 +84,28 @@ function winnica_page_cache_key(): string
     $analytics_id = function_exists('winnica_analytics_id') ? winnica_analytics_id() : '';
     $manifest_path = WINNICA_DIR . '/assets/dist/.vite/manifest.json';
     $asset_version = is_readable($manifest_path) ? md5_file($manifest_path) : 'development';
+    $release = defined('WINNICA_RELEASE')
+        ? (string) WINNICA_RELEASE
+        : (string) (getenv('WINNICA_RELEASE') ?: WINNICA_VERSION);
 
     return 'winnica_front_' . md5(
         home_url('/')
         . '|' . determine_locale()
-        . '|' . WINNICA_VERSION
+        . '|' . $release
         . '|' . $asset_version
         . '|' . $analytics_id
     );
+}
+
+function winnica_register_page_cache_key(string $key): void
+{
+    $keys = get_option('winnica_page_cache_keys', []);
+    $keys = is_array($keys) ? $keys : [];
+
+    if (!in_array($key, $keys, true)) {
+        $keys[] = $key;
+        update_option('winnica_page_cache_keys', array_slice($keys, -20), false);
+    }
 }
 
 function winnica_page_cache_allowed(): bool
@@ -123,7 +137,9 @@ add_action('template_redirect', function (): void {
             // visitor pay it. Editing flushes the cache anyway (save_post,
             // customize_save_after), so the TTL is only a backstop. Keep it below the
             // 2-hour form token validity window in winnica_contact_token_is_valid().
-            set_transient(winnica_page_cache_key(), $html, HOUR_IN_SECONDS);
+            $key = winnica_page_cache_key();
+            set_transient($key, $html, HOUR_IN_SECONDS);
+            winnica_register_page_cache_key($key);
         }
         return $html;
     });
@@ -131,6 +147,16 @@ add_action('template_redirect', function (): void {
 
 function winnica_flush_page_cache(): void
 {
+    $keys = get_option('winnica_page_cache_keys', []);
+    if (is_array($keys)) {
+        foreach ($keys as $key) {
+            if (is_string($key) && str_starts_with($key, 'winnica_front_')) {
+                delete_transient($key);
+            }
+        }
+    }
+
+    delete_option('winnica_page_cache_keys');
     delete_transient(winnica_page_cache_key());
 }
 

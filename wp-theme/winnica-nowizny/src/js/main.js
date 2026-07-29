@@ -1,4 +1,3 @@
-import '../css/main.css';
 import { initNav } from './modules/nav.js';
 import { initReveal } from './modules/reveal.js';
 import { initConsent } from './modules/consent.js';

@@ -11,6 +11,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'src/js/main.js'),
+        styles: resolve(__dirname, 'src/css/main.css'),
       },
     },
   },

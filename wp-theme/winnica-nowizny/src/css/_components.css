@@ -298,6 +298,19 @@
 .form-consent-error { color: #f3d7d1; }
 .form-consent-error input { outline: 2px solid rgba(205, 122, 108, 0.8); outline-offset: 2px; }
 
+.form-field-error {
+  display: block;
+  margin-top: 7px;
+  color: #f3d7d1;
+  font-size: var(--fs-meta);
+  line-height: 1.45;
+}
+
+.form-field-error-consent {
+  margin-top: calc(-1 * var(--sp-2));
+  padding-left: 36px;
+}
+
 .form-notice {
   margin-bottom: var(--sp-3);
   padding: 14px 16px;

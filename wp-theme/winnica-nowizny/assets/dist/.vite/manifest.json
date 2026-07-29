@@ -1,0 +1,53 @@
+{
+  "assets/fonts/cormorant-garamond-italic-latin-ext.woff2": {
+    "file": "assets/cormorant-garamond-italic-latin-ext-BdEzgT7i.woff2",
+    "src": "assets/fonts/cormorant-garamond-italic-latin-ext.woff2"
+  },
+  "assets/fonts/cormorant-garamond-italic-latin.woff2": {
+    "file": "assets/cormorant-garamond-italic-latin-Dc_OZ8oc.woff2",
+    "src": "assets/fonts/cormorant-garamond-italic-latin.woff2"
+  },
+  "assets/fonts/cormorant-garamond-normal-latin-ext.woff2": {
+    "file": "assets/cormorant-garamond-normal-latin-ext-ltf1AbuM.woff2",
+    "src": "assets/fonts/cormorant-garamond-normal-latin-ext.woff2"
+  },
+  "assets/fonts/cormorant-garamond-normal-latin.woff2": {
+    "file": "assets/cormorant-garamond-normal-latin-CUoBjw-S.woff2",
+    "src": "assets/fonts/cormorant-garamond-normal-latin.woff2"
+  },
+  "assets/fonts/source-sans-3-normal-latin-ext.woff2": {
+    "file": "assets/source-sans-3-normal-latin-ext-C8iNium2.woff2",
+    "src": "assets/fonts/source-sans-3-normal-latin-ext.woff2"
+  },
+  "assets/fonts/source-sans-3-normal-latin.woff2": {
+    "file": "assets/source-sans-3-normal-latin-BqRLTx4X.woff2",
+    "src": "assets/fonts/source-sans-3-normal-latin.woff2"
+  },
+  "assets/images/wizyta-tlo.avif": {
+    "file": "assets/wizyta-tlo-DRi5TDRo.avif",
+    "src": "assets/images/wizyta-tlo.avif"
+  },
+  "assets/images/wizyta-tlo.webp": {
+    "file": "assets/wizyta-tlo-CdJT5daB.webp",
+    "src": "assets/images/wizyta-tlo.webp"
+  },
+  "src/js/main.js": {
+    "file": "assets/main-kZvpS3F6.js",
+    "name": "main",
+    "src": "src/js/main.js",
+    "isEntry": true,
+    "css": [
+      "assets/main-wfL0L64o.css"
+    ],
+    "assets": [
+      "assets/cormorant-garamond-normal-latin-ext-ltf1AbuM.woff2",
+      "assets/cormorant-garamond-normal-latin-CUoBjw-S.woff2",
+      "assets/cormorant-garamond-italic-latin-ext-BdEzgT7i.woff2",
+      "assets/cormorant-garamond-italic-latin-Dc_OZ8oc.woff2",
+      "assets/source-sans-3-normal-latin-ext-C8iNium2.woff2",
+      "assets/source-sans-3-normal-latin-BqRLTx4X.woff2",
+      "assets/wizyta-tlo-DRi5TDRo.avif",
+      "assets/wizyta-tlo-CdJT5daB.webp"
+    ]
+  }
+}

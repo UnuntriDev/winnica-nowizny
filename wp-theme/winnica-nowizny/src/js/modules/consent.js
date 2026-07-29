@@ -196,7 +196,7 @@ export function initConsent() {
     });
   });
 
-  panel.querySelectorAll('[data-consent-collapse], [data-consent-close]').forEach((button) => {
+  panel.querySelectorAll('[data-consent-close]').forEach((button) => {
     button.addEventListener('click', () => closePanel());
   });
 

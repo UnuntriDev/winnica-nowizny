@@ -4,9 +4,6 @@ wp_data/
 # Dependencies
 wp-theme/winnica-nowizny/node_modules/
 
-# Build output
-wp-theme/winnica-nowizny/assets/dist/
-
 # Uploads (large binary files)
 uploads/
 
