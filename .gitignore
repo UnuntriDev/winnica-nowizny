@@ -3,6 +3,7 @@ wp_data/
 
 # Dependencies
 wp-theme/winnica-nowizny/node_modules/
+wp-theme/winnica-nowizny/vendor/
 
 # Uploads (large binary files)
 uploads/

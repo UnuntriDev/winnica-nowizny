@@ -12,14 +12,14 @@ stosem Docker, obrazem produkcyjnym, skryptami instalacyjnymi i migracyjnymi.
 
 ## Stack
 
-- WordPress 7.0 jako Classic Theme, PHP 8.1
-- Timber 1.23 i Twig na warstwę szablonów
+- WordPress 7.0 jako Classic Theme, PHP 8.2
+- Timber 2.5 i Twig 3 na warstwę szablonów
 - Advanced Custom Fields 6.8 (wersja darmowa, synchronizacja przez `acf-json`)
 - Vite 6 do budowania CSS i JavaScriptu
 - MariaDB 11, Apache, wszystko w Dockerze
 
-Wersje ACF i Timbera są przypięte w `Dockerfile.wordpress`, żeby obraz produkcyjny
-budował się powtarzalnie.
+Wersja ACF jest przypięta w `Dockerfile.wordpress`, a Timber i Twig w
+`composer.lock`, żeby obraz produkcyjny budował się powtarzalnie.
 
 ## Uruchomienie lokalne
 
@@ -28,6 +28,7 @@ haseł w `.env` compose przerwie start z komunikatem, która zmienna jest pusta.
 
 ```bash
 docker compose up -d
+docker run --rm -v "$PWD/wp-theme/winnica-nowizny:/app" -w /app composer:2.8 install
 docker compose run --rm wpcli sh /setup/install.sh
 docker compose run --rm wpcli sh /setup/seed-homepage.sh
 ```
@@ -66,8 +67,8 @@ Analytics ładuje się dopiero po zgodzie, a jej cofnięcie usuwa ciasteczka `_g
 albo w Personalizacji motywu, analityka i panel zgód w ogóle się nie renderują.
 
 **SEO.** Motyw sam generuje tytuły, opisy, canonicale, Open Graph i dane
-strukturalne schema.org typu `LocalBusiness` z rozszerzeniem `Winery`, razem z
-sezonowymi godzinami otwarcia. Bez wtyczki SEO.
+strukturalne schema.org typu `LocalBusiness` z rozszerzeniem `Winery`. Godziny
+nie trafiają do schema.org, dopóki właściciel nie potwierdzi pełnego harmonogramu.
 
 **Wydajność.** Strona główna cache'uje się w transiencie na godzinę i unieważnia
 przy zapisie wpisu, zmianie motywu lub menu. Zdjęcia mają warianty AVIF i WebP z
@@ -113,6 +114,5 @@ Pełna instrukcja krok po kroku znajduje się w [setup/SETUP.md](setup/SETUP.md)
 
 ## Uwagi
 
-Timber 1.x nie jest już rozwijany, dlatego stos stoi na PHP 8.1. Migracja motywu
-do Timbera 2 jest zaplanowana jako osobna, przetestowana zmiana, a nie przy okazji
-wdrożenia.
+Timber 2 jest zależnością motywu instalowaną przez Composer. Nie instaluj starej
+wtyczki `timber-library`; jest nieutrzymywana i koliduje z wersją z `vendor/`.

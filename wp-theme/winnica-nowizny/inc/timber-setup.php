@@ -1,6 +1,6 @@
 <?php
 /**
- * Timber initialization and Twig template paths (Timber 1.x API).
+ * Timber 2 initialization, Twig security defaults and global context.
  */
 
 defined('ABSPATH') || exit;
@@ -52,7 +52,7 @@ function winnica_short_author(string $name): string
 
 function winnica_require_timber(): void
 {
-    if (class_exists('Timber')) {
+    if (class_exists(\Timber\Timber::class)) {
         return;
     }
 
@@ -65,20 +65,26 @@ function winnica_require_timber(): void
     );
 }
 
-if (!class_exists('Timber')) {
+if (!class_exists(\Timber\Timber::class)) {
     add_action('admin_notices', function () {
-        echo '<div class="error"><p>Timber nie jest zainstalowany. Zainstaluj plugin Timber.</p></div>';
+        echo '<div class="notice notice-error"><p><strong>Winnica Nowizny:</strong> '
+            . 'brak zależności PHP. Uruchom <code>composer install --no-dev</code> w katalogu motywu.</p></div>';
     });
     return;
 }
 
-// Timber 1.x disables Twig autoescaping by default. Keep it enabled globally
-// and opt into |raw only for markup already produced or sanitised by WordPress.
-Timber::$autoescape = 'html';
-Timber::$dirname = ['templates', 'templates/partials'];
+\Timber\Timber::init();
+\Timber\Timber::$dirname = ['templates', 'templates/partials'];
 
-add_filter('timber_context', function (array $context): array {
-    $context['menu']           = new Timber\Menu('primary');
+// Keep Twig safe by default and opt into |raw only for markup already produced
+// or sanitised by WordPress.
+add_filter('timber/twig/environment/options', function (array $options): array {
+    $options['autoescape'] = 'html';
+    return $options;
+});
+
+add_filter('timber/context', function (array $context): array {
+    $context['menu']           = \Timber\Timber::get_menu('primary');
     $context['site_phone']      = get_theme_mod('winnica_phone', '607 578 156');
     $context['site_phone_href'] = winnica_tel_href((string) $context['site_phone']);
     $context['site_email']     = get_theme_mod('winnica_email', 'winnicanowizny@op.pl');

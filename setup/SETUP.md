@@ -10,6 +10,7 @@
 
 ```bash
 docker compose up -d
+docker run --rm -v "$PWD/wp-theme/winnica-nowizny:/app" -w /app composer:2.8 install
 docker compose run --rm wpcli sh /setup/install.sh
 docker compose run --rm wpcli sh /setup/seed-homepage.sh
 ```
@@ -18,9 +19,9 @@ Strona: `http://localhost:8080`. Instalator tworzy stronę główną, politykę
 prywatności, pięć prezentowanych win i menu. Hasło administratora pochodzi z
 `WP_ADMIN_PASSWORD`; jeśli go nie podano, instalator generuje je jednorazowo.
 
-ACF 6.8.6 i Timber 1.23.4 są instalowane w wersjach przypiętych. Timber 1.x jest
-rozwiązaniem przejściowym; stos produkcyjny pozostaje na PHP 8.1 do czasu
-osobnej, przetestowanej migracji motywu do Timber 2.
+ACF 6.8.6 jest instalowane w wersji przypiętej. Timber 2.5.1 i Twig 3.28.0 są
+zależnościami motywu zapisanymi w `composer.lock` i działają na PHP 8.2. Starej
+wtyczki `timber-library` nie instalujemy.
 
 ## Frontend
 
@@ -107,5 +108,5 @@ powiadomień przed publikacją.
 python scripts/generate_production_assets.py
 ```
 
-Przed aktualizacją WordPressa, ACF, Timbera lub PHP wykonaj kopię i test na
-stagingu. Nie aktualizuj Timbera do wersji 2 bez migracji API motywu.
+Przed aktualizacją WordPressa, ACF, Timbera, Twig lub PHP wykonaj kopię i test na
+stagingu. Timber i Twig aktualizuj przez Composer razem z plikiem blokady.
