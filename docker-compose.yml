@@ -1,6 +1,6 @@
 services:
   wordpress:
-    image: wordpress:6.7-php8.2-apache
+    image: wordpress:7.0.2-php8.1-apache
     container_name: winnica-wp
     restart: unless-stopped
     ports:
@@ -20,8 +20,10 @@ services:
       WINNICA_SMTP_FROM_EMAIL: ${WINNICA_SMTP_FROM_EMAIL:-}
       WINNICA_SMTP_FROM_NAME: ${WINNICA_SMTP_FROM_NAME:-Winnica Nowizny}
       WINNICA_GA_ID: ${WINNICA_GA_ID:-}
+      WINNICA_RELEASE: ${WINNICA_RELEASE:-local}
+      WINNICA_TRUSTED_PROXY_CIDRS: ${WINNICA_TRUSTED_PROXY_CIDRS:-}
       WORDPRESS_CONFIG_EXTRA: |
-        define('WP_DEBUG_LOG', WP_DEBUG);
+        define('WP_DEBUG_LOG', WP_DEBUG ? 'php://stderr' : false);
         define('WP_DEBUG_DISPLAY', false);
         define('SCRIPT_DEBUG', WP_DEBUG);
         define('WP_ENVIRONMENT_TYPE', getenv('WP_ENVIRONMENT_TYPE') ?: 'local');
@@ -30,6 +32,8 @@ services:
       - ./wp-theme/winnica-nowizny:/var/www/html/wp-content/themes/winnica-nowizny
       - ./plugins:/var/www/html/wp-content/plugins
       - ./uploads:/var/www/html/wp-content/uploads
+      - ./setup/apache-security.conf:/etc/apache2/conf-enabled/winnica-security.conf:ro
+      - ./setup/php-hardening.ini:/usr/local/etc/php/conf.d/winnica-hardening.ini:ro
     depends_on:
       db:
         condition: service_healthy
@@ -58,7 +62,7 @@ services:
       retries: 5
 
   wpcli:
-    image: wordpress:cli-php8.2
+    image: wordpress:cli-php8.1
     container_name: winnica-cli
     volumes:
       - wp_data:/var/www/html
@@ -72,6 +76,9 @@ services:
       WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD:?ustaw WORDPRESS_DB_PASSWORD w pliku .env (wzor w .env.example)}
       WORDPRESS_DB_NAME: winnica
       WP_ADMIN_PASSWORD: ${WP_ADMIN_PASSWORD:-}
+      WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL:-admin@winnicanowizny.local}
+      WP_URL: ${WP_URL:-http://localhost:8080}
+      WP_ENVIRONMENT_TYPE: ${WP_ENVIRONMENT_TYPE:-local}
     depends_on:
       db:
         condition: service_healthy

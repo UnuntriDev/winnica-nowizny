@@ -1,0 +1,10 @@
+.git
+.env
+.review-deps
+photo-review
+plugins
+uploads
+setup/backups
+wp-theme/winnica-nowizny/node_modules
+wp-theme/winnica-nowizny/assets/dist
+/*.md

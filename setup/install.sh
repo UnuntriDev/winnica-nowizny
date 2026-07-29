@@ -18,19 +18,25 @@ done
 
 echo "🔧 Installing WordPress..."
 ADMIN_PASSWORD="${WP_ADMIN_PASSWORD:-}"
+ADMIN_EMAIL="${WP_ADMIN_EMAIL:-admin@winnicanowizny.local}"
+SITE_URL="${WP_URL:-http://localhost:8080}"
 GENERATED_PASSWORD=0
 if [ -z "$ADMIN_PASSWORD" ]; then
   ADMIN_PASSWORD="$(tr -dc 'A-Za-z0-9!@#%+=' </dev/urandom | head -c 24)"
   GENERATED_PASSWORD=1
 fi
 $WP core install \
-  --url="http://localhost:8080" \
+  --url="$SITE_URL" \
   --title="Winnica Nowizny" \
   --admin_user=admin \
   --admin_password="$ADMIN_PASSWORD" \
-  --admin_email=admin@winnicanowizny.local \
+  --admin_email="$ADMIN_EMAIL" \
   --locale=pl_PL \
   --skip-email
+
+echo "📦 Installing pinned plugin versions..."
+$WP plugin install advanced-custom-fields --version=6.8.6 --activate
+$WP plugin install timber-library --version=1.23.4 --activate
 
 echo "🎨 Activating theme..."
 $WP theme activate winnica-nowizny
@@ -54,10 +60,6 @@ $WP plugin delete akismet 2>/dev/null || true
 $WP theme delete twentytwentyfour 2>/dev/null || true
 $WP theme delete twentytwentyfive 2>/dev/null || true
 
-echo "📦 Installing plugins..."
-$WP plugin install advanced-custom-fields --activate
-$WP plugin install timber-library --activate
-
 echo "🔄 Syncing ACF field groups from JSON..."
 for f in /var/www/html/wp-content/themes/winnica-nowizny/acf-json/*.json; do
   $WP acf json import "$f" 2>/dev/null || true
@@ -72,6 +74,11 @@ $WP option update page_on_front "$FRONT_ID"
 echo "📄 Creating privacy page..."
 PRIVACY_ID=$($WP post create --post_type=page --post_title="Polityka prywatności" --post_status=publish --post_name=polityka-prywatnosci --post_content="$(cat /setup/privacy-policy.html)" --porcelain)
 $WP option update wp_page_for_privacy_policy "$PRIVACY_ID"
+
+echo "🦌 Setting site icon..."
+SITE_ICON_ID=$($WP media import /var/www/html/wp-content/themes/winnica-nowizny/assets/images/site-icon.png \
+  --title="Ikona Winnicy Nowizny" --porcelain)
+$WP option update site_icon "$SITE_ICON_ID"
 
 echo "🍷 Creating wine posts..."
 # Real range from the winery. Card label comes from the 'rodzaj' post meta (not the
@@ -126,8 +133,8 @@ $WP theme mod set winnica_footer_desc "Rodzinna winnica na Pogórzu Rożnowskim.
 
 echo ""
 echo "✅ Setup complete!"
-echo "🌐 Site: http://localhost:8080"
-echo "🔑 Admin: http://localhost:8080/wp-admin"
+echo "🌐 Site: $SITE_URL"
+echo "🔑 Admin: ${SITE_URL%/}/wp-admin"
 echo "   Login: admin"
 if [ "$GENERATED_PASSWORD" = "1" ]; then
   echo "   Jednorazowo wygenerowane hasło: $ADMIN_PASSWORD"
@@ -137,7 +144,6 @@ fi
 echo ""
 echo "⚠️  Next steps:"
 echo "   1. ACF fields auto-sync from acf-json/ folder"
-echo "   2. Run: sh /setup/seed-acf-meta.sh"
-echo "   3. Run: sh /setup/seed-homepage.sh"
-echo "   4. Set cut-out bottle photos (transparent WebP) as each wine's featured image"
-echo "   5. Set Customizer options: Appearance → Customize → Winnica Nowizny"
+echo "   2. Run: sh /setup/seed-homepage.sh"
+echo "   3. Set cut-out bottle photos (transparent WebP) as each wine's featured image"
+echo "   4. Set Customizer options: Appearance → Customize → Winnica Nowizny"
