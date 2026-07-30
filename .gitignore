@@ -29,6 +29,10 @@ desktop.ini
 setup/backups/*
 !setup/backups/.gitkeep
 
+# Paczki wdrozeniowe z setup/build-release.sh. Kotwica na poczatku wzorca jest
+# istotna: assets/dist to zbudowany frontend i ma zostac pod kontrola wersji.
+/dist/
+
 # Review tooling artifacts
 .review-deps/
 photo-review/
