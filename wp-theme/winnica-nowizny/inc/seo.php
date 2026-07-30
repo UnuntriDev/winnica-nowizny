@@ -110,6 +110,39 @@ function winnica_seo_meta(): void {
     echo '<meta name="twitter:image" content="' . esc_url($image['url']) . '">' . "\n";
 }
 
+/**
+ * Opening hours as schema.org expects them, mirroring the visible text in the
+ * visit section: weekends all year, and a wider week in July and August.
+ *
+ * The summer schedule overlaps the rest of the year on Saturday, so the two
+ * cannot stand as one unqualified list; validFrom/validThrough is what tells
+ * a consumer which one is in force. Those bounds need real dates, so the year
+ * is passed in and the off-season is split around summer rather than hardcoded
+ * once. Nobody has to remember to bump this every January.
+ *
+ * @return array<int, array<string, mixed>>
+ */
+function winnica_opening_hours(int $year): array {
+    $spec = static fn(array $days, string $opens, string $closes, string $from, string $through): array => [
+        '@type'        => 'OpeningHoursSpecification',
+        'dayOfWeek'    => $days,
+        'opens'        => $opens,
+        'closes'       => $closes,
+        'validFrom'    => $from,
+        'validThrough' => $through,
+    ];
+
+    $weekend = ['Saturday', 'Sunday'];
+    $summer  = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    return [
+        $spec($weekend, '11:00', '20:00', $year . '-01-01', $year . '-06-30'),
+        $spec($summer, '11:00', '20:00', $year . '-07-01', $year . '-08-31'),
+        $spec(['Sunday'], '14:00', '20:00', $year . '-07-01', $year . '-08-31'),
+        $spec($weekend, '11:00', '20:00', $year . '-09-01', $year . '-12-31'),
+    ];
+}
+
 function winnica_schema_organization(): void {
     if (!is_front_page()) {
         return;
@@ -180,9 +213,7 @@ function winnica_schema_organization(): void {
         $winery['sameAs'] = array_values($same_as);
     }
 
-    // Opening hours are intentionally omitted until the owner confirms whether
-    // the weekend schedule also applies from December through March. Publishing
-    // incomplete machine-readable hours would contradict the visible ACF text.
+    $winery['openingHoursSpecification'] = winnica_opening_hours((int) current_time('Y'));
 
     $schema = [
         '@context' => 'https://schema.org',
