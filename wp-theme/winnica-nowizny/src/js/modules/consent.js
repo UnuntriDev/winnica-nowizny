@@ -128,8 +128,8 @@ function syncButtons(panel, choice) {
 }
 
 export function initConsent() {
-  const widget = document.getElementById('consentWidget');
-  const panel = document.getElementById('consentPanel');
+  const widget = document.getElementById('consent-widget');
+  const panel = document.getElementById('consent-panel');
   const toggle = widget?.querySelector('[data-consent-toggle]');
   if (!widget || !panel || !toggle) return;
 
