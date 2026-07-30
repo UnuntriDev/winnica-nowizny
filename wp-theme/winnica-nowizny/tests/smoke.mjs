@@ -12,7 +12,29 @@ assert.match(homepage, /<main id="main"/, 'homepage should contain the main land
 assert.match(homepage, /class="no-js"/, 'raw HTML should start in the no-js state');
 assert.match(homepage, /assets\/dist\/assets\/main-[^"]+\.js/, 'built JavaScript should be loaded');
 assert.match(homepage, /assets\/dist\/assets\/styles-[^"]+\.css/, 'built CSS should be loaded');
-assert.doesNotMatch(homepage, /openingHoursSpecification/, 'unconfirmed opening hours must not be in schema');
+// Hours used to be withheld from the schema while unconfirmed. They are
+// confirmed now, so the check flips: the structured data has to stay in step
+// with the visible text, and the seasonal entries only mean something if their
+// validity window carries the current year.
+const schemaBlocks = [...homepage.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+  .map(match => JSON.parse(match[1]));
+const winery = schemaBlocks
+  .flatMap(block => block['@graph'] || [block])
+  .find(node => Array.isArray(node['@type']) ? node['@type'].includes('Winery') : node['@type'] === 'Winery');
+assert.ok(winery, 'schema should describe the winery');
+const hours = winery.openingHoursSpecification;
+assert.ok(Array.isArray(hours) && hours.length > 0, 'opening hours should be published in schema');
+const currentYear = String(new Date().getFullYear());
+for (const entry of hours) {
+  assert.equal(entry['@type'], 'OpeningHoursSpecification', 'each entry should be an OpeningHoursSpecification');
+  assert.ok(Array.isArray(entry.dayOfWeek) && entry.dayOfWeek.length > 0, 'each entry should name its days');
+  assert.match(entry.opens, /^\d{2}:\d{2}$/, 'opening time should be HH:MM');
+  assert.match(entry.closes, /^\d{2}:\d{2}$/, 'closing time should be HH:MM');
+  assert.ok(
+    entry.validFrom.startsWith(currentYear) && entry.validThrough.startsWith(currentYear),
+    'seasonal hours should be dated to the current year, not a hardcoded past one',
+  );
+}
 assert.match(homepage, /rel=["'][^"']*icon/, 'WordPress site icon should be rendered');
 
 // Exercise the rejected-submission path without creating a message or sending mail.
