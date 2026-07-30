@@ -101,20 +101,6 @@ $WP post meta update $FRONT_ID opinie_5_author "Łukasz P."
 $WP post meta update $FRONT_ID opinie_6_text "Pierogi ze śliwkami. I wszystko jasne. Ci, którzy byli, wiedzą. A Ci, którzy jeszcze nie byli powinni to szybko zmienić. Z wielu garnków i pieców miałem okazję pierogi jeść. Ale te tutaj, a w szczególności te ze śliwką były wyjątkowe, aromatyczne i nie obyło się bez drugiej porcji. Do tego piękny widok na winnicę. Świetne miejsce na obiad w drodze."
 $WP post meta update $FRONT_ID opinie_6_author "Szymon S."
 
-# Terroir
-$WP post meta update $FRONT_ID terroir_show 1
-$WP post meta update $FRONT_ID terroir_label "Terroir"
-$WP post meta update $FRONT_ID terroir_title "Nasz terroir"
-$WP post meta update $FRONT_ID terroir_1_title "Gleba lessowa"
-$WP post meta update $FRONT_ID terroir_1_desc "Żyzne gleby lessowe z domieszką wapienia, typowe dla Pogórza. Nadają winom mineralny charakter i elegancję."
-$WP post meta update $FRONT_ID terroir_1_icon '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a15 15 0 0 1 4 10c0 4-1.5 7-4 10"/><path d="M12 2a15 15 0 0 0-4 10c0 4 1.5 7 4 10"/></svg>'
-$WP post meta update $FRONT_ID terroir_2_title "Mikroklimat"
-$WP post meta update $FRONT_ID terroir_2_desc "Południowa ekspozycja zapewnia maksymalne nasłonecznienie. Rożnowskie wzgórza chronią przed północnymi wiatrami."
-$WP post meta update $FRONT_ID terroir_2_icon '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
-$WP post meta update $FRONT_ID terroir_3_title "340 m n.p.m."
-$WP post meta update $FRONT_ID terroir_3_desc "Wzniesienie zapewnia idealną amplitudę temperatur między dniem a nocą, kluczową dla rozwoju aromatów."
-$WP post meta update $FRONT_ID terroir_3_icon '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 20l5-7 4 3 5-8 4 5"/><path d="M3 20h18"/></svg>'
-
 # Wizyta
 $WP post meta update $FRONT_ID wizyta_show 1
 $WP post meta update $FRONT_ID wizyta_label "Pozostańmy w kontakcie"

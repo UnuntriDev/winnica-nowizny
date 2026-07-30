@@ -505,43 +505,10 @@
 /* Sekcja opinii ma wlasny plik: src/css/_opinie.css */
 
 /* ── Terroir ── */
-.terroir-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 64px;
-  text-align: center;
-}
 
-.terroir-heading {
-  margin-bottom: var(--sp-8);
-  text-align: center;
-}
 
-.terroir-icon {
-  width: 72px;
-  height: 72px;
-  border: 1.5px solid var(--c-amber-light);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto var(--sp-3);
-}
 
-.terroir-title {
-  font-family: var(--ff-display);
-  font-size: var(--fs-display-sm);
-  font-weight: 500;
-  color: var(--c-earth-dark);
-  margin: 0 0 10px;
-}
 
-.terroir-desc {
-  font-size: var(--fs-body-sm);
-  line-height: 1.7;
-  color: var(--c-text-body);
-  margin: 0;
-}
 
 /* ── Visit / Contact ── */
 /* Kolejnosc w HTML idzie za jedna kolumna: naglowek, kontakt, formularz, mapa.
