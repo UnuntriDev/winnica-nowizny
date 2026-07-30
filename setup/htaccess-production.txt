@@ -1,0 +1,44 @@
+# Reguly bezpieczenstwa dla hostingu wspoldzielonego.
+#
+# Lokalnie te same zasady wchodza przez setup/apache-security.conf montowany do
+# konfiguracji Apache. Na hostingu wspoldzielonym nie ma dostepu do konfiguracji
+# serwera, wiec musza pojechac w .htaccess.
+#
+# Uzycie: wklej ponizsze reguly do .htaccess w katalogu glownym WordPressa,
+# PONIZEJ bloku "# BEGIN WordPress ... # END WordPress". WordPress nadpisuje
+# swoj blok przy kazdym zapisie permalinkow i skasowalby to, co stoi w srodku.
+#
+# Po wgraniu sprawdz, ze /wp-content/debug.log zwraca 403 albo 404.
+
+# Serwer nie musi ogłaszać swojej wersji.
+ServerSignature Off
+
+<IfModule mod_headers.c>
+    Header always unset X-Powered-By
+</IfModule>
+
+# Zrzuty bazy, logi i kopie plikow nie sa tresciami publicznymi. Trafiaja tu
+# przez przypadek, przy recznym zgrywaniu albo edytorze zostawiajacym .old.
+<FilesMatch "(?i)\.(log|sql|bak|old|dist)$">
+    Require all denied
+</FilesMatch>
+
+# Pliki kropkowe: .env, .git, .htpasswd i reszta tego, co nigdy nie ma wyjsc
+# poza serwer.
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# xmlrpc.php jest wylaczony w motywie po stronie PHP, ale odciecie go na poziomie
+# serwera oszczedza cykle przy probach logowania metoda slownikowa.
+<Files xmlrpc.php>
+    Require all denied
+</Files>
+
+# Wykonywanie PHP w katalogu uploadow. Nawet jesli ktos wgra tam plik, nie
+# uruchomi sie. Klasyczna sciezka wejscia po przejeciu konta redaktora.
+# Ten blok wklej do osobnego .htaccess w wp-content/uploads/, nie do glownego.
+#
+# <FilesMatch "\.(?i:php|phtml|php[0-9])$">
+#     Require all denied
+# </FilesMatch>

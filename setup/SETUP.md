@@ -37,33 +37,89 @@ z modułowego fallbacku źródłowego.
 
 ## Wdrożenie produkcyjne
 
-1. Uzupełnij wszystkie wymagane zmienne w `.env`: hasła bazy, `WP_URL` z HTTPS,
-   `WINNICA_RELEASE`, SMTP, adres administratora i adresy zaufanego reverse proxy.
-2. Utwórz sieć reverse proxy i skonfiguruj na nim certyfikat TLS oraz przekierowanie
-   HTTP → HTTPS. Kontener WordPressa nie publikuje portu bezpośrednio.
-3. Zbuduj i uruchom obraz:
+Strona idzie na hosting współdzielony vh.pl z dostępem SSH i WP-CLI. Docker jest
+środowiskiem lokalnym i nie ma go na serwerze docelowym; pliki `docker-compose.production.yml`
+i `Dockerfile.wordpress` zostają w repozytorium na wypadek przeniesienia na VPS,
+ale poniższa procedura ich nie używa.
+
+Wymagania po stronie hostingu: **PHP 8.2 lub nowszy** (Timber 2 nie uruchomi się
+na starszej wersji), MySQL lub MariaDB, SSH i WP-CLI.
+
+### 1. Przygotowanie paczki lokalnie
+
+`vendor/` jest w `.gitignore`, a `node_modules` nie jedzie na serwer. Zbuduj
+jedno i drugie przed wysyłką:
 
 ```bash
-docker compose -f docker-compose.production.yml build --pull
-docker compose -f docker-compose.production.yml up -d
+cd wp-theme/winnica-nowizny && composer install --no-dev --optimize-autoloader && npm ci && npm run build
 ```
 
-4. Po imporcie lokalnej bazy wykonaj serializacyjnie bezpieczną migrację URL:
+Na serwer trafia katalog motywu **bez** `node_modules`, `src`, `tests` i plików
+konfiguracyjnych narzędzi. `assets/dist` i `vendor` są obowiązkowe: motyw czyta
+manifest Vite i odmawia startu przy niekompletnym buildzie.
+
+### 2. WordPress i wtyczki
+
+Zainstaluj WordPressa autoinstalatorem z panelu, włącz darmowy certyfikat SSL i
+wymuś przekierowanie HTTP → HTTPS. Następnie wgraj przez SFTP:
+
+- motyw do `wp-content/themes/winnica-nowizny`,
+- Advanced Custom Fields do `wp-content/plugins`,
+- zawartość `uploads/` do `wp-content/uploads`.
+
+**Nie wgrywaj `plugins/timber-library`.** Timber jest zależnością motywu w
+`vendor/`, a ta wtyczka jest nieutrzymywana i koliduje z wersją z Composera.
+Leży w repozytorium wyłącznie na potrzeby archiwalne.
+
+### 3. Import bazy i migracja adresu
+
+Zrzuć lokalną bazę i zaimportuj ją na serwerze, a potem uruchom migrację przez
+SSH z katalogu WordPressa:
 
 ```bash
-docker compose -f docker-compose.production.yml exec \
-  -e OLD_WP_URL=http://localhost:8080 wordpress winnica-migrate
+OLD_WP_URL=http://localhost:8080 WP_URL=https://twojadomena.pl WP_ADMIN_EMAIL=kontakt@twojadomena.pl sh setup/migrate-production.sh
 ```
 
-Skrypt wymaga produkcyjnego `WP_URL`, aktualizuje `home`/`siteurl`, włącza
-indeksowanie, odświeża rewrite rules właściwym mechanizmem WordPressa oraz czyści
-cache. Nie wpisuj docelowej domeny ręcznie w dumpie SQL.
+Skrypt wymusza HTTPS w `WP_URL`, robi serializacyjnie bezpieczny search-replace,
+ustawia `home`/`siteurl` i adres administratora, włącza indeksowanie, odświeża
+rewrite rules i czyści cache. Nie podmieniaj domeny ręcznie w dumpie SQL, bo
+zepsujesz zserializowane wartości w `wp_options`.
+
+### 4. Konfiguracja środowiska
+
+Na współdzielonym hostingu nie ma `.env` z compose, więc stałe trafiają do
+`wp-config.php` powyżej linii `That's all, stop editing`:
+
+```php
+define('WP_ENVIRONMENT_TYPE', 'production');
+define('WP_DEBUG', false);
+define('WP_DEBUG_LOG', false);
+define('WP_DEBUG_DISPLAY', false);
+putenv('WINNICA_SMTP_HOST=smtp.twojadomena.pl');
+putenv('WINNICA_SMTP_PORT=587');
+putenv('WINNICA_SMTP_USER=kontakt@twojadomena.pl');
+putenv('WINNICA_SMTP_PASS=...');
+putenv('WINNICA_SMTP_FROM_EMAIL=kontakt@twojadomena.pl');
+putenv('WINNICA_SMTP_FROM_NAME=Winnica Nowizny');
+```
+
+Adres nadawcy musi należeć do domeny strony. Wysyłka z cudzej domeny, na przykład
+z Gmaila przez serwer winnicy, jest przez odbiorców traktowana jak podszywanie i
+ląduje w spamie.
+
+`WINNICA_TRUSTED_PROXY_CIDRS` zostaw puste. Ma sens wyłącznie wtedy, gdy przed
+WordPressem stoi własny reverse proxy albo CDN; bez tego nagłówki z adresem IP
+są ignorowane i limit wysyłek formularza opiera się na `REMOTE_ADDR`, co na tym
+hostingu jest zachowaniem poprawnym.
 
 ## Bezpieczeństwo i dane
 
 - `WP_DEBUG`, wyświetlanie błędów i publiczny `debug.log` są wyłączone na produkcji.
-- Logi PHP trafiają do stderr kontenera; Apache blokuje dostęp do `*.log`,
-  `*.sql`, `*.bak`, plików ukrytych i nie ujawnia wersji PHP/Apache.
+- Reguły blokujące `*.log`, `*.sql`, `*.bak` i pliki ukryte siedzą w
+  `setup/apache-security.conf`, montowanym tylko lokalnie. Na hostingu
+  współdzielonym gotowy odpowiednik leży w `setup/htaccess-production.txt`;
+  wklej go do `.htaccess` **poniżej** bloku `# END WordPress`, bo WordPress
+  nadpisuje swoją część przy każdym zapisie permalinków.
 - Wiadomości formularza mają oddzielne capabilities przyznawane administratorowi,
   a nie standardowym redaktorom.
 - SMTP korzysta tylko ze zmiennych `WINNICA_SMTP_*`. Po uruchomieniu wyślij jedno
@@ -73,27 +129,39 @@ cache. Nie wpisuj docelowej domeny ręcznie w dumpie SQL.
 
 ## Backup i monitoring
 
-`backup.ps1` służy wyłącznie do kopii lokalnej. Produkcja musi mieć automatyczny
-backup bazy i wolumenu uploads poza serwerem, szyfrowanie, retencję po stronie
-storage i cykliczny test odtworzenia. Skrypt `backup-production.sh` tworzy
-zaszyfrowaną kopię i wysyła ją przez `rclone`; uruchamiaj go z cron/systemd timer.
+`backup.ps1` służy wyłącznie do kopii lokalnej. Na produkcji backup robi vh.pl:
+dwa razy dziennie, retencja 31 dni, baza i poczta. To pokrywa najczęstszy scenariusz,
+czyli zepsucie treści albo nieudaną aktualizację.
 
-Workflow `.github/workflows/uptime.yml` sprawdza publiczny endpoint zdrowia.
-Alerty GitHub nie zastępują alertów operatora hostingu — przypisz odbiorcę
-powiadomień przed publikacją.
+Czego ten backup nie pokrywa: utraty konta u dostawcy. Źródło strony jest w gicie,
+więc realnie zagrożone są tylko baza i `uploads`. Raz na jakiś czas pobierz jedno
+i drugie na dysk lokalny; przy stronie zmieniającej się kilka razy w roku to
+wystarczy. Skrypt `backup-production.sh` zakłada `age` i `rclone` na własnym
+serwerze i na tym hostingu nie ma zastosowania.
+
+Sprawdź w panelu, czy odtworzenie kopii faktycznie działa, **zanim** będzie
+potrzebne. Backup nieprzetestowany to założenie, nie zabezpieczenie.
+
+Workflow `.github/workflows/uptime.yml` sprawdza publiczny endpoint zdrowia i jest
+wyłączony z harmonogramu. Włącz go po wdrożeniu albo skasuj i polegaj na
+monitoringu hostingu; nierozstrzygnięty zostawia fałszywe poczucie nadzoru.
 
 ## Checklista po migracji
 
+- PHP na serwerze to 8.2 lub nowszy,
 - `WP_ENVIRONMENT_TYPE=production`, `blog_public=1`,
 - `home`, `siteurl`, canonicale, sitemap i schema używają docelowego HTTPS,
 - `/wp-content/debug.log` zwraca 403/404,
-- nagłówki nie zawierają wersji PHP/Apache,
+- wtyczka `timber-library` **nie** jest wgrana ani aktywna,
+- aktywna jest tylko wtyczka ACF,
 - endpoint `/wp-json/winnica/v1/health` zwraca `{"status":"ok"}`,
-- formularz zapisuje wiadomość i wysyła e-mail przez SMTP,
-- GA4 nie ładuje się przed zgodą,
-- favikona, dane administratora i godziny otwarcia są potwierdzone,
+- formularz zapisuje wiadomość i wysyła e-mail przez SMTP, a adres nadawcy jest
+  w domenie strony i ma poprawne SPF, DKIM oraz DMARC,
+- `winnica_last_mail_error` zniknęło z `wp_options` po pierwszej udanej wysyłce,
+- favikona i dane administratora są potwierdzone,
+- godziny otwarcia w schema zgadzają się z sekcją kontaktu,
 - testy 320, 375, 768 i 1440 px oraz klawiatura/czytnik ekranu przechodzą,
-- wykonano i odtworzono pierwszą kopię zapasową.
+- wykonano i **odtworzono** pierwszą kopię zapasową.
 
 ## Utrzymanie
 

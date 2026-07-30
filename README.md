@@ -100,15 +100,18 @@ scripts/                    przygotowanie zdjęć i zasobów produkcyjnych
 
 ## Wdrożenie
 
-`Dockerfile.wordpress` buduje obraz wieloetapowo: kompiluje motyw, pobiera
-przypięte wtyczki i składa je z bazowym WordPressem. `docker-compose.production.yml`
-trzyma bazę w sieci wewnętrznej, wymaga kompletu sekretów ze środowiska i
-podłącza się do zewnętrznej sieci reverse proxy, który obsługuje TLS. Kontener
-WordPressa nie publikuje portu bezpośrednio.
+Docelowo strona stoi na hostingu współdzielonym z PHP 8.2, SSH i WP-CLI. Docker
+jest środowiskiem lokalnym: na serwerze WordPress instaluje się z panelu, a motyw
+jedzie przez SFTP razem z `vendor/` i `assets/dist`, bo pierwsze jest w
+`.gitignore`, a drugie warunkuje start motywu.
 
 Po imporcie bazy `setup/migrate-production.sh` podmienia adres lokalny na
-produkcyjny i czyści cache. `setup/backup-production.sh` robi szyfrowany backup
-bazy i uploadów przez `age` i `rclone`.
+produkcyjny i czyści cache; działa zarówno w kontenerze, jak i przez SSH.
+Reguły serwera, których nie da się wgrać do konfiguracji Apache na hostingu
+współdzielonym, czekają gotowe w `setup/htaccess-production.txt`.
+
+`Dockerfile.wordpress` i `docker-compose.production.yml` zostają w repozytorium
+na wypadek przeniesienia na VPS, ale obecna procedura wdrożenia ich nie używa.
 
 Pełna instrukcja krok po kroku znajduje się w [setup/SETUP.md](setup/SETUP.md).
 
