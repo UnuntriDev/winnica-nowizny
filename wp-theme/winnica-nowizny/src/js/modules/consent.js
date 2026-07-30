@@ -141,6 +141,10 @@ export function initConsent() {
   syncButtons(panel, stored);
   widget.dataset.consentState = stored || 'unset';
   panel.hidden = false;
+  // Zamkniety panel zostaje poza kolejnoscia tabulacji. Samo CSS nie wystarcza:
+  // po pierwszym otwarciu i zamknieciu opozniona zmiana visibility nie wraca do
+  // hidden, wiec przyciski panelu lapaly focus, mimo ze byly niewidoczne.
+  panel.inert = true;
 
   if (stored === 'granted') {
     loadAnalytics(analyticsId);
@@ -157,6 +161,7 @@ export function initConsent() {
 
   const openPanel = (trigger, { moveFocus = true } = {}) => {
     settingsTrigger = trigger;
+    panel.inert = false;
     panel.setAttribute('aria-hidden', 'false');
     panel.classList.add('is-open');
     setExpandedState(true);
@@ -167,7 +172,9 @@ export function initConsent() {
     panel.classList.remove('is-open');
     panel.setAttribute('aria-hidden', 'true');
     setExpandedState(false);
+    // Focus wychodzi z panelu przed inert, inaczej przegladarka rzuca go na body.
     if (restoreFocus) (settingsTrigger || toggle).focus({ preventScroll: true });
+    panel.inert = true;
     settingsTrigger = null;
   };
 
