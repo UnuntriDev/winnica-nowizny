@@ -6,11 +6,18 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "node tests/lint.mjs",
+    "lint:js": "eslint .",
+    "lint:css": "stylelint \"src/css/**/*.css\" \"style.css\"",
+    "lint:templates": "node tests/lint.mjs",
+    "lint": "npm run lint:js && npm run lint:css && npm run lint:templates",
     "test": "npm run lint && npm run build",
     "test:smoke": "node tests/smoke.mjs"
   },
   "devDependencies": {
+    "eslint": "^9.39.5",
+    "globals": "^15.15.0",
+    "stylelint": "^16.26.1",
+    "stylelint-config-standard": "^36.0.1",
     "vite": "^6.0.0"
   }
 }
