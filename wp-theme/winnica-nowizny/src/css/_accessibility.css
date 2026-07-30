@@ -16,7 +16,7 @@
    destination and the cookie panel. Named one by one so a future component
    with tabindex="-1" keeps its focus ring unless someone decides otherwise. */
 #main:focus,
-#consentPanel:focus { outline: none; }
+#consent-panel:focus { outline: none; }
 
 /* WCAG 2.5.8 Target Size (Minimum) asks for 24x24 CSS px. These links sit in text
    columns where line-height alone left them at 20-22px. */

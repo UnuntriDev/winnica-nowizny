@@ -3,7 +3,9 @@ export function initReveal() {
     return;
   }
 
-  var observer = new IntersectionObserver(function (entries) {
+  // const, nie var: callback wykonuje sie dopiero po przypisaniu, wiec
+  // odwolanie do observer w jego wnetrzu jest bezpieczne.
+  const observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');

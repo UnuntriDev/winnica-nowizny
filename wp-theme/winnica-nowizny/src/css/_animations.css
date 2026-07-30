@@ -1,14 +1,14 @@
-@keyframes fadeInUp {
+@keyframes fade-in-up {
   from { opacity: 0; transform: translateY(32px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes fadeIn {
+@keyframes fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
 
-@keyframes heroLine {
+@keyframes hero-line {
   from { width: 0; }
   to   { width: 120px; }
 }

@@ -39,7 +39,7 @@
   text-align: center;
   max-width: 800px;
   padding: 0 var(--sp-4);
-  animation: fadeIn 1.5s ease-out;
+  animation: fade-in 1.5s ease-out;
 }
 
 .hero-line {
@@ -47,7 +47,7 @@
   height: 1px;
   background: var(--c-amber);
   margin: 0 auto var(--sp-5);
-  animation: heroLine 1.2s ease-out 0.3s both;
+  animation: hero-line 1.2s ease-out 0.3s both;
 }
 
 .hero-label {
@@ -57,7 +57,7 @@
   text-transform: uppercase;
   color: var(--c-amber-light);
   margin: 0 0 var(--sp-3) 0;
-  animation: fadeInUp 1s ease-out 0.5s both;
+  animation: fade-in-up 1s ease-out 0.5s both;
 }
 
 .hero h1 {
@@ -66,10 +66,10 @@
   font-weight: 300;
   line-height: 1.08;
   color: var(--c-text-light);
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
   letter-spacing: -1px;
   text-shadow: 0 2px 30px rgba(26, 21, 16, 0.55), 0 1px 2px rgba(26, 21, 16, 0.3);
-  animation: fadeInUp 1s ease-out 0.7s both;
+  animation: fade-in-up 1s ease-out 0.7s both;
 }
 
 .hero-subtitle {
@@ -81,7 +81,7 @@
   margin: 0 0 var(--sp-6) 0;
   line-height: 1.5;
   text-shadow: 0 1px 16px rgba(26, 21, 16, 0.5);
-  animation: fadeInUp 1s ease-out 0.9s both;
+  animation: fade-in-up 1s ease-out 0.9s both;
 }
 
 .hero-buttons {
@@ -89,7 +89,7 @@
   gap: var(--sp-4);
   align-items: center;
   justify-content: center;
-  animation: fadeInUp 1s ease-out 1.1s both;
+  animation: fade-in-up 1s ease-out 1.1s both;
 }
 
 .hero-cta-text {
@@ -108,7 +108,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--sp-1);
-  animation: fadeIn 1s ease-out 1.8s both;
+  animation: fade-in 1s ease-out 1.8s both;
 }
 
 .scroll-indicator span {
@@ -123,7 +123,7 @@
   width: 1px;
   height: 34px;
   background: linear-gradient(180deg, rgba(221, 207, 184, 0.8) 0%, rgba(221, 207, 184, 0.15) 100%);
-  animation: scrollCue 2.2s var(--ease-out) infinite;
+  animation: scroll-cue 2.2s var(--ease-out) infinite;
 }
 
 /* Chevron cue at the base of the line. */
@@ -139,7 +139,7 @@
   transform: translate(-50%, 40%) rotate(45deg);
 }
 
-@keyframes scrollCue {
+@keyframes scroll-cue {
   0%, 100% { transform: translateY(0); opacity: 1; }
   50% { transform: translateY(5px); opacity: 0.6; }
 }

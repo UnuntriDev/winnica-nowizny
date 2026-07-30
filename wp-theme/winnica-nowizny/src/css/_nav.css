@@ -17,7 +17,7 @@
 .site-nav::before {
   content: '';
   position: absolute;
-  inset: 0 0 auto 0;
+  inset: 0 0 auto;
   height: 160px;
   background: linear-gradient(180deg, rgba(26, 21, 16, 0.5) 0%, rgba(26, 21, 16, 0) 100%);
   opacity: 1;
@@ -79,7 +79,7 @@
 }
 
 /* Animated underline for hover + current section. */
-.nav-links a:not(.nav-cta):not(.nav-social-link)::after {
+.nav-links a:not(.nav-cta, .nav-social-link)::after {
   content: '';
   position: absolute;
   left: 0;
@@ -92,11 +92,11 @@
   transition: transform var(--duration-fast) var(--ease-out);
 }
 
-.nav-links a:not(.nav-cta):not(.nav-social-link):hover {
+.nav-links a:not(.nav-cta, .nav-social-link):hover {
   color: var(--c-amber-light);
 }
 
-.nav-links a:not(.nav-cta):not(.nav-social-link):hover::after {
+.nav-links a:not(.nav-cta, .nav-social-link):hover::after {
   transform: scaleX(1);
 }
 
