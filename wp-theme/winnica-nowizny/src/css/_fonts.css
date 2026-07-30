@@ -1,7 +1,7 @@
 /*
  * Self-hosted fonts. Loading these from fonts.googleapis.com handed every
- * visitor's IP to Google before the consent banner even appeared, so the files
- * live in the theme instead. Variable builds: two weight axes cover the six
+ * visitor's IP to Google on the first paint, so the files live in the theme
+ * instead. Variable builds: two weight axes cover the six
  * weights the design uses, which is 6 files instead of 14.
  *
  * unicode-range keeps latin-ext (Polish diacritics) a separate download from

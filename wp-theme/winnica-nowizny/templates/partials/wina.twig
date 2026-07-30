@@ -34,4 +34,12 @@
       </li>
     {% endfor %}
   </ul>
+
+  {# Sekcja konczyla sie piecioma butelkami i cisza. Pytanie "gdzie to kupic"
+     pada tu samo, wiec odpowiedz stoi w tym samym miejscu, a nie dwie sekcje
+     nizej w godzinach otwarcia. Gwiazdka jest w szablonie, a nie w polu ACF,
+     zeby klient wpisywal sama tresc przypisu. #}
+  <p class="wines-note reveal">
+    <span class="wines-note-mark" aria-hidden="true">*</span>{{ post.meta('wines_note') | default('Wina sprzedajemy wyłącznie na miejscu w winnicy, przez cały rok.') }}
+  </p>
 </section>

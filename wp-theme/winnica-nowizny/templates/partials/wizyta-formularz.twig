@@ -99,7 +99,7 @@
           {% if 'date' in errs %}<span class="form-field-error" id="contact-date-error">{{ error_messages.date }}</span>{% endif %}
         </div>
         <div class="form-group">
-          <label class="form-label" for="contact-guests">Liczba osób (min. 8 osób)</label>
+          <label class="form-label" for="contact-guests">Liczba osób (grupy od 8)</label>
           <input class="form-input" id="contact-guests" name="contact_guests" type="number" value="{{ old.guests | default('') }}" inputmode="numeric" min="8" max="60"{% if 'guests' in errs %} aria-invalid="true" aria-describedby="contact-guests-error"{% endif %}>
           {% if 'guests' in errs %}<span class="form-field-error" id="contact-guests-error">{{ error_messages.guests }}</span>{% endif %}
         </div>

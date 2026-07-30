@@ -165,10 +165,21 @@
 .nav-social-link .social-dot { fill: var(--c-amber-light); stroke: none; }
 .nav-social-link .facebook-icon { fill: var(--c-amber-light); stroke: none; }
 
+/* Na desktopie przycisk wizyty znika z paska: to samo wezwanie stoi w hero, a
+   dwa razy ta sama etykieta na jednym ekranie nie dokladala drugiego wyjscia.
+   W menu mobilnym zostaje, bo tam hero jest juz dawno przewiniete.
+
+   Ikony zostaja tam, gdzie byly, i domykaja pasek przy prawej krawedzi. Ujemny
+   margines byl potrzebny tylko po to, zeby przylegaly do przycisku; bez niego
+   odstep od ostatniego linku menu jest taki sam jak miedzy pozostalymi. */
+@media (min-width: 769px) {
+  .nav-links a.nav-cta { display: none; }
+  .nav-social-links { margin-left: 0; }
+}
+
 @media (max-width: 1120px) and (min-width: 769px) {
   .site-nav { padding-left: var(--sp-3); padding-right: var(--sp-3); }
   .nav-links { gap: 20px; letter-spacing: 1.8px; }
-  .nav-social-links { margin-left: -10px; }
 }
 
 /* ── Hamburger ── */

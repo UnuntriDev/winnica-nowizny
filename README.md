@@ -61,10 +61,10 @@ Nonce, honeypot, token czasowy podpisany HMAC i limit czterech wysyłek na
 kwadrans liczony po zahashowanym adresie IP. Wiadomości zapisują się jako wpisy,
 a wysyłka idzie przez SMTP skonfigurowany zmiennymi środowiskowymi.
 
-**Zgody i analityka.** Panel zgód działa w modelu Consent Mode v2. Google
-Analytics ładuje się dopiero po zgodzie, a jej cofnięcie usuwa ciasteczka `_ga`,
-`_gid` i `_gat`. Dopóki identyfikator GA4 nie zostanie podany w `WINNICA_GA_ID`
-albo w Personalizacji motywu, analityka i panel zgód w ogóle się nie renderują.
+**Bez analityki i bez cookies.** Strona nie ładuje Google Analytics ani żadnego
+innego narzędzia śledzącego, więc nie ma panelu zgód. Jedyna usługa zewnętrzna to
+osadzona mapa Google w sekcji dojazdu, opisana w polityce prywatności. Fonty są
+serwowane z motywu, a nie z fonts.googleapis.com.
 
 **SEO.** Motyw sam generuje tytuły, opisy, canonicale, Open Graph i dane
 strukturalne schema.org typu `LocalBusiness` z rozszerzeniem `Winery`. Godziny

@@ -19,7 +19,9 @@ echo "📄 Seeding homepage fields (page ID: $FRONT_ID)..."
 $WP post meta update $FRONT_ID hero_show 1
 $WP post meta update $FRONT_ID hero_label "Pogórze Rożnowskie · od 2005 roku"
 $WP post meta update $FRONT_ID hero_title "Winnica <br>Nowizny"
-$WP post meta update $FRONT_ID hero_subtitle "Gdzie tradycja winiarstwa spotyka piękno Pogórza Rożnowskiego"
+$WP post meta update $FRONT_ID hero_subtitle "Gdzie pasja rodzi wyjątkowy smak, a widok zatrzymuje czas"
+# Oba wyjscia zostaja w hero. Powtorka "Odwiedz nas" zniknela po stronie paska
+# nawigacji, ktory na desktopie nie pokazuje juz tego przycisku.
 $WP post meta update $FRONT_ID hero_cta_primary_text "Odwiedź nas"
 $WP post meta update $FRONT_ID hero_cta_primary_url "#wizyta"
 $WP post meta update $FRONT_ID hero_cta_secondary_text "Poznaj nasze wina"
@@ -29,8 +31,9 @@ $WP post meta update $FRONT_ID hero_cta_secondary_url "#wina"
 $WP post meta update $FRONT_ID historia_show 1
 $WP post meta update $FRONT_ID historia_label "Nasza historia"
 $WP post meta update $FRONT_ID historia_title "Rodzinna pasja<br><em>zakwita w winorośli</em>"
-$WP post meta update $FRONT_ID historia_text_1 "Winnica Nowizny to rodzinne przedsięwzięcie Urszuli i Bogusława Kamińskich, rozwijane od 2005 roku w Połomiu Małym na malowniczym Pogórzu Rożnowskim. Na południe od Krakowa, w miejscu, gdzie klimat, gleba i pasja spotykają się w jednym miejscu."
-$WP post meta update $FRONT_ID historia_text_2 "Nasze wino jest wyrazem tego terenu, jego historii, mikroklimatu i charakteru. Każda butelka opowiada historię tego wzgórza, tych winorośli i naszej rodziny."
+$WP post meta update $FRONT_ID historia_text_1 "Jesteśmy rodziną, która od ponad 20 lat z pasją zajmuje się winiarstwem. Nasza winnica to gospodarstwo enoturystyczne, w którym zamiłowanie do uprawy winorośli łączymy z gościnnością."
+$WP post meta update $FRONT_ID historia_text_2 "Winnica została założona w 2005 roku. Położona jest na słonecznym, południowo-zachodnim stoku Pogórza Rożnowskiego, skąd rozciąga się malowniczy widok na Beskid Wyspowy i Beskid Sądecki."
+$WP post meta update $FRONT_ID historia_text_3 "Naszą misją jest dzielenie się tym wyjątkowym miejscem oraz przynoszenie naszym gościom radości, spokoju i harmonii płynących z bliskiego kontaktu z naturą."
 $WP post meta update $FRONT_ID historia_stat_1_number "2005"
 $WP post meta update $FRONT_ID historia_stat_1_label "Rok założenia"
 $WP post meta update $FRONT_ID historia_stat_2_number "1,5 ha"
@@ -43,11 +46,11 @@ $WP post meta update $FRONT_ID exp_show 1
 $WP post meta update $FRONT_ID exp_label "Doświadczenia"
 $WP post meta update $FRONT_ID exp_title "Poczuj charakter winnicy"
 $WP post meta update $FRONT_ID exp_card_1_title "Degustacja w piwnicy"
-$WP post meta update $FRONT_ID exp_card_1_desc "Degustacja 5 rodzajów wina w zabytkowej piwnicy z 1891 roku"
+$WP post meta update $FRONT_ID exp_card_1_desc "Degustacja win oraz produktów regionalnych w zabytkowej piwnicy"
 $WP post meta update $FRONT_ID exp_card_2_title "Spacer po winnicy"
 $WP post meta update $FRONT_ID exp_card_2_desc "Oprowadzanie po winnicy z historią terroir"
 $WP post meta update $FRONT_ID exp_card_3_title "Karmienie danieli"
-$WP post meta update $FRONT_ID exp_card_3_desc "Bliskie spotkanie ze zwierzętami podczas wizyty w winnicy"
+$WP post meta update $FRONT_ID exp_card_3_desc "Bliskie spotkanie z sympatycznymi zwierzętami podczas pobytu w winnicy"
 $WP post meta update $FRONT_ID exp_card_4_title "Park linowy"
 $WP post meta update $FRONT_ID exp_card_4_desc "Trasa z tyrolką dla dzieci w wieku 3–10 lat"
 
@@ -55,6 +58,7 @@ $WP post meta update $FRONT_ID exp_card_4_desc "Trasa z tyrolką dla dzieci w wi
 $WP post meta update $FRONT_ID wines_show 1
 $WP post meta update $FRONT_ID wines_label "Nasze wina"
 $WP post meta update $FRONT_ID wines_title "Smak Pogórza"
+$WP post meta update $FRONT_ID wines_note "Wina sprzedajemy wyłącznie na miejscu w winnicy, przez cały rok."
 $WP post meta update $FRONT_ID wines_count "5"
 $WP post meta update $FRONT_ID wines_count 6
 
@@ -62,8 +66,8 @@ $WP post meta update $FRONT_ID wines_count 6
 $WP post meta update $FRONT_ID cellar_show 1
 $WP post meta update $FRONT_ID cellar_year "1891"
 $WP post meta update $FRONT_ID cellar_title "Piwnica z historią"
-$WP post meta update $FRONT_ID cellar_text_1 "Nasza piwnica to serce winnicy. Zbudowana w 1891 roku, przez ponad sto lat służyła okolicznym gospodarzom. Dziś, po starannej renowacji, jest miejscem, gdzie nasze wina dojrzewają w idealnych warunkach."
-$WP post meta update $FRONT_ID cellar_text_2 "Grube kamienne mury utrzymują stałą temperaturę i wilgotność — naturalna klimatyzacja, którą doceniamy każdego dnia."
+$WP post meta update $FRONT_ID cellar_text_1 "Szczególny charakter Winnicy nadaje zabytkowa piwnica, której historia sięga 1891 roku. Pierwotnie została wybudowana w pobliskiej Wytrzyszczce, gdzie przez wiele lat pełniła funkcję budynku gospodarczego."
+$WP post meta update $FRONT_ID cellar_text_2 "W 2012 roku przeniesiono ją na teren Winnicy i nadano jej nowe życie. Dziś przechowujemy w niej nasze wina, organizujemy degustacje i chętnie przyjmujemy gości."
 $WP post meta update $FRONT_ID cellar_cta_text "Zarezerwuj degustację w piwnicy"
 $WP post meta update $FRONT_ID cellar_cta_url "#wizyta"
 
@@ -118,10 +122,10 @@ $WP post meta update $FRONT_ID wizyta_title "Odwiedź nas"
 $WP post meta update $FRONT_ID wizyta_address "Połom Mały 60<br>32-862 Porąbka Iwkowska"
 $WP post meta update $FRONT_ID wizyta_contact '<a href="mailto:winnicanowizny@op.pl">winnicanowizny@op.pl</a><br><a href="tel:+48607578156">tel. 607 578 156</a>'
 $WP post meta update $FRONT_ID wizyta_hours "Poza sezonem wakacyjnym<br>Sobota–niedziela: 11:00–20:00<br><br>Lipiec–sierpień<br>Poniedziałek–sobota: 11:00–20:00<br>Niedziela: 14:00–20:00"
-$WP post meta update $FRONT_ID wizyta_hours_note "Nasze wina są dostępne w sprzedaży przez cały rok."
+$WP post meta update $FRONT_ID wizyta_hours_note "W godzinach otwarcia zapraszamy bez rezerwacji.<br>Nasze wina są dostępne w sprzedaży na miejscu przez cały rok."
 # Informacje o dojeździe należy uzupełnić po ich potwierdzeniu.
 $WP post meta update $FRONT_ID wizyta_form_title "Rezerwacja wizyty"
-$WP post meta update $FRONT_ID wizyta_form_subtitle "Wypełnij formularz, odezwiemy się w ciągu 24h"
+$WP post meta update $FRONT_ID wizyta_form_subtitle "Formularz jest potrzebny tylko przy grupach od 8 osób. W mniejszym gronie wpadaj bez zapowiedzi w godzinach otwarcia. Odpowiadamy w ciągu 24h."
 $WP post meta update $FRONT_ID wizyta_show_map 1
 
 echo ""

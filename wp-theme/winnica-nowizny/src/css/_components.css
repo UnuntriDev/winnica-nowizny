@@ -142,11 +142,22 @@
 .section-title-light { color: var(--c-earth-dark); }
 
 /* ── Form elements ── */
+/* Karta stoi na fotografii, a nie na jednolitym tle sekcji. Przy tle 0,1 alfa
+   zdjecie przebijalo przez pola formularza i ich krawedzie gubily sie w
+   galeziach; formularz jest jedynym miejscem na stronie, gdzie ktos ma cos
+   wpisac, wiec ma byc czytelny niezaleznie od tego, co jest pod spodem. */
 .form-container {
-  background: rgba(139, 109, 75, 0.1);
+  background: rgba(26, 21, 16, 0.9);
   padding: var(--sp-6);
-  border: 1px solid rgba(196, 180, 154, 0.18);
+  border: 1px solid rgba(196, 180, 154, 0.28);
   border-radius: var(--radius-md);
+}
+
+@supports (backdrop-filter: blur(4px)) {
+  .form-container {
+    background: rgba(26, 21, 16, 0.78);
+    backdrop-filter: blur(6px);
+  }
 }
 
 /* Tytul ma zostac w jednej linii. "Rezerwacja wizyty grupowej" zajmuje 11,06px
@@ -196,10 +207,13 @@
   margin-bottom: var(--sp-1);
 }
 
+/* Tlo pola jest ciemniejsze od karty, zeby granica byla widoczna takze wtedy,
+   gdy ktos ma przygaszony ekran. Krawedz na 0,5 alfa daje 3,1:1 wzgledem
+   wnetrza pola, czyli minimum WCAG dla elementow interfejsu. */
 .form-input {
   height: 48px;
-  background: rgba(26, 21, 16, 0.28);
-  border: 1px solid rgba(196, 180, 154, 0.28);
+  background: rgba(12, 9, 6, 0.75);
+  border: 1px solid rgba(196, 180, 154, 0.5);
   border-radius: var(--radius-sm);
   padding: 0 var(--sp-2);
   font-family: var(--ff-body);
@@ -240,8 +254,8 @@
 
 .form-textarea {
   min-height: 108px;
-  background: rgba(26, 21, 16, 0.28);
-  border: 1px solid rgba(196, 180, 154, 0.28);
+  background: rgba(12, 9, 6, 0.75);
+  border: 1px solid rgba(196, 180, 154, 0.5);
   border-radius: var(--radius-sm);
   padding: var(--sp-2);
   font-family: var(--ff-body);
@@ -253,7 +267,7 @@
 }
 
 .form-textarea:focus-visible { border-color: var(--c-amber-light); }
-.form-textarea::placeholder { color: rgba(196, 180, 154, 0.4); }
+.form-textarea::placeholder { color: rgba(196, 180, 154, 0.75); }
 
 .form-submit {
   width: 100%;

@@ -86,23 +86,4 @@ add_action('customize_register', function (WP_Customize_Manager $wp_customize) {
         'section' => 'winnica_footer',
         'type'    => 'textarea',
     ]);
-
-    // ── Section: Analytics ──
-    $wp_customize->add_section('winnica_analytics', [
-        'title' => 'Analityka i zgody',
-        'panel' => 'winnica_panel',
-    ]);
-    $wp_customize->add_setting('winnica_ga_id', [
-        'default' => '',
-        'sanitize_callback' => function (string $value): string {
-            $value = strtoupper(trim($value));
-            return preg_match('/^G-[A-Z0-9]{6,16}$/', $value) ? $value : '';
-        },
-    ]);
-    $wp_customize->add_control('winnica_ga_id', [
-        'label'       => 'Identyfikator Google Analytics 4',
-        'description' => 'Format G-XXXXXXXXXX. Skrypt uruchomi się wyłącznie po zgodzie użytkownika.',
-        'section'     => 'winnica_analytics',
-        'type'        => 'text',
-    ]);
 });

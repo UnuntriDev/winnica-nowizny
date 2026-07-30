@@ -24,7 +24,10 @@
                 <p class="visit-block-label">Godziny otwarcia</p>
                 <p class="visit-block-text">{{ function('wp_kses_post', post.meta('wizyta_hours')) | raw }}</p>
                 {% if post.meta('wizyta_hours_note') %}
-                  <p class="visit-block-text-small">{{ post.meta('wizyta_hours_note') }}</p>
+                  {# wp_kses_post, bo notka niesie <br>: zdanie o rezerwacji i
+                     zdanie o sprzedazy to dwie osobne informacje i sklejone w
+                     jeden wers czytaja sie jak jedna. #}
+                  <p class="visit-block-text-small">{{ function('wp_kses_post', post.meta('wizyta_hours_note')) | raw }}</p>
                 {% endif %}
               </div>
             {% endif %}

@@ -101,7 +101,7 @@
                 "id": ""
             },
             "rows": 4,
-            "default_value": "Winnica Nowizny to rodzinne przedsięwzięcie Urszuli i Bogusława Kamińskich, rozwijane od 2005 roku w Połomiu Małym na malowniczym Pogórzu Rożnowskim. Na południe od Krakowa, w miejscu, gdzie klimat, gleba i pasja spotykają się w jednym miejscu.",
+            "default_value": "Jesteśmy rodziną, która od ponad 20 lat z pasją zajmuje się winiarstwem. Nasza winnica to gospodarstwo enoturystyczne, w którym zamiłowanie do uprawy winorośli łączymy z gościnnością.",
             "new_lines": "",
             "maxlength": "",
             "placeholder": ""
@@ -129,7 +129,35 @@
                 "id": ""
             },
             "rows": 4,
-            "default_value": "Nasze wino jest wyrazem tego terenu, jego historii, mikroklimatu i charakteru. Każda butelka opowiada historię tego wzgórza, tych winorośli i naszej rodziny.",
+            "default_value": "Winnica została założona w 2005 roku. Położona jest na słonecznym, południowo-zachodnim stoku Pogórza Rożnowskiego, skąd rozciąga się malowniczy widok na Beskid Wyspowy i Beskid Sądecki.",
+            "new_lines": "",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_hist_text_3",
+            "label": "Akapit 3",
+            "name": "historia_text_3",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_hist_show",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 4,
+            "default_value": "Naszą misją jest dzielenie się tym wyjątkowym miejscem oraz przynoszenie naszym gościom radości, spokoju i harmonii płynących z bliskiego kontaktu z naturą.",
             "new_lines": "",
             "maxlength": "",
             "placeholder": ""

@@ -45,8 +45,6 @@ require_once WINNICA_DIR . '/inc/contact-form.php';
 // Configurable SMTP transport
 require_once WINNICA_DIR . '/inc/smtp.php';
 
-// Consent-based analytics
-require_once WINNICA_DIR . '/inc/analytics.php';
 
 // ── SEO (Schema.org JSON-LD) ──
 require_once WINNICA_DIR . '/inc/seo.php';

@@ -329,6 +329,19 @@
   text-transform: uppercase;
 }
 
+/* Przypis, nie akapit: mniejszy stopien i przygaszony kolor odrozniaja go od
+   opisow win nad nim. Gwiazdka wisi w lewym marginesie, zeby pierwsza litera
+   tekstu stala w jednej linii z lewa krawedzia siatki butelek. */
+.wines-note {
+  margin: var(--sp-5) 0 0;
+  font-size: var(--fs-body-sm);
+  color: var(--c-text-body);
+  text-indent: -0.6em;
+  padding-left: 0.6em;
+}
+
+.wines-note-mark { margin-right: 0.2em; }
+
 /* Reflow: 5 across → 3 on tablet → 2 on phones. */
 @media (max-width: 1023px) {
   .wines-grid { grid-template-columns: repeat(3, 1fr); }

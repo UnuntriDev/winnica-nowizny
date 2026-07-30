@@ -81,7 +81,6 @@ add_filter('heartbeat_settings', function (array $settings): array {
 
 function winnica_page_cache_key(): string
 {
-    $analytics_id = function_exists('winnica_analytics_id') ? winnica_analytics_id() : '';
     $manifest_path = WINNICA_DIR . '/assets/dist/.vite/manifest.json';
     $asset_version = is_readable($manifest_path) ? md5_file($manifest_path) : 'development';
     $release = defined('WINNICA_RELEASE')
@@ -93,7 +92,6 @@ function winnica_page_cache_key(): string
         . '|' . determine_locale()
         . '|' . $release
         . '|' . $asset_version
-        . '|' . $analytics_id
     );
 }
 
