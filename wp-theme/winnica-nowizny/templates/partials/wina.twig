@@ -1,8 +1,8 @@
-<section class="section-light wines" id="wina">
+<section class="section-light wines" id="wina" aria-labelledby="wina-title">
   <div class="wines-header reveal">
     <div>
       <p class="section-label">{{ post.meta('wines_label') | default('Nasze wina') }}</p>
-      <h2 class="section-title section-title-light">{{ function('wp_kses_post', post.meta('wines_title') | default('Smak Pogórza')) | raw }}</h2>
+      <h2 id="wina-title" class="section-title section-title-light">{{ function('wp_kses_post', post.meta('wines_title') | default('Smak Pogórza')) | raw }}</h2>
     </div>
   </div>
 
@@ -34,4 +34,14 @@
       </li>
     {% endfor %}
   </ul>
+
+  {# Sekcja konczyla sie piecioma butelkami i cisza. Pytanie "gdzie to kupic"
+     pada tu samo, wiec odpowiedz stoi w tym samym miejscu, a nie dwie sekcje
+     nizej w godzinach otwarcia. Gwiazdka jest w szablonie, a nie w polu ACF,
+     zeby klient wpisywal sama tresc przypisu. #}
+  {% if post.meta('wines_note') %}
+    <p class="wines-note reveal">
+      <span class="wines-note-mark" aria-hidden="true">*</span>{{ post.meta('wines_note') }}
+    </p>
+  {% endif %}
 </section>

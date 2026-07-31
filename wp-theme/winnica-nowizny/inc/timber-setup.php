@@ -87,7 +87,7 @@ add_filter('timber/context', function (array $context): array {
     $context['menu']           = \Timber\Timber::get_menu('primary');
     $context['site_phone']      = get_theme_mod('winnica_phone', '607 578 156');
     $context['site_phone_href'] = winnica_tel_href((string) $context['site_phone']);
-    $context['site_email']     = get_theme_mod('winnica_email', 'winnicanowizny@op.pl');
+    $context['site_email']     = get_theme_mod('winnica_email', 'kontakt@winnicanowizny.pl');
     $context['site_address']   = get_theme_mod('winnica_address', 'Połom Mały 60, 32-862 Porąbka Iwkowska');
     $context['site_facebook']  = get_theme_mod('winnica_facebook', 'https://www.facebook.com/winnicanowizny');
     $context['site_instagram'] = get_theme_mod('winnica_instagram', 'https://www.instagram.com/winnicanowizny/');

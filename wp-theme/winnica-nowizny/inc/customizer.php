@@ -21,7 +21,7 @@ add_action('customize_register', function (WP_Customize_Manager $wp_customize) {
 
     $contact_fields = [
         'winnica_phone'   => ['label' => 'Telefon', 'default' => '607 578 156'],
-        'winnica_email'   => ['label' => 'Email', 'default' => 'winnicanowizny@op.pl'],
+        'winnica_email'   => ['label' => 'Email', 'default' => 'kontakt@winnicanowizny.pl'],
         'winnica_address' => ['label' => 'Adres', 'default' => 'Połom Mały 60, 32-862 Porąbka Iwkowska'],
     ];
 
@@ -85,24 +85,5 @@ add_action('customize_register', function (WP_Customize_Manager $wp_customize) {
         'label'   => 'Opis w stopce',
         'section' => 'winnica_footer',
         'type'    => 'textarea',
-    ]);
-
-    // ── Section: Analytics ──
-    $wp_customize->add_section('winnica_analytics', [
-        'title' => 'Analityka i zgody',
-        'panel' => 'winnica_panel',
-    ]);
-    $wp_customize->add_setting('winnica_ga_id', [
-        'default' => '',
-        'sanitize_callback' => function (string $value): string {
-            $value = strtoupper(trim($value));
-            return preg_match('/^G-[A-Z0-9]{6,16}$/', $value) ? $value : '';
-        },
-    ]);
-    $wp_customize->add_control('winnica_ga_id', [
-        'label'       => 'Identyfikator Google Analytics 4',
-        'description' => 'Format G-XXXXXXXXXX. Skrypt uruchomi się wyłącznie po zgodzie użytkownika.',
-        'section'     => 'winnica_analytics',
-        'type'        => 'text',
     ]);
 });

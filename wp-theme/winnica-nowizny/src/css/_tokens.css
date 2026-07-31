@@ -62,7 +62,6 @@
   --z-nav: 100;
   --z-nav-toggle: 101;   /* hamburger stays reachable above the open overlay */
   --z-mobile-bar: 110;
-  --z-consent: 200;
   --z-lightbox: 300;
   --z-skip-link: 1000;   /* must clear everything, including the lightbox */
 

@@ -20,7 +20,6 @@
           <a href="{{ function('esc_url', function('home_url', '/#wizyta')) }}">Zaplanuj wizytę</a>
           {% set privacy_url = function('get_privacy_policy_url') %}
           <a href="{{ function('esc_url', privacy_url ?: function('home_url', '/polityka-prywatnosci/')) }}">Polityka prywatności</a>
-          {% if analytics_id %}<button class="footer-consent-settings" type="button" data-open-consent aria-controls="consent-panel" aria-expanded="false">Ustawienia cookies</button>{% endif %}
         </div>
       </div>
       <div>
@@ -45,6 +44,10 @@
     </div>
     <div class="footer-bottom">
       <p>&copy; {{ "now" | date("Y") }} Winnica Nowizny. Wszelkie prawa zastrzeżone.</p>
+      {# Strona przedstawia produkty wlasnej winnicy osobom pelnoletnim. Zdanie
+         nie zastepuje opinii prawnika, ale nazywa wprost adresata i intencje,
+         czego przy napojach alkoholowych brakowalo tu w ogole. #}
+      <p class="footer-legal">Strona przeznaczona dla osób pełnoletnich. Sprzedaż wyłącznie na miejscu w winnicy.</p>
     </div>
   </div>
 </footer>

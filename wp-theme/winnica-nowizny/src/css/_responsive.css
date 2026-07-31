@@ -29,7 +29,6 @@
   .exp-card-image { grid-area: 1 / 2; aspect-ratio: 3 / 4; max-width: 100%; }
 
   .cellar-inner { padding: 88px var(--sp-6); gap: var(--sp-5); }
-  .terroir-grid { gap: var(--sp-4); }
 
   .footer-grid { grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
 
@@ -157,10 +156,6 @@
   .form-container { padding: var(--sp-4) var(--sp-3); }
   .visit-header { margin-bottom: var(--sp-5); }
   .visit-grid { grid-template-columns: 1fr; gap: var(--sp-6); }
-  #terroir { padding-top: var(--sp-6); padding-bottom: var(--sp-6); }
-  .terroir-heading { margin-bottom: var(--sp-4); }
-  .terroir-grid { grid-template-columns: 1fr; gap: var(--sp-4); }
-  .terroir-icon { width: 64px; height: 64px; margin-bottom: var(--sp-2); }
 
   .site-footer { padding: var(--sp-6) var(--sp-3) var(--sp-3); }
   .footer-grid {
@@ -226,22 +221,6 @@
     border-color: var(--c-amber-light);
     color: var(--c-earth-deep);
   }
-
-  .consent-widget {
-    left: 12px;
-    bottom: 76px;
-  }
-
-  .consent-panel {
-    width: min(360px, calc(100vw - 24px));
-    max-height: calc(100vh - 164px);
-    overflow-y: auto;
-    padding: 20px;
-  }
-
-  .consent-toggle { width: 54px; height: 54px; }
-  .consent-toggle svg { width: 28px; height: 28px; }
-  .consent-actions { display: grid; grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 768px) {

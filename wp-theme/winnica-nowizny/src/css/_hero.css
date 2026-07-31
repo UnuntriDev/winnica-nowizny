@@ -111,18 +111,24 @@
   animation: fade-in 1s ease-out 1.8s both;
 }
 
+/* Wskaznik stoi nad doswietlonym pasem pola, a nie nad ciemnym niebem jak reszta
+   hero. Samo podniesienie krycia nie wystarczylo, bo jasny tekst na jasnej trawie
+   gubi sie niezaleznie od alfy; cien niesie kontrast tam, gdzie tlo jest jasne,
+   i znika tam, gdzie i tak jest ciemno. */
 .scroll-indicator span {
   font-size: var(--fs-xs);
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: rgba(221, 207, 184, 0.88);
+  color: var(--c-text-light);
+  text-shadow: 0 1px 10px rgba(26, 21, 16, 0.85), 0 0 2px rgba(26, 21, 16, 0.6);
 }
 
 .scroll-indicator-line {
   position: relative;
   width: 1px;
   height: 34px;
-  background: linear-gradient(180deg, rgba(221, 207, 184, 0.8) 0%, rgba(221, 207, 184, 0.15) 100%);
+  background: linear-gradient(180deg, rgb(245 238 226) 0%, rgba(245, 238, 226, 0.25) 100%);
+  filter: drop-shadow(0 1px 4px rgba(26, 21, 16, 0.8));
   animation: scroll-cue 2.2s var(--ease-out) infinite;
 }
 
@@ -134,8 +140,8 @@
   left: 50%;
   width: 7px;
   height: 7px;
-  border-right: 1.5px solid rgba(221, 207, 184, 0.8);
-  border-bottom: 1.5px solid rgba(221, 207, 184, 0.8);
+  border-right: 1.5px solid rgb(245 238 226);
+  border-bottom: 1.5px solid rgb(245 238 226);
   transform: translate(-50%, 40%) rotate(45deg);
 }
 

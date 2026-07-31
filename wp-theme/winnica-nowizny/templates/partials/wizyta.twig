@@ -1,14 +1,14 @@
 {# Kolejnosc w HTML odpowiada widokowi jednej kolumny: naglowek, dane
    kontaktowe, formularz i mapa. Desktop sklada te bloki w dwie kolumny
    przez jawne obszary siatki, bez zmiany kolejnosci dla czytnika ekranu. #}
-<section class="section-dark" id="wizyta">
+<section class="section-dark" id="wizyta" aria-labelledby="wizyta-title">
   <div class="section-dark-inner">
     {% set has_visit_info = post.meta('wizyta_address') or post.meta('wizyta_hours') or post.meta('wizyta_contact') or post.meta('wizyta_directions') or post.meta('wizyta_show_map') %}
     {% if has_visit_info %}
       <div class="visit-grid">
         <div class="visit-header reveal">
           <p class="section-label">{{ post.meta('wizyta_label') | default('Pozostańmy w kontakcie') }}</p>
-          <h2 class="section-title section-title-dark">{{ function('wp_kses_post', post.meta('wizyta_title') | default('Odwiedź nas')) | raw }}</h2>
+          <h2 id="wizyta-title" class="section-title section-title-dark">{{ function('wp_kses_post', post.meta('wizyta_title') | default('Odwiedź nas')) | raw }}</h2>
         </div>
 
         <div class="visit-sidebar">
@@ -24,7 +24,10 @@
                 <p class="visit-block-label">Godziny otwarcia</p>
                 <p class="visit-block-text">{{ function('wp_kses_post', post.meta('wizyta_hours')) | raw }}</p>
                 {% if post.meta('wizyta_hours_note') %}
-                  <p class="visit-block-text-small">{{ post.meta('wizyta_hours_note') }}</p>
+                  {# wp_kses_post, bo notka niesie <br>: zdanie o rezerwacji i
+                     zdanie o sprzedazy to dwie osobne informacje i sklejone w
+                     jeden wers czytaja sie jak jedna. #}
+                  <p class="visit-block-text-small">{{ function('wp_kses_post', post.meta('wizyta_hours_note')) | raw }}</p>
                 {% endif %}
               </div>
             {% endif %}
@@ -71,7 +74,7 @@
     {% else %}
       <div class="visit-header reveal">
         <p class="section-label">{{ post.meta('wizyta_label') | default('Pozostańmy w kontakcie') }}</p>
-        <h2 class="section-title section-title-dark">{{ function('wp_kses_post', post.meta('wizyta_title') | default('Odwiedź nas')) | raw }}</h2>
+        <h2 id="wizyta-title" class="section-title section-title-dark">{{ function('wp_kses_post', post.meta('wizyta_title') | default('Odwiedź nas')) | raw }}</h2>
       </div>
       <div class="visit-grid visit-grid-form-only">
         {% include 'partials/wizyta-formularz.twig' %}
