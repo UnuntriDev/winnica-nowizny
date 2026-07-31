@@ -60,7 +60,6 @@ $WP post meta update $FRONT_ID wines_label "Nasze wina"
 $WP post meta update $FRONT_ID wines_title "Smak Pogórza"
 $WP post meta update $FRONT_ID wines_note "Wina sprzedajemy wyłącznie na miejscu w winnicy, przez cały rok."
 $WP post meta update $FRONT_ID wines_count "5"
-$WP post meta update $FRONT_ID wines_count 6
 
 # Piwnica
 $WP post meta update $FRONT_ID cellar_show 1

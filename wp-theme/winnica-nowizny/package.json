@@ -14,7 +14,7 @@
     "test:smoke": "node tests/smoke.mjs"
   },
   "devDependencies": {
-    "eslint": "^9.39.5",
+    "eslint": "^10.8.0",
     "globals": "^15.15.0",
     "stylelint": "^16.26.1",
     "stylelint-config-standard": "^36.0.1",
