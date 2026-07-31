@@ -13,6 +13,24 @@ const WINNICA_MESSAGE_STATUSES = [
     'spam'      => 'Spam',
 ];
 
+/**
+ * Two ceilings, because they answer two different questions.
+ *
+ * The submission limit is the strict one. Four accepted reservations a quarter
+ * is already more than a real visitor sends, and it counts only what passed
+ * validation, so nobody locks themselves out while fixing their own typo.
+ *
+ * The request limit is the flood guard and counts every hit on the handler
+ * whatever the outcome. A rejected submission is not free: it stores the typed
+ * values in a ten-minute transient so the visitor gets the form back filled in.
+ * With the strict limit alone that path was unbounded, and the pre-deployment
+ * review reproduced it: five invalid posts against a limit of four all went
+ * through and left ten rows in wp_options.
+ */
+const WINNICA_CONTACT_MAX_SUBMISSIONS = 4;
+const WINNICA_CONTACT_MAX_REQUESTS    = 20;
+const WINNICA_CONTACT_WINDOW          = 15 * MINUTE_IN_SECONDS;
+
 function winnica_message_capabilities(): array
 {
     return [
@@ -182,6 +200,21 @@ function winnica_contact_old_input(): array
 
 function winnica_handle_contact_form(): void
 {
+    $fingerprint = winnica_contact_fingerprint();
+    $suffix      = substr($fingerprint, 0, 32);
+    $request_key = 'winnica_contact_req_' . $suffix;
+    $rate_key    = 'winnica_contact_' . $suffix;
+
+    // First thing in the handler, so a missing nonce, a tripped honeypot and a
+    // failed validation all cost the sender exactly as much as a real message.
+    $requests = (int) get_transient($request_key);
+    if ($requests >= WINNICA_CONTACT_MAX_REQUESTS) {
+        winnica_contact_redirect('rate_limit');
+    }
+    // Nothing is written once the ceiling is reached, so hammering the form
+    // cannot keep pushing the expiry forward and lock an address out for good.
+    set_transient($request_key, $requests + 1, WINNICA_CONTACT_WINDOW);
+
     if (
         !isset($_POST['winnica_contact_nonce'])
         || !wp_verify_nonce(
@@ -201,10 +234,8 @@ function winnica_handle_contact_form(): void
         winnica_contact_redirect('security');
     }
 
-    $fingerprint = winnica_contact_fingerprint();
-    $rate_key = 'winnica_contact_' . substr($fingerprint, 0, 32);
     $attempts = (int) get_transient($rate_key);
-    if ($attempts >= 4) {
+    if ($attempts >= WINNICA_CONTACT_MAX_SUBMISSIONS) {
         winnica_contact_redirect('rate_limit');
     }
 
@@ -287,9 +318,10 @@ function winnica_handle_contact_form(): void
         ]);
     }
 
-    // Only submissions that get past validation count against the limit, so nobody
-    // locks themselves out by fixing their own typos.
-    set_transient($rate_key, $attempts + 1, 15 * MINUTE_IN_SECONDS);
+    // Only submissions that get past validation count against this limit, so nobody
+    // locks themselves out by fixing their own typos. The request counter above
+    // already charged this attempt regardless of how it ended.
+    set_transient($rate_key, $attempts + 1, WINNICA_CONTACT_WINDOW);
 
     $topic_label = $topics[$topic];
     $content = sprintf(
