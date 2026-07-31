@@ -69,7 +69,9 @@ wymuś przekierowanie HTTP → HTTPS. Następnie wgraj przez SFTP:
 
 **Nie wgrywaj `plugins/timber-library`.** Timber jest zależnością motywu w
 `vendor/`, a ta wtyczka jest nieutrzymywana i koliduje z wersją z Composera.
-Leży w repozytorium wyłącznie na potrzeby archiwalne.
+Katalog `plugins/` jest w `.gitignore`, więc wtyczka istnieje tylko lokalnie i
+nie ma jej w repozytorium. Nie kopiuj `wp-content/plugins` hurtem na serwer:
+przez SFTP idzie wyłącznie ACF.
 
 ### 3. Import bazy i migracja adresu
 
