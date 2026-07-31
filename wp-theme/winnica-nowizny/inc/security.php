@@ -153,29 +153,14 @@ add_action('send_headers', function (): void {
 });
 
 /**
- * The two ACF fields wp_kses_post cannot handle: inline SVG icons and the map
- * iframe. Both used to reach the page through a bare | raw, which meant any
- * account that can edit the front page could store a script there. These keep
- * the fields usable while allowing only what the fields exist to hold.
+ * The one ACF field wp_kses_post cannot handle: the map iframe. It used to
+ * reach the page through a bare | raw, which meant any account that can edit
+ * the front page could store a script there. This keeps the field usable while
+ * allowing only what the field exists to hold.
+ *
+ * There was a second one here, winnica_kses_svg(), for the inline icons in the
+ * terroir section. The section is gone and so is its last caller.
  */
-function winnica_kses_svg(string $svg): string
-{
-    $shape = ['fill' => true, 'stroke' => true, 'stroke-width' => true, 'stroke-linecap' => true, 'stroke-linejoin' => true, 'stroke-dasharray' => true, 'opacity' => true, 'transform' => true, 'class' => true];
-
-    return wp_kses($svg, [
-        'svg'      => ['xmlns' => true, 'viewbox' => true, 'width' => true, 'height' => true, 'fill' => true, 'stroke' => true, 'stroke-width' => true, 'aria-hidden' => true, 'focusable' => true, 'role' => true, 'class' => true],
-        'g'        => $shape,
-        'path'     => $shape + ['d' => true],
-        'circle'   => $shape + ['cx' => true, 'cy' => true, 'r' => true],
-        'ellipse'  => $shape + ['cx' => true, 'cy' => true, 'rx' => true, 'ry' => true],
-        'rect'     => $shape + ['x' => true, 'y' => true, 'width' => true, 'height' => true, 'rx' => true, 'ry' => true],
-        'line'     => $shape + ['x1' => true, 'y1' => true, 'x2' => true, 'y2' => true],
-        'polyline' => $shape + ['points' => true],
-        'polygon'  => $shape + ['points' => true],
-        'title'    => [],
-    ]);
-}
-
 function winnica_kses_map_embed(string $html): string
 {
     $filtered = wp_kses($html, [

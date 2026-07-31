@@ -49,7 +49,6 @@ const allowedRaw = [
   'wp_kses_post',
   'wp_get_attachment_image',
   'wp_nonce_field',
-  'winnica_kses_svg',
   'winnica_kses_map_embed',
   "function('language_attributes')",
   "function('wp_head')",
