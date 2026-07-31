@@ -43,11 +43,14 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; {{ "now" | date("Y") }} Winnica Nowizny. Wszelkie prawa zastrzeżone.</p>
+      <p class="footer-copyright">&copy; {{ "now" | date("Y") }} Winnica Nowizny. Wszelkie prawa zastrzeżone.</p>
       {# Strona przedstawia produkty wlasnej winnicy osobom pelnoletnim. Zdanie
          nie zastepuje opinii prawnika, ale nazywa wprost adresata i intencje,
          czego przy napojach alkoholowych brakowalo tu w ogole. #}
-      <p class="footer-legal">Strona przeznaczona dla osób pełnoletnich. Sprzedaż wyłącznie na miejscu w winnicy.</p>
+      <p class="footer-legal">
+        <span>Strona przeznaczona dla osób pełnoletnich.</span>
+        <span>Sprzedaż wyłącznie na miejscu w winnicy.</span>
+      </p>
     </div>
   </div>
 </footer>

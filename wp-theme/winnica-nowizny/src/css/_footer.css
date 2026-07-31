@@ -114,5 +114,10 @@
 
 @media (max-width: 768px) {
   .footer-bottom { flex-direction: column; align-items: flex-start; gap: var(--sp-1); }
-  .footer-legal { text-align: left; }
+  .footer-legal {
+    order: -1;
+    text-align: left;
+  }
+
+  .footer-legal span { display: block; }
 }
