@@ -17,7 +17,7 @@ add_action('wp_head', 'winnica_schema_breadcrumbs', 21);
 
 function winnica_seo_document_title(string $title): string {
     if (is_front_page()) {
-        return 'Winnica Nowizny | Rodzinna winnica na Pogórzu Rożnowskim';
+        return 'Winnica Nowizny';
     }
 
     if (is_404()) {
