@@ -148,20 +148,9 @@ monitoringu hostingu; nierozstrzygnięty zostawia fałszywe poczucie nadzoru.
 
 ## Checklista po migracji
 
-- PHP na serwerze to 8.2 lub nowszy,
-- `WP_ENVIRONMENT_TYPE=production`, `blog_public=1`,
-- `home`, `siteurl`, canonicale, sitemap i schema używają docelowego HTTPS,
-- `/wp-content/debug.log` zwraca 403/404,
-- wtyczka `timber-library` **nie** jest wgrana ani aktywna,
-- aktywna jest tylko wtyczka ACF,
-- endpoint `/wp-json/winnica/v1/health` zwraca `{"status":"ok"}`,
-- formularz zapisuje wiadomość i wysyła e-mail przez SMTP, a adres nadawcy jest
-  w domenie strony i ma poprawne SPF, DKIM oraz DMARC,
-- `winnica_last_mail_error` zniknęło z `wp_options` po pierwszej udanej wysyłce,
-- favikona i dane administratora są potwierdzone,
-- godziny otwarcia w schema zgadzają się z sekcją kontaktu,
-- testy 320, 375, 768 i 1440 px oraz klawiatura/czytnik ekranu przechodzą,
-- wykonano i **odtworzono** pierwszą kopię zapasową.
+Lista kontrolna do odhaczania w trakcie wdrożenia, razem z wariantem bez SSH,
+konfiguracją poczty i osobnym etapem HSTS, leży w
+[PRODUCTION-CHECKLIST.md](PRODUCTION-CHECKLIST.md).
 
 ## Utrzymanie
 

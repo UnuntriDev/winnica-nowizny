@@ -57,9 +57,12 @@ przypiętych do strony głównej. Wina są osobnym typem wpisu (`wino`) z własn
 zestawem pól. Definicje grup leżą w `acf-json` i synchronizują się automatycznie.
 
 **Formularz kontaktowy.** Własna obsługa w `inc/contact-form.php`, bez wtyczki.
-Nonce, honeypot, token czasowy podpisany HMAC i limit czterech wysyłek na
-kwadrans liczony po zahashowanym adresie IP. Wiadomości zapisują się jako wpisy,
-a wysyłka idzie przez SMTP skonfigurowany zmiennymi środowiskowymi.
+Nonce, honeypot, token czasowy podpisany HMAC i dwa limity liczone po
+zahashowanym adresie IP: cztery przyjęte zgłoszenia na kwadrans oraz dwadzieścia
+żądań na kwadrans niezależnie od tego, czy przeszły walidację. Ten drugi jest
+po to, żeby odrzucone zgłoszenia, które też zapisują transient, nie były darmowe.
+Wiadomości zapisują się jako wpisy, a wysyłka idzie przez SMTP skonfigurowany
+zmiennymi środowiskowymi.
 
 **Bez analityki i bez cookies.** Strona nie ładuje Google Analytics ani żadnego
 innego narzędzia śledzącego, więc nie ma panelu zgód. Jedyna usługa zewnętrzna to
@@ -68,10 +71,13 @@ serwowane z motywu, a nie z fonts.googleapis.com.
 
 **SEO.** Motyw sam generuje tytuły, opisy, canonicale, Open Graph i dane
 strukturalne schema.org typu `LocalBusiness` z rozszerzeniem `Winery`. Godziny
-nie trafiają do schema.org, dopóki właściciel nie potwierdzi pełnego harmonogramu.
+otwarcia idą jako cztery okresy z `validFrom` i `validThrough`, bo harmonogram
+letni nakłada się na resztę roku w soboty i nie da się go podać jedną listą.
 
 **Wydajność.** Strona główna cache'uje się w transiencie na godzinę i unieważnia
-przy zapisie wpisu, zmianie motywu lub menu. Zdjęcia mają warianty AVIF i WebP z
+przy zmianie motywu, menu, ustawień w Customizerze oraz przy zapisie strony,
+wina albo załącznika. Wiadomość z formularza cache'u nie rusza, bo nie zmienia
+niczego na stronie publicznej. Zdjęcia mają warianty AVIF i WebP z
 `srcset`, fonty są hostowane lokalnie, a te potrzebne do pierwszego renderu
 dostają `preload`.
 
