@@ -43,9 +43,8 @@ i `Dockerfile.wordpress` zostają w repozytorium na wypadek przeniesienia na VPS
 ale poniższa procedura ich nie używa.
 
 Wymagania po stronie hostingu: **PHP 8.2 lub nowszy** (Timber 2 nie uruchomi się
-na starszej wersji), MySQL lub MariaDB, SSH i WP-CLI. Plan Wizytówka spełnia
-wszystkie cztery, ale wersję PHP trzeba ustawić ręcznie w panelu, bo domyślna
-bywa starsza.
+na starszej wersji), MySQL lub MariaDB, SSH i WP-CLI. Wersję PHP zwykle trzeba
+ustawić ręcznie w panelu, bo domyślna na współdzielonych kontach bywa starsza.
 
 Serwerem jest LiteSpeed, nie Apache. Czyta `.htaccess` i jest zgodny składniowo,
 więc reguły z `setup/htaccess-production.txt` powinny wejść, ale po wklejeniu
@@ -160,9 +159,25 @@ monitoringu hostingu; nierozstrzygnięty zostawia fałszywe poczucie nadzoru.
 
 ## Checklista po migracji
 
-Lista kontrolna do odhaczania w trakcie wdrożenia, razem z wariantem bez SSH,
-konfiguracją poczty i osobnym etapem HSTS, leży w
-[PRODUCTION-CHECKLIST.md](PRODUCTION-CHECKLIST.md).
+- PHP na serwerze to 8.2 lub nowszy,
+- `WP_ENVIRONMENT_TYPE=production`, `blog_public=1`,
+- `home`, `siteurl`, canonicale, sitemap i schema używają docelowego HTTPS,
+- migracja adresów zakończyła się przebiegiem kontrolnym bez trafień,
+- `/wp-content/debug.log` zwraca 403/404,
+- wtyczka `timber-library` **nie** jest wgrana ani aktywna,
+- aktywna jest tylko wtyczka ACF, nic nie cache'uje stron przed PHP,
+- endpoint `/wp-json/winnica/v1/health` zwraca `{"status":"ok"}`,
+- formularz zapisuje wiadomość i wysyła e-mail przez SMTP, a adres nadawcy jest
+  w domenie strony i ma poprawne SPF, DKIM oraz DMARC,
+- `winnica_last_mail_error` zniknęło z `wp_options` po pierwszej udanej wysyłce,
+- konto administratora ma własny login i adres w domenie strony,
+- favikona i dane kontaktowe są potwierdzone,
+- godziny otwarcia w schema zgadzają się z sekcją kontaktu,
+- testy 320, 375, 768 i 1440 px oraz klawiatura/czytnik ekranu przechodzą,
+- wykonano i **odtworzono** pierwszą kopię zapasową.
+
+Rozpisana wersja operacyjna, z krokami zależnymi od konkretnego konta u
+dostawcy, jest trzymana poza repozytorium.
 
 ## Utrzymanie
 
