@@ -116,6 +116,18 @@ function winnica_page_cache_allowed(): bool
         && empty($_GET);
 }
 
+/**
+ * The cache header is a debugging aid for us, not information visitors need.
+ * On production it stays off; everywhere else it is what lets the smoke tests
+ * and a manual curl tell a warm response from a cold one.
+ */
+function winnica_page_cache_header(string $state): void
+{
+    if (wp_get_environment_type() !== 'production') {
+        header('X-Winnica-Cache: ' . $state);
+    }
+}
+
 add_action('template_redirect', function (): void {
     if (!winnica_page_cache_allowed()) {
         return;
@@ -123,12 +135,12 @@ add_action('template_redirect', function (): void {
 
     $cached = get_transient(winnica_page_cache_key());
     if (is_string($cached) && $cached !== '') {
-        header('X-Winnica-Cache: HIT');
+        winnica_page_cache_header('HIT');
         echo $cached; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         exit;
     }
 
-    header('X-Winnica-Cache: MISS');
+    winnica_page_cache_header('MISS');
     ob_start(function (string $html): string {
         if (http_response_code() === 200 && $html !== '') {
             // A cold render costs ~1.9s against ~0.6s warm, and every expiry made one
@@ -158,7 +170,41 @@ function winnica_flush_page_cache(): void
     delete_transient(winnica_page_cache_key());
 }
 
-add_action('save_post', 'winnica_flush_page_cache');
+/**
+ * Whether a save actually changes what the front page renders.
+ *
+ * A cold render costs ~1.9s against ~0.6s warm, and that bill lands on whoever
+ * visits next. Before this guard every contact form submission sent it: the
+ * form stores the message with wp_insert_post(), save_post fired, the cache
+ * went. A visitor's message does not appear anywhere on the public page.
+ *
+ * Revisions and autosaves are snapshots of a post whose real save fires this
+ * hook again a moment later, and an auto-draft is a row WordPress created for
+ * an editor screen nobody has saved yet.
+ *
+ * What is left is the short list of types the front page reads: its own page
+ * with the ACF fields, the wines, and the images those point at. Menu changes
+ * arrive through wp_update_nav_menu instead, once per menu rather than once
+ * per item.
+ */
+function winnica_save_affects_front_page(int $post_id, WP_Post $post): bool
+{
+    if (wp_is_post_revision($post_id) || wp_is_post_autosave($post_id)) {
+        return false;
+    }
+
+    if ($post->post_status === 'auto-draft') {
+        return false;
+    }
+
+    return in_array($post->post_type, ['page', 'wino', 'attachment'], true);
+}
+
+add_action('save_post', function (int $post_id, WP_Post $post): void {
+    if (winnica_save_affects_front_page($post_id, $post)) {
+        winnica_flush_page_cache();
+    }
+}, 10, 2);
 add_action('customize_save_after', 'winnica_flush_page_cache');
 add_action('switch_theme', 'winnica_flush_page_cache');
 // The nav renders a real menu (Timber::get_menu('primary')), so a menu edit changes
