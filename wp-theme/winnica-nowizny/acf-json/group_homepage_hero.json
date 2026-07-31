@@ -44,7 +44,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "Pogórze Rożnowskie · od 2005 roku",
+            "default_value": "Pogórze Rożnowskie · od 2005",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
@@ -101,7 +101,7 @@
                 "id": ""
             },
             "rows": 2,
-            "default_value": "Gdzie tradycja winiarstwa spotyka piękno Pogórza Rożnowskiego",
+            "default_value": "Gdzie pasja rodzi wyjątkowy smak, a widok zatrzymuje czas",
             "new_lines": "",
             "maxlength": "",
             "placeholder": ""
@@ -161,7 +161,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "Zaplanuj wizytę",
+            "default_value": "Zarezerwuj wizytę",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
@@ -267,5 +267,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1784744122
+    "modified": 1785520042
 }

@@ -153,3 +153,88 @@
 @media (prefers-reduced-motion: reduce) {
   .scroll-indicator-line { animation: none; }
 }
+
+/* ── Hero na desktopie ──
+   Cala korekta siedzi w jednym bloku min-width, bo mobilne hero jest juz
+   dostrojone w _responsive.css i nie chcemy go ruszac. Progiem jest 769px,
+   czyli dokladnie pierwszy piksel nad mobilnym blokiem, wiec oba zakresy sa
+   rozlaczne i kolejnosc importow nie ma tu znaczenia. */
+@media (min-width: 769px) {
+  /* Za tekstem lezy niebo o zachodzie, czyli najjasniejszy fragment kadru.
+     Zamiast przyciemniac calosc, dokladamy miekka plame dokladnie pod blokiem
+     tekstowym: kontrast rosnie tam, gdzie stoja litery, a krawedzie zdjecia i
+     linia horyzontu zostaja takie jak byly. */
+  .hero-overlay {
+    background:
+      radial-gradient(
+        ellipse 62% 50% at 50% 46%,
+        rgba(26, 21, 16, 0.34) 0%,
+        rgba(26, 21, 16, 0.15) 58%,
+        rgba(26, 21, 16, 0) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(26, 21, 16, 0.10) 0%,
+        rgba(26, 21, 16, 0.25) 35%,
+        rgba(26, 21, 16, 0.52) 100%
+      );
+  }
+
+  /* 72px bylo bezpieczne, ale na szerokim ekranie tytul przestawal dominowac
+     kadr. Dolna granica clamp to dotychczasowe 72px, gorna 82px, czyli +14%.
+     Miedzy nimi rozmiar rosnie z szerokoscia okna, wiec 1280 dostaje ~79px,
+     a od okolo 1560px wartosc sie zatrzymuje i nie ucieka na duzych monitorach. */
+  .hero h1 {
+    font-size: clamp(4.5rem, 4.2rem + 0.95vw, 5.125rem);
+    line-height: 1.06;
+    letter-spacing: -1.5px;
+  }
+
+  /* Nadtytul miał 11px w kolorze --c-amber-light. Nad fotografia to bylo na
+     granicy czytelnosci, wiec idzie w gore rozmiar, jasnosc i cien. */
+  .hero-label {
+    font-size: clamp(0.75rem, 0.65rem + 0.16vw, 0.8125rem);
+    letter-spacing: 5.5px;
+    color: #ddcfb4;
+    text-shadow: 0 1px 12px rgba(26, 21, 16, 0.7), 0 0 2px rgba(26, 21, 16, 0.5);
+  }
+
+  /* Podtytul przechodzi z --c-text-soft na --c-text-light. Roznica jest
+     niewielka na probce koloru, ale nad zdjeciem decyduje o tym, czy kursywa
+     Cormoranta trzyma sie tla, czy w nie wsiaka. */
+  .hero-subtitle {
+    font-size: clamp(1.5rem, 1.32rem + 0.5vw, 1.75rem);
+    color: var(--c-text-light);
+    text-shadow: 0 2px 20px rgba(26, 21, 16, 0.62), 0 1px 3px rgba(26, 21, 16, 0.45);
+  }
+
+  /* CTA rosnie razem z typografia, zeby nie wygladalo na doklejone do wiekszego
+     tytulu. Skala jest mniejsza niz przy naglowku, bo przycisk ma pozostac
+     akcentem, a nie drugim bohaterem kadru. */
+  .hero-buttons .btn-primary {
+    font-size: 0.875rem;
+    letter-spacing: 2.6px;
+    padding: 18px 44px;
+  }
+
+  /* Odstep przed strzalka schodzi z 8px na 5px, a na hover z 12px na 8px.
+     Przy wiekszym stopniu pisma osiem pikseli czytalo sie jak spacja miedzy
+     dwoma osobnymi elementami, zamiast jak jeden link z grotem. */
+  .hero-cta-text {
+    font-size: 0.9375rem;
+    letter-spacing: 1.3px;
+    gap: 5px;
+  }
+
+  .hero-cta-text:hover { gap: 8px; }
+
+  /* "Odkryj" zostaje, bo niesie realna podpowiedz na ekranie wysokim na cale
+     okno, ale przy 10px i cienkim jasnym kolorze bylo praktycznie niewidoczne.
+     Wiekszy stopien i mocniejszy cien robia z niego czytelna etykiete. */
+  .scroll-indicator span {
+    font-size: 0.6875rem;
+    letter-spacing: 3.4px;
+    color: #f2ece1;
+    text-shadow: 0 1px 12px rgba(26, 21, 16, 0.95), 0 0 3px rgba(26, 21, 16, 0.8);
+  }
+}
