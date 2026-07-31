@@ -50,12 +50,16 @@
   animation: hero-line 1.2s ease-out 0.3s both;
 }
 
+/* Kolor bursztynowy --c-amber-light dawal tu 2,4:1 nad rozjaśnionym niebem,
+   przy wymaganych 4,5:1 dla tekstu ponizej 24px. Kremowy odcien trzyma cieply
+   charakter nadtytulu, a niesie o wiele wiecej luminancji. Sam kolor nie
+   wystarcza, druga polowa naprawy siedzi w kryciu overlaya. */
 .hero-label {
   font-size: var(--fs-label);
   font-weight: 500;
   letter-spacing: 5px;
   text-transform: uppercase;
-  color: var(--c-amber-light);
+  color: #f7f0e2;
   margin: 0 0 var(--sp-3) 0;
   animation: fade-in-up 1s ease-out 0.5s both;
 }
@@ -166,10 +170,24 @@
      linia horyzontu zostaja takie jak byly. */
   .hero-overlay {
     background:
+      /* Plama pod wskaznikiem "Odkryj". Stoi on nad doswietlonym pasem pola,
+         poza zasiegiem plamy centralnej, i schodzil do 3,67:1. Elipsa jest
+         niska i waska, wiec podnosi kontrast pod samym napisem, nie ruszajac
+         linii horyzontu ani rogow kadru. */
       radial-gradient(
-        ellipse 62% 50% at 50% 46%,
-        rgba(26, 21, 16, 0.34) 0%,
-        rgba(26, 21, 16, 0.15) 58%,
+        ellipse 38% 18% at 50% 91%,
+        rgba(26, 21, 16, 0.54) 0%,
+        rgba(26, 21, 16, 0.28) 60%,
+        rgba(26, 21, 16, 0) 100%
+      ),
+      /* Plama centralna. Krycie podniesione z 0,34 na 0,52, bo przy poprzedniej
+         wartosci nadtytul mial 2,77:1. Elipsa jest jednoczesnie szersza i
+         bardziej miekka w srodkowej strefie, dzieki czemu przyrost rozklada sie
+         na cala kolumne tekstu zamiast tworzyc widoczna obwodke. */
+      radial-gradient(
+        ellipse 72% 58% at 50% 46%,
+        rgba(26, 21, 16, 0.52) 0%,
+        rgba(26, 21, 16, 0.30) 58%,
         rgba(26, 21, 16, 0) 100%
       ),
       linear-gradient(
@@ -195,7 +213,6 @@
   .hero-label {
     font-size: clamp(0.75rem, 0.65rem + 0.16vw, 0.8125rem);
     letter-spacing: 5.5px;
-    color: #ddcfb4;
     text-shadow: 0 1px 12px rgba(26, 21, 16, 0.7), 0 0 2px rgba(26, 21, 16, 0.5);
   }
 
@@ -236,5 +253,28 @@
     letter-spacing: 3.4px;
     color: #f2ece1;
     text-shadow: 0 1px 12px rgba(26, 21, 16, 0.95), 0 0 3px rgba(26, 21, 16, 0.8);
+  }
+}
+
+/* ── Hero na telefonie: kontrast podtytulu ──
+   Podtytul ma tu 19px waga zwykla, wiec obowiazuje prog 4,5:1, a nie 3:1 jak
+   na desktopie, gdzie te same 27,5px licza sie juz jako tekst duzy. Przy
+   dotychczasowym gradiencie schodzil do 2,93:1. Podniesienie stopnia pisma nic
+   by nie dalo, bo 2,93 nie osiaga nawet luzniejszego progu 3:1; brakuje
+   kontrastu, nie wielkosci.
+
+   Selektor jest celowo bardziej szczegolowy niz `.hero-overlay`, bo mobilna
+   regula mieszka w _responsive.css, ktory importuje sie pozniej. Wyzsza
+   specyficznosc wygrywa niezaleznie od kolejnosci i pozwala trzymac cala
+   poprawke kontrastu w jednym pliku. */
+@media (max-width: 768px) {
+  .hero .hero-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(26, 21, 16, 0.30) 0%,
+      rgba(26, 21, 16, 0.46) 34%,
+      rgba(26, 21, 16, 0.74) 72%,
+      rgba(26, 21, 16, 0.70) 100%
+    );
   }
 }

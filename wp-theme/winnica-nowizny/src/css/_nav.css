@@ -13,13 +13,19 @@
   background: transparent;
 }
 
-/* Readability scrim over the bright hero; fades once a solid bar takes over. */
+/* Readability scrim over the bright hero; fades once a solid bar takes over.
+   Pojedyncze zejscie z 0,5 do zera oddawalo w pasie linkow (26-52px, czyli
+   16-33% wysokosci gradientu) juz tylko okolo 0,38 krycia. Link "Historia"
+   schodzil przez to do 4,08:1 przy progu 4,5:1, a pozostale stały na granicy,
+   wiec kazda zmiana zdjecia hero przesuwala kolejne ponizej normy. Gradient
+   trzyma teraz wysokie krycie przez cala wysokosc paska i dopiero pod nim
+   zanika, przez co dolna krawedz pozostaje rownie miekka jak wczesniej. */
 .site-nav::before {
   content: '';
   position: absolute;
   inset: 0 0 auto;
   height: 160px;
-  background: linear-gradient(180deg, rgba(26, 21, 16, 0.5) 0%, rgba(26, 21, 16, 0) 100%);
+  background: linear-gradient(180deg, rgba(26, 21, 16, 0.82) 0%, rgba(26, 21, 16, 0.66) 40%, rgba(26, 21, 16, 0) 100%);
   opacity: 1;
   transition: opacity var(--duration-mid);
   pointer-events: none;
