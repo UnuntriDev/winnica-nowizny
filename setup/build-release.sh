@@ -29,7 +29,10 @@ echo "==> Zaleznosci PHP"
 if command -v composer >/dev/null 2>&1; then
   ( cd "$THEME_DIR" && composer install --no-dev --optimize-autoloader --quiet )
 elif command -v docker >/dev/null 2>&1; then
-  docker run --rm -v "$(pwd)/$THEME_DIR:/app" -w /app composer:2.8 \
+  # MSYS_NO_PATHCONV wylacza tlumaczenie sciezek w Git Bashu na Windows. Bez
+  # tego "-w /app" jedzie do Dockera jako "C:/Program Files/Git/app" i demon
+  # odrzuca polecenie. Poza Windowsem zmienna nie robi nic.
+  MSYS_NO_PATHCONV=1 docker run --rm -v "$(pwd)/$THEME_DIR:/app" -w /app composer:2.8 \
     install --no-dev --optimize-autoloader --quiet
 else
   echo "Potrzebny Composer albo Docker" >&2
