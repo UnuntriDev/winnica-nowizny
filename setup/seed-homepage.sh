@@ -106,7 +106,7 @@ $WP post meta update $FRONT_ID wizyta_show 1
 $WP post meta update $FRONT_ID wizyta_label "Pozostańmy w kontakcie"
 $WP post meta update $FRONT_ID wizyta_title "Odwiedź nas"
 $WP post meta update $FRONT_ID wizyta_address "Połom Mały 60<br>32-862 Porąbka Iwkowska"
-$WP post meta update $FRONT_ID wizyta_contact '<a href="mailto:winnicanowizny@op.pl">winnicanowizny@op.pl</a><br><a href="tel:+48607578156">tel. 607 578 156</a>'
+$WP post meta update $FRONT_ID wizyta_contact '<a href="mailto:kontakt@winnicanowizny.pl">kontakt@winnicanowizny.pl</a><br><a href="tel:+48607578156">tel. 607 578 156</a>'
 $WP post meta update $FRONT_ID wizyta_hours "Poza sezonem wakacyjnym<br>Sobota–niedziela: 11:00–20:00<br><br>Lipiec–sierpień<br>Poniedziałek–sobota: 11:00–20:00<br>Niedziela: 14:00–20:00"
 $WP post meta update $FRONT_ID wizyta_hours_note "W godzinach otwarcia zapraszamy bez rezerwacji.<br>Nasze wina są dostępne w sprzedaży na miejscu przez cały rok."
 # Informacje o dojeździe należy uzupełnić po ich potwierdzeniu.

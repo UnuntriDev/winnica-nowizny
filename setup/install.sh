@@ -126,7 +126,7 @@ $WP menu item add-custom "Menu główne" "Odwiedź nas" "#wizyta"
 
 echo "⚙️ Setting Customizer options..."
 $WP theme mod set winnica_phone "607 578 156"
-$WP theme mod set winnica_email "winnicanowizny@op.pl"
+$WP theme mod set winnica_email "kontakt@winnicanowizny.pl"
 $WP theme mod set winnica_address "Połom Mały 60, 32-862 Porąbka Iwkowska"
 $WP theme mod set winnica_instagram "https://www.instagram.com/winnicanowizny/"
 $WP theme mod set winnica_facebook "https://www.facebook.com/winnicanowizny"

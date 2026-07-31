@@ -21,7 +21,7 @@ add_action('customize_register', function (WP_Customize_Manager $wp_customize) {
 
     $contact_fields = [
         'winnica_phone'   => ['label' => 'Telefon', 'default' => '607 578 156'],
-        'winnica_email'   => ['label' => 'Email', 'default' => 'winnicanowizny@op.pl'],
+        'winnica_email'   => ['label' => 'Email', 'default' => 'kontakt@winnicanowizny.pl'],
         'winnica_address' => ['label' => 'Adres', 'default' => 'Połom Mały 60, 32-862 Porąbka Iwkowska'],
     ];
 
