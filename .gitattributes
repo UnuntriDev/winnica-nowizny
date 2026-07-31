@@ -2,3 +2,11 @@
 Dockerfile* text eol=lf
 *.yml text eol=lf
 *.yaml text eol=lf
+
+# Zbudowany frontend jest pod kontrola wersji i jedzie prosto na serwer
+# linuksowy. Vite zapisuje go z LF, a core.autocrlf=true wymienia je na CRLF
+# przy kazdym checkoucie, wiec po nastepnym buildzie git status pokazywal trzy
+# fantomowe zmiany o identycznej tresci.
+wp-theme/winnica-nowizny/assets/dist/**/*.js text eol=lf
+wp-theme/winnica-nowizny/assets/dist/**/*.css text eol=lf
+wp-theme/winnica-nowizny/assets/dist/**/*.json text eol=lf
