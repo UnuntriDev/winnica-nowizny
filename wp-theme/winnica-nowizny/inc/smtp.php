@@ -71,6 +71,15 @@ add_action('wp_mail_failed', function (WP_Error $error): void {
     ], false);
 });
 
+// Without this the option is written once and kept for good, so a failure from
+// before SMTP was configured keeps reading as the current state of the mail
+// transport. One delivery that works is the proof that the old error is stale.
+add_action('wp_mail_succeeded', function (): void {
+    if (get_option('winnica_last_mail_error') !== false) {
+        delete_option('winnica_last_mail_error');
+    }
+});
+
 add_action('admin_notices', function (): void {
     if (!current_user_can('manage_options') || winnica_smtp_is_configured()) {
         return;
