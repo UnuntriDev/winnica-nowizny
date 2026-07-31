@@ -2,8 +2,8 @@
    z danymi kontaktowymi i ta bez nich, wstawiaja go w innym miejscu siatki. #}
 <div class="visit-form reveal reveal-delay-2">
   <div class="form-container">
-    <h3 class="form-title">{{ post.meta('wizyta_form_title') | default('Rezerwacja wizyty grupowej') }}</h3>
-    <p class="form-subtitle">{{ post.meta('wizyta_form_subtitle') | default('Wypełnij formularz, odezwiemy się w ciągu 24h') }}</p>
+    <h3 class="form-title">{{ post.meta('wizyta_form_title') | default('Rezerwacja dla grup') }}</h3>
+    <p class="form-subtitle">{{ post.meta('wizyta_form_subtitle') | default('Dla grup od 8 osób prosimy o wcześniejszą rezerwację. Gości indywidualnych zapraszamy bez rezerwacji w godzinach otwarcia. Odpowiadamy w ciągu 24 godzin.') }}</p>
     {% set old = contact_old | default({}) %}
     {% set errs = contact_errors | default([]) %}
     {% set error_messages = {
@@ -16,24 +16,48 @@
       'consent': 'Zaznacz zgodę, aby wysłać wiadomość.'
     } %}
     {% if contact_status == 'success' %}
-      <div class="form-notice form-notice-success" role="status">
-        Dziękujemy! Wiadomość została zapisana. Odpowiemy najszybciej, jak to możliwe.
+      <div class="form-notice form-notice-success" role="status" data-clear-contact-status>
+        <svg class="form-notice-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="m8 12 2.5 2.5L16 9"></path>
+        </svg>
+        <span class="form-notice-copy">
+          <strong>Dziękujemy!</strong>
+          <span>Otrzymaliśmy Twoją wiadomość. Odpowiemy najszybciej, jak to możliwe.</span>
+        </span>
       </div>
     {% elseif contact_status in ['validation', 'security'] %}
       <div class="form-notice form-notice-error" role="alert">
-        {% if errs %}
-          Popraw zaznaczone pola. Pozostałe dane zostały zachowane.
-        {% else %}
-          Sprawdź wymagane pola i spróbuj ponownie.
-        {% endif %}
+        <svg class="form-notice-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 3 2.8 20h18.4L12 3Z"></path>
+          <path d="M12 9v5M12 17.5v.1"></path>
+        </svg>
+        <span class="form-notice-copy">
+          <strong>Sprawdź formularz</strong>
+          <span>{% if errs %}Popraw zaznaczone pola. Pozostałe dane zostały zachowane.{% else %}Sprawdź wymagane pola i spróbuj ponownie.{% endif %}</span>
+        </span>
       </div>
     {% elseif contact_status == 'rate_limit' %}
       <div class="form-notice form-notice-error" role="alert">
-        Wysłano zbyt wiele wiadomości. Spróbuj ponownie za kilkanaście minut.
+        <svg class="form-notice-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 3 2.8 20h18.4L12 3Z"></path>
+          <path d="M12 9v5M12 17.5v.1"></path>
+        </svg>
+        <span class="form-notice-copy">
+          <strong>Spróbuj ponownie później</strong>
+          <span>Wysłano zbyt wiele wiadomości. Spróbuj ponownie za kilkanaście minut.</span>
+        </span>
       </div>
     {% elseif contact_status == 'error' %}
       <div class="form-notice form-notice-error" role="alert">
-        Nie udało się zapisać wiadomości. Skontaktuj się z nami telefonicznie lub mailowo.
+        <svg class="form-notice-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 3 2.8 20h18.4L12 3Z"></path>
+          <path d="M12 9v5M12 17.5v.1"></path>
+        </svg>
+        <span class="form-notice-copy">
+          <strong>Nie udało się zapisać wiadomości</strong>
+          <span>Skontaktuj się z nami telefonicznie lub mailowo.</span>
+        </span>
       </div>
     {% endif %}
 

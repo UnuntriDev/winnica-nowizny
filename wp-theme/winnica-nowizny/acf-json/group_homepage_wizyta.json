@@ -320,7 +320,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "Rezerwacja wizyty grupowej",
+            "default_value": "Rezerwacja dla grup",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
@@ -348,7 +348,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "Wypełnij formularz, odezwiemy się w ciągu 24h",
+            "default_value": "Dla grup od 8 osób prosimy o wcześniejszą rezerwację. Gości indywidualnych zapraszamy bez rezerwacji w godzinach otwarcia. Odpowiadamy w ciągu 24 godzin.",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",

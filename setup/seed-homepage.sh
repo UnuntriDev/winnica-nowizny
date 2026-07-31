@@ -17,12 +17,11 @@ echo "📄 Seeding homepage fields (page ID: $FRONT_ID)..."
 
 # Hero
 $WP post meta update $FRONT_ID hero_show 1
-$WP post meta update $FRONT_ID hero_label "Pogórze Rożnowskie · od 2005 roku"
+$WP post meta update $FRONT_ID hero_label "Pogórze Rożnowskie · od 2005"
 $WP post meta update $FRONT_ID hero_title "Winnica <br>Nowizny"
 $WP post meta update $FRONT_ID hero_subtitle "Gdzie pasja rodzi wyjątkowy smak, a widok zatrzymuje czas"
-# Oba wyjscia zostaja w hero. Powtorka "Odwiedz nas" zniknela po stronie paska
-# nawigacji, ktory na desktopie nie pokazuje juz tego przycisku.
-$WP post meta update $FRONT_ID hero_cta_primary_text "Odwiedź nas"
+# Główne CTA prowadzi bezpośrednio do formularza wizyty.
+$WP post meta update $FRONT_ID hero_cta_primary_text "Zarezerwuj wizytę"
 $WP post meta update $FRONT_ID hero_cta_primary_url "#wizyta"
 $WP post meta update $FRONT_ID hero_cta_secondary_text "Poznaj nasze wina"
 $WP post meta update $FRONT_ID hero_cta_secondary_url "#wina"
@@ -60,7 +59,6 @@ $WP post meta update $FRONT_ID wines_label "Nasze wina"
 $WP post meta update $FRONT_ID wines_title "Smak Pogórza"
 $WP post meta update $FRONT_ID wines_note "Wina sprzedajemy wyłącznie na miejscu w winnicy, przez cały rok."
 $WP post meta update $FRONT_ID wines_count "5"
-$WP post meta update $FRONT_ID wines_count 6
 
 # Piwnica
 $WP post meta update $FRONT_ID cellar_show 1
@@ -110,8 +108,8 @@ $WP post meta update $FRONT_ID wizyta_contact '<a href="mailto:kontakt@winnicano
 $WP post meta update $FRONT_ID wizyta_hours "Poza sezonem wakacyjnym<br>Sobota–niedziela: 11:00–20:00<br><br>Lipiec–sierpień<br>Poniedziałek–sobota: 11:00–20:00<br>Niedziela: 14:00–20:00"
 $WP post meta update $FRONT_ID wizyta_hours_note "W godzinach otwarcia zapraszamy bez rezerwacji.<br>Nasze wina są dostępne w sprzedaży na miejscu przez cały rok."
 # Informacje o dojeździe należy uzupełnić po ich potwierdzeniu.
-$WP post meta update $FRONT_ID wizyta_form_title "Rezerwacja wizyty"
-$WP post meta update $FRONT_ID wizyta_form_subtitle "Formularz jest potrzebny tylko przy grupach od 8 osób. W mniejszym gronie wpadaj bez zapowiedzi w godzinach otwarcia. Odpowiadamy w ciągu 24h."
+$WP post meta update $FRONT_ID wizyta_form_title "Rezerwacja dla grup"
+$WP post meta update $FRONT_ID wizyta_form_subtitle "Dla grup od 8 osób prosimy o wcześniejszą rezerwację. Gości indywidualnych zapraszamy bez rezerwacji w godzinach otwarcia. Odpowiadamy w ciągu 24 godzin."
 $WP post meta update $FRONT_ID wizyta_show_map 1
 
 echo ""

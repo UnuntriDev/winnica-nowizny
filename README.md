@@ -62,7 +62,15 @@ zahashowanym adresie IP: cztery przyjęte zgłoszenia na kwadrans oraz dwadzieś
 żądań na kwadrans niezależnie od tego, czy przeszły walidację. Ten drugi jest
 po to, żeby odrzucone zgłoszenia, które też zapisują transient, nie były darmowe.
 Wiadomości zapisują się jako wpisy, a wysyłka idzie przez SMTP skonfigurowany
-zmiennymi środowiskowymi.
+zmiennymi środowiskowymi. Po udanej wysyłce skrypt usuwa `?contact=success` z
+adresu, żeby odświeżenie strony nie pokazywało potwierdzenia po raz drugi.
+
+**Pasek kontaktowy na telefonie.** Poniżej 768 px, po przewinięciu hero, z dołu
+wysuwa się pasek z telefonem i rezerwacją. Chowa się przy stopce, gdzie te same
+dane są już w treści, oraz przy otwartym menu i lightboxie, żeby nie leżeć na
+warstwie modalnej. Widocznością steruje `IntersectionObserver`, a nie zdarzenie
+przewijania. Gdy pasek jest schowany, jego linki dostają `tabindex="-1"` i
+`aria-hidden`, więc nie zbierają fokusu i nie są czytane przez czytniki ekranu.
 
 **Bez analityki i bez cookies.** Strona nie ładuje Google Analytics ani żadnego
 innego narzędzia śledzącego, więc nie ma panelu zgód. Jedyna usługa zewnętrzna to
@@ -79,7 +87,10 @@ przy zmianie motywu, menu, ustawień w Customizerze oraz przy zapisie strony,
 wina albo załącznika. Wiadomość z formularza cache'u nie rusza, bo nie zmienia
 niczego na stronie publicznej. Zdjęcia mają warianty AVIF i WebP z
 `srcset`, fonty są hostowane lokalnie, a te potrzebne do pierwszego renderu
-dostają `preload`.
+dostają `preload`. Cały JavaScript strony to jeden plik ładowany z `defer`,
+około 6 kB, a CSS około 10 kB po kompresji. Zmierzone lokalnie: LCP 1,1 s i CLS
+równe 0 na profilu desktopowym, LCP 3,2 s na profilu mobilnym z dławieniem
+sieci i procesora.
 
 **Bezpieczeństwo.** Ukryta wersja WordPressa, ogólny komunikat błędu logowania,
 limit prób logowania, wyłączony XML-RPC. Adres klienta bierze się z nagłówków
@@ -91,6 +102,40 @@ przekierowań tylko wtedy, gdy żądanie przyszło z zakresu wpisanego w
 **Monitoring.** Endpoint `/wp-json/winnica/v1/health` zwraca 200 albo 503 razem z
 lakonicznym statusem. Korzysta z niego healthcheck kontenera i workflow w
 `.github/workflows`, na razie wyłączony z harmonogramu do czasu wdrożenia.
+
+## Dostępność
+
+Celem jest WCAG 2.2 na poziomie AA.
+
+**Klawiatura.** Menu i lightbox galerii obsługują się bez myszy, a pole daty
+przyjmuje wpisanie z klawiatury, więc kalendarz nie jest do niczego potrzebny.
+Lightbox to `role="dialog"` z `aria-modal`: przy otwarciu fokus przechodzi
+na przycisk zamknięcia, tło dostaje blokadę przewijania, a Escape zamyka okno i
+oddaje fokus na kafelek, z którego przyszliśmy. Menu zachowuje się tak samo.
+Pierścień fokusu ma trzy piksele i ciemną otoczkę, dzięki czemu jest widoczny
+zarówno na jasnych sekcjach, jak i na ciemnym zdjęciu.
+
+**Kontrast na zdjęciu.** To najtrudniejszy fragment, bo tłem dla nadtytułu,
+tytułu i podtytułu jest fotografia z jasnym niebem. Overlay hero i przyciemnienie
+pod paskiem nawigacji są dobrane tak, aby najgorszy piksel pod każdym napisem
+dawał co najmniej 4,5:1 dla tekstu poniżej 24 px. Wartości sprawdzano przez
+próbkowanie pikseli zdjęcia, a nie na oko, bo automatyczne testery zgłaszają
+tekst na obrazie jako nierozstrzygnięty i przepuszczają go bez oceny.
+
+**Formularz.** Każde pole ma etykietę, a pola z błędem dostają `aria-invalid` i
+`aria-describedby` wskazujące na komunikat przy tym konkretnym polu. Podsumowanie
+po wysyłce jest w `role="alert"` albo `role="status"`, zależnie od tego, czy
+niesie błąd, czy potwierdzenie. Oczekiwany format daty jest podany tekstem dla
+czytników ekranu, bo placeholder znika po pierwszym znaku i nie jest ogłaszany.
+
+**Bez JavaScriptu.** Cała treść przychodzi z serwera. Kontrolki, które bez
+skryptu nic by nie robiły, w ogóle nie trafiają do HTML-a, a menu mobilne
+zamienia się na zwykłą listę linków. Nie ma więc martwych przycisków.
+
+**Reszta.** Ruch respektuje `prefers-reduced-motion`. Wszystkie obrazy mają
+`alt`, osadzona mapa ma `title`. Cele dotykowe spełniają wymagane 24 × 24 px,
+a przyciski główne i pasek mobilny mają 44 px. Układ nie wymaga przewijania w
+poziomie od 320 px wzwyż.
 
 ## Struktura
 

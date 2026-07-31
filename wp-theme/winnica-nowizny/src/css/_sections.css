@@ -342,21 +342,31 @@
 
 .wines-note-mark { margin-right: 0.2em; }
 
-/* Reflow: 5 across → 3 on tablet → 2 on phones. */
+/* Reflow: five across on desktop, three on tablet. Phones use the original
+   lightweight scroll-snap slider with a glimpse of the next bottle. */
 @media (max-width: 1023px) {
   .wines-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 640px) {
   .wines-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--sp-4) var(--sp-2);
+    --edge: var(--sp-3);
+    display: flex;
+    gap: var(--sp-3);
+    margin-inline: calc(-1 * var(--edge));
+    padding-inline: var(--edge);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline-start: var(--edge);
+    scrollbar-width: none;
   }
 
-  .wine-slide:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
-    width: min(50%, 260px);
-    justify-self: center;
+  .wines-grid::-webkit-scrollbar { display: none; }
+
+  .wine-slide {
+    flex: 0 0 min(68%, 260px);
+    scroll-snap-align: start;
   }
 
   .wine-stage { height: clamp(240px, 64vw, 260px); }
@@ -368,6 +378,10 @@
     font-size: var(--fs-body-sm);
     line-height: 1.55;
   }
+}
+
+@media (max-width: 360px) {
+  .wines-grid { --edge: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

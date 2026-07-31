@@ -46,7 +46,7 @@
     {% endif %}
     <div class="hero-buttons">
       {% if post.meta('hero_cta_primary_text') %}
-        <a href="{{ function('esc_url', post.meta('hero_cta_primary_url') | default('#wizyta')) }}" class="btn-primary">{{ post.meta('hero_cta_primary_text') }}</a>
+        <a href="{{ function('esc_url', post.meta('hero_cta_primary_url') | default('#wizyta')) }}" class="btn-primary" data-mobile-cta-trigger>{{ post.meta('hero_cta_primary_text') }}</a>
       {% endif %}
       {% if post.meta('hero_cta_secondary_text') %}
         <a href="{{ function('esc_url', post.meta('hero_cta_secondary_url') | default('#wina')) }}" class="btn-text hero-cta-text">{{ post.meta('hero_cta_secondary_text') }}</a>
