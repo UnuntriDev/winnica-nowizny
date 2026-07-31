@@ -7,11 +7,17 @@ Paczkę motywu budujesz **lokalnie** przez `sh setup/build-release.sh`. Poniższ
 lista zaczyna się w momencie, gdy masz gotowy plik `dist/winnica-nowizny-*.zip`
 i dostęp do panelu hostingu.
 
+**Docelowy hosting:** vh.pl, plan Wizytówka. Ze specyfikacji planu wynika, co
+poniżej jest przesądzone, a co wymaga ustawienia: SSH, SFTP i WP-CLI są w
+pakiecie, więc migracja idzie ścieżką z WP-CLI. Serwerem jest **LiteSpeed, nie
+Apache**, PHP sięga 8.5, a backup robi się dwa razy dziennie z retencją 31 dni.
+
 ## 0. Zanim zaczniesz
 
 - [ ] domena `winnicanowizny.pl` wskazuje na serwery nazw vh.pl,
-- [ ] PHP na koncie ustawione na 8.2 lub nowsze (Timber 2 nie wystartuje niżej),
-- [ ] wiesz, czy konto ma dostęp SSH; jeśli nie, patrz krok 3b,
+- [ ] PHP na koncie **ustawione ręcznie** na 8.2 lub nowsze. Plan oferuje wersje
+      od 5.6 do 8.5, a domyślna bywa starsza; Timber 2 na niej nie wystartuje,
+- [ ] SSH działa: `ssh uzytkownik@serwer` wpuszcza, a `wp --info` odpowiada,
 - [ ] hasło do skrzynki `kontakt@winnicanowizny.pl` masz w menedżerze haseł,
       a nie w repozytorium, notatniku ani historii poleceń.
 
@@ -36,45 +42,74 @@ Przez SFTP:
 - [ ] motyw aktywowany, ACF aktywne,
 - [ ] **`timber-library` nie jest wgrane ani aktywne**. Timber jedzie w
       `vendor/` motywu, stara wtyczka koliduje z tą wersją,
+- [ ] sprawdzone, **co dołożył instalator 1-click**. Hostingi z LiteSpeed często
+      wgrywają LSCache razem z WordPressem, więc lista wtyczek po instalacji
+      może nie być pusta: `wp plugin list`,
 - [ ] żadna inna wtyczka nie jest aktywna.
 
 Sprawdź, że `wp-content/themes/winnica-nowizny/vendor/autoload.php` oraz
 `assets/dist/.vite/manifest.json` faktycznie są na serwerze. Bez nich motyw
 odpowiada kontrolowanym błędem 503, co jest zachowaniem celowym.
 
-## 3a. Baza i migracja adresów, wariant z SSH
+### Czego nie włączać, mimo że hosting to reklamuje
 
-- [ ] lokalny zrzut bazy zaimportowany na serwer (phpMyAdmin albo `mysql <`),
-- [ ] migracja uruchomiona z katalogu głównego WordPressa:
+- [ ] **LiteSpeed Cache: nie instalować.** Motyw ma własny cache całych stron na
+      transientach, z TTFB rzędu 0,35 s. LSCache dołożyłby drugą warstwę
+      **przed PHP**, poza zasięgiem logiki motywu. Trzy skutki: formularz
+      dostaje nonce i podpisany token w HTML, więc serwowanie tego samego
+      dokumentu po wygaśnięciu nonce kończy się odpowiedzią `contact=security`
+      zamiast podziękowania; unieważnianie cache przy zapisie wina albo strony
+      przestaje cokolwiek znaczyć, bo LSCache dalej wydaje starą wersję;
+      diagnostyka przestaje działać, bo żądanie nie dociera do PHP. Bez wtyczki
+      serwer nie cache'uje dynamicznego PHP i nic się nie dubluje.
+- [ ] **Redis: zostawić wyłączony.** Kolejna warstwa bez zysku przy stronie,
+      która renderuje się w 0,35 s. Transienty motywu działają na bazie.
+
+Imunify360 działa po stronie serwera i potrafi przenieść plik do kwarantanny.
+Normalnego kodu zwykle nie rusza, ale jeśli po wgraniu strona nagle zwróci 500
+albo zniknie plik motywu, to jest pierwsze miejsce do sprawdzenia w panelu.
+
+## 3. Baza i migracja adresów
+
+Plan daje SSH i WP-CLI, więc to jest ścieżka domyślna.
+
+- [ ] zrzut `setup/backups/produkcja-import-*.sql` wgrany na serwer
+      i zaimportowany (phpMyAdmin albo `mysql <`),
+- [ ] migracja uruchomiona przez SSH, z katalogu głównego WordPressa:
 
 ```bash
 OLD_WP_URL=http://localhost:8080 WP_URL=https://winnicanowizny.pl WP_ADMIN_EMAIL=kontakt@winnicanowizny.pl sh setup/migrate-production.sh
 ```
 
 Skrypt robi `wp search-replace --precise --skip-columns=guid`, czyli podmianę
-świadomą serializacji, ustawia `home`, `siteurl`, `admin_email`, `blog_public`,
-odświeża rewrite rules i czyści cache.
+świadomą serializacji, ustawia `home`, `siteurl`, `admin_email` i `blog_public`,
+odświeża rewrite rules, czyści cache, a na końcu powtarza to samo wyszukiwanie
+jako `--dry-run`.
 
-- [ ] `wp option get home` zwraca adres HTTPS.
+- [ ] przebieg kontrolny na końcu wypisał **same zera**. Jeśli nie, coś zostało
+      i migracja nie jest skończona,
+- [ ] `wp option get home` zwraca adres HTTPS,
+- [ ] w wypisanych adresach kont zobaczyłeś, na co wskazuje konto administratora.
+      `admin_email` to opcja, a konto ma własny adres i skrypt go nie rusza.
 
-## 3b. Baza i migracja adresów, wariant bez SSH
+**Czego nie robić:** nie otwieraj dumpu SQL w edytorze i nie podmieniaj w nim
+adresu szukaj-zamień. Zserializowane wartości w bazie mają prefiksy długości.
+Nowy adres jest dłuższy od `http://localhost:8080`, więc prefiks przestaje się
+zgadzać i PHP odrzuca całą wartość, zwykle po cichu.
 
-Jeżeli plan nie daje SSH ani WP-CLI:
+<details>
+<summary>Gdyby SSH jednak nie działało</summary>
 
 - [ ] zrzut zaimportowany przez phpMyAdmin **bez żadnych ręcznych podmian**,
-- [ ] `home` i `siteurl` ustawione tymczasowo w phpMyAdmin (to jedyne dwa
-      pola, które są zwykłymi łańcuchami, a nie tablicą zserializowaną),
+- [ ] `home` i `siteurl` ustawione w phpMyAdmin (to jedyne dwa pola, które są
+      zwykłymi łańcuchami, a nie tablicą zserializowaną),
 - [ ] zainstalowana wtyczka **Better Search Replace**, podmiana
       `http://localhost:8080` na `https://winnicanowizny.pl` na wszystkich
       tabelach, z zaznaczonym trybem obsługi serializacji, bez kolumny `guid`,
 - [ ] wtyczka **dezaktywowana i usunięta** zaraz po migracji,
 - [ ] Ustawienia → Bezpośrednie odnośniki zapisane ponownie (odświeża reguły).
 
-**Czego nie robić w żadnym wariancie:** nie otwieraj dumpu SQL w edytorze i nie
-podmieniaj w nim adresu szukaj-zamień. `wp_options` trzyma `theme_mods` jako
-tablicę zserializowaną z prefiksami długości. Nowy adres ma inną długość niż
-stary, prefiks przestaje się zgadzać i PHP odrzuca całą tablicę. Efekt: telefon,
-e-mail, adres i linki społecznościowe znikają ze strony naraz.
+</details>
 
 ## 4. wp-config.php
 
@@ -106,12 +141,26 @@ w ogóle nie ma go w drzewie projektu: powstaje na serwerze.
 
 ## 5. .htaccess
 
+Reguły pisane były pod Apache, a tu stoi LiteSpeed. Składniowo jest zgodny i
+czyta `.htaccess`, ale to trzeba sprawdzić, a nie założyć.
+
 - [ ] zawartość `setup/htaccess-production.txt` wklejona do `.htaccess` w
       katalogu głównym, **poniżej** bloku `# END WordPress`,
 - [ ] blok PHP dla uploadów wklejony do osobnego `.htaccess` w
       `wp-content/uploads/` (w pliku źródłowym jest zakomentowany),
 - [ ] `https://winnicanowizny.pl/wp-content/debug.log` zwraca 403 albo 404,
-- [ ] `https://winnicanowizny.pl/xmlrpc.php` zwraca 403.
+- [ ] `https://winnicanowizny.pl/xmlrpc.php` zwraca 403,
+- [ ] nagłówki faktycznie wychodzą:
+
+```bash
+curl -sI https://winnicanowizny.pl/ | grep -iE "x-frame|x-content-type|referrer|permissions"
+```
+
+Powinny być cztery linie. Motyw wystawia je z PHP, więc ich brak oznacza
+poważniejszy problem niż `.htaccess`. Jeśli natomiast **strona zwraca 500 zaraz
+po wklejeniu reguł**, winny jest któryś blok: zacznij od zdjęcia opakowania
+`<IfModule mod_headers.c>` i zostawienia samych dyrektyw `Header`, bo to
+najczęstsza różnica między Apache a LiteSpeed.
 
 ## 6. Poczta
 
@@ -139,6 +188,11 @@ winnicy wygląda dla odbiorcy jak podszywanie i ląduje w spamie.
 - [ ] strona główna ładuje się i wygląda jak lokalnie,
 - [ ] `curl -sI https://winnicanowizny.pl | grep -i x-winnica-cache` **nic nie
       zwraca**. Nagłówek diagnostyczny jest widoczny tylko poza produkcją,
+- [ ] `curl -sI https://winnicanowizny.pl | grep -i litespeed-cache` też **nic
+      nie zwraca**. Gdyby coś się pojawiło, znaczy że LSCache jednak działa i
+      cache'uje stronę przed PHP, ze skutkami opisanymi w kroku 2,
+- [ ] cache motywu działa: drugie żądanie pod rząd jest wyraźnie szybsze od
+      pierwszego (`curl -s -o /dev/null -w "%{time_total}\n"` dwa razy),
 - [ ] obecne są `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`
       i `Permissions-Policy`,
 - [ ] `/wp-json/winnica/v1/health` zwraca `{"status":"ok"}`,
@@ -158,9 +212,29 @@ winnicy wygląda dla odbiorcy jak podszywanie i ląduje w spamie.
 - [ ] login administratora **nie** brzmi `admin`,
 - [ ] `admin_email` to `kontakt@winnicanowizny.pl` i skrzynka jest czytana,
 - [ ] w Wiadomościach i rezerwacjach nie ma żadnych wpisów testowych, również
-      w koszu,
-- [ ] automatyczne aktualizacje rdzenia włączone w panelu hostingu albo
-      w WordPressie, ale nie w obu naraz.
+      w koszu.
+
+### Automatyczne aktualizacje: wybierz jedno miejsce
+
+Plan Wizytówka sam aktualizuje rdzeń i wtyczki, a motyw ustawia to samo po
+swojej stronie w `inc/security.php`. Dwa niezależne mechanizmy aktualizujące te
+same pliki to przepis na aktualizację wykonaną w połowie.
+
+- [ ] decyzja podjęta i zapisana: aktualizacje robi **hosting** albo
+      **WordPress**, nie oba naraz.
+
+Sensowniej zostawić to hostingowi: działa poza ruchem WordPressa i ma backup
+dwa razy dziennie pod ręką. W tym wariancie trzeba zdjąć filtry z motywu:
+
+```php
+add_filter('auto_update_plugin', '__return_true');
+add_filter('auto_update_theme', '__return_true');
+```
+
+Motyw i tak jest odcięty od aktualizacji nagłówkiem `Update URI: false`, więc
+drugi filtr nic nie robi. Pierwszy dotyczy wyłącznie ACF, bo Timber i Twig
+siedzą w `vendor/` i WordPress o nich nie wie; te aktualizuje się przez
+Composer i przebudowanie paczki.
 
 ## 9. HSTS, dopiero po tygodniu
 

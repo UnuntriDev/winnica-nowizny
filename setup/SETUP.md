@@ -43,7 +43,17 @@ i `Dockerfile.wordpress` zostają w repozytorium na wypadek przeniesienia na VPS
 ale poniższa procedura ich nie używa.
 
 Wymagania po stronie hostingu: **PHP 8.2 lub nowszy** (Timber 2 nie uruchomi się
-na starszej wersji), MySQL lub MariaDB, SSH i WP-CLI.
+na starszej wersji), MySQL lub MariaDB, SSH i WP-CLI. Plan Wizytówka spełnia
+wszystkie cztery, ale wersję PHP trzeba ustawić ręcznie w panelu, bo domyślna
+bywa starsza.
+
+Serwerem jest LiteSpeed, nie Apache. Czyta `.htaccess` i jest zgodny składniowo,
+więc reguły z `setup/htaccess-production.txt` powinny wejść, ale po wklejeniu
+trzeba sprawdzić curl-em, czy nagłówki faktycznie wychodzą. **Wtyczki LiteSpeed
+Cache nie instalujemy.** Motyw ma własny cache całych stron, a LSCache stanąłby
+przed PHP i serwował dokument z wygasłym nonce formularza, poza zasięgiem
+unieważniania z `inc/performance.php`. Redis z tego samego powodu zostaje
+wyłączony.
 
 ### 1. Przygotowanie paczki lokalnie
 
