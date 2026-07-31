@@ -31,7 +31,12 @@ COPY setup/apache-security.conf /etc/apache2/conf-enabled/winnica-security.conf
 COPY setup/php-hardening.ini /usr/local/etc/php/conf.d/winnica-hardening.ini
 COPY setup/migrate-production.sh /usr/local/bin/winnica-migrate
 COPY --from=plugin-fetcher /plugins/ /usr/src/wordpress/wp-content/plugins/
-COPY --from=theme-builder /build/theme/ /usr/src/wordpress/wp-content/themes/winnica-nowizny/
+COPY --from=theme-builder /build/theme/404.php /build/theme/front-page.php /build/theme/functions.php /build/theme/index.php /build/theme/page.php /build/theme/screenshot.jpg /build/theme/style.css /usr/src/wordpress/wp-content/themes/winnica-nowizny/
+COPY --from=theme-builder /build/theme/acf-json/ /usr/src/wordpress/wp-content/themes/winnica-nowizny/acf-json/
+COPY --from=theme-builder /build/theme/assets/dist/ /usr/src/wordpress/wp-content/themes/winnica-nowizny/assets/dist/
+COPY --from=theme-builder /build/theme/assets/images/ /usr/src/wordpress/wp-content/themes/winnica-nowizny/assets/images/
+COPY --from=theme-builder /build/theme/inc/ /usr/src/wordpress/wp-content/themes/winnica-nowizny/inc/
+COPY --from=theme-builder /build/theme/templates/ /usr/src/wordpress/wp-content/themes/winnica-nowizny/templates/
 COPY --from=php-dependencies /build/theme/vendor/ /usr/src/wordpress/wp-content/themes/winnica-nowizny/vendor/
 
 RUN chmod +x /usr/local/bin/winnica-migrate \

@@ -61,9 +61,9 @@ do
   cp -R "$THEME_DIR/$item" "$STAGE/"
 done
 
-# Zrodla fontow i obrazow sa juz w assets/dist z hashami w nazwach. Katalogi
-# zrodlowe zostawiaja w paczce kilka megabajtow, ktorych nikt nie serwuje.
-rm -rf "$STAGE/assets/fonts" "$STAGE/assets/img"
+# Zrodla fontow sa juz w assets/dist z hashami w nazwach. Katalog assets/images
+# zostaje w paczce, bo szablony uzywaja go dla obrazow domyslnych.
+rm -rf "$STAGE/assets/fonts"
 
 echo "==> Pakowanie"
 rm -f "$ARCHIVE"
