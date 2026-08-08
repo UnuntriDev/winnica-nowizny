@@ -32,6 +32,21 @@ add_action('wp_enqueue_scripts', function (): void {
     if (!is_user_logged_in()) {
         wp_dequeue_style('dashicons');
     }
+
+    // The custom front-page templates do not render Gutenberg blocks. Core
+    // nevertheless enqueues three inline styles there, adding about 13 kB to
+    // every HTML response. Keep them available everywhere else so a future
+    // block-based page or post continues to render correctly.
+    if (is_front_page()) {
+        foreach ([
+            'wp-block-library',
+            'wp-block-library-theme',
+            'classic-theme-styles',
+            'global-styles',
+        ] as $handle) {
+            wp_dequeue_style($handle);
+        }
+    }
 }, 100);
 
 add_action('send_headers', function (): void {

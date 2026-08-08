@@ -146,10 +146,46 @@ add_action('send_headers', function (): void {
     if (headers_sent()) {
         return;
     }
+
+    // PHP adds this header by default on some shared-hosting configurations.
+    // It is not useful to visitors and needlessly exposes the runtime version.
+    header_remove('X-Powered-By');
+
     header('X-Content-Type-Options: nosniff');
     header('X-Frame-Options: SAMEORIGIN');
     header('Referrer-Policy: strict-origin-when-cross-origin');
     header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
+
+    // Start HSTS with a deliberately short lifetime. Once HTTPS has remained
+    // stable for a full observation period, this can be raised gradually to a
+    // year. Do not add includeSubDomains until every subdomain is confirmed to
+    // support HTTPS, because browsers remember that decision independently.
+    if (wp_get_environment_type() === 'production' && is_ssl()) {
+        header('Strict-Transport-Security: max-age=300');
+    }
+
+    // Observe CSP compatibility before enforcing it. The current front page
+    // contains a small inline bootstrap script and embeds Google Maps, so they
+    // are represented explicitly. Report-Only cannot break the live page and
+    // gives us a safe stage for tightening the policy later.
+    if (!is_admin()) {
+        $policy = [
+            "default-src 'self'",
+            "base-uri 'self'",
+            "form-action 'self'",
+            "frame-ancestors 'self'",
+            "object-src 'none'",
+            "script-src 'self' 'unsafe-inline'",
+            "style-src 'self' 'unsafe-inline'",
+            "img-src 'self' data: https:",
+            "font-src 'self' data:",
+            "connect-src 'self'",
+            "frame-src https://www.google.com https://maps.google.com",
+            "media-src 'self'",
+            "manifest-src 'self'",
+        ];
+        header('Content-Security-Policy-Report-Only: ' . implode('; ', $policy));
+    }
 });
 
 /**

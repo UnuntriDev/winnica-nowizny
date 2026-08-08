@@ -44,7 +44,7 @@ ServerSignature Off
 # </FilesMatch>
 
 # ---------------------------------------------------------------------------
-# HSTS. CELOWO WYLACZONY. Wlaczaj recznie, dopiero po weryfikacji.
+# HSTS. ETAP POCZATKOWY JEST USTAWIANY PRZEZ MOTYW W inc/security.php.
 # ---------------------------------------------------------------------------
 #
 # Naglowek mowi przegladarce: przez najblizsze max-age sekund nie probuj tej
@@ -68,11 +68,11 @@ ServerSignature Off
 # Preload zostawiamy poza gra. Wpis na liste preload jest wpisany na stale w
 # przegladarke i usuwa sie go miesiacami.
 #
-# <IfModule mod_headers.c>
-#     Header always set Strict-Transport-Security "max-age=300"
-# </IfModule>
+# Nie ustawiaj tutaj rownolegle max-age=300: motyw wysyla go juz dla HTTPS na
+# produkcji. Po okresie obserwacji zwiekszaj wartosc w inc/security.php, zeby
+# naglowek mial jedno zrodlo prawdy.
 #
-# Docelowo, po kroku 4:
+# Docelowo, po kroku 4, przenies te wartosc do inc/security.php:
 # <IfModule mod_headers.c>
 #     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 # </IfModule>
