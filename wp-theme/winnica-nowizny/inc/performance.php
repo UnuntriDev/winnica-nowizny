@@ -46,6 +46,22 @@ function winnica_dequeue_unused_front_page_styles(): void
     }
 }
 
+/**
+ * WordPress registers global styles both in wp_enqueue_scripts and wp_footer.
+ * Remove those callbacks only for the custom front page, which does not render
+ * blocks. The editor and all other templates keep the core behaviour.
+ */
+function winnica_disable_front_page_global_styles(): void
+{
+    if (!is_front_page()) {
+        return;
+    }
+
+    remove_action('wp_enqueue_scripts', 'wp_enqueue_global_styles');
+    remove_action('wp_footer', 'wp_enqueue_global_styles', 1);
+}
+add_action('wp', 'winnica_disable_front_page_global_styles');
+
 add_action('wp_enqueue_scripts', function (): void {
     if (!is_user_logged_in()) {
         wp_dequeue_style('dashicons');
@@ -54,9 +70,8 @@ add_action('wp_enqueue_scripts', function (): void {
     winnica_dequeue_unused_front_page_styles();
 }, 100);
 
-// global-styles can be enqueued again after wp_enqueue_scripts by core. Remove
-// it once more immediately before styles are printed, without affecting other
-// templates or the block editor.
+// Keep a final, front-page-only safeguard for styles added by extensions after
+// wp_enqueue_scripts, without affecting other templates or the block editor.
 add_action('wp_print_styles', 'winnica_dequeue_unused_front_page_styles', 100);
 
 add_action('send_headers', function (): void {
