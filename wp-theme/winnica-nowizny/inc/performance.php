@@ -28,11 +28,8 @@ add_action('init', function (): void {
     remove_action('template_redirect', 'wp_shortlink_header', 11);
 });
 
-add_action('wp_enqueue_scripts', function (): void {
-    if (!is_user_logged_in()) {
-        wp_dequeue_style('dashicons');
-    }
-
+function winnica_dequeue_unused_front_page_styles(): void
+{
     // The custom front-page templates do not render Gutenberg blocks. Core
     // nevertheless enqueues three inline styles there, adding about 13 kB to
     // every HTML response. Keep them available everywhere else so a future
@@ -47,7 +44,20 @@ add_action('wp_enqueue_scripts', function (): void {
             wp_dequeue_style($handle);
         }
     }
+}
+
+add_action('wp_enqueue_scripts', function (): void {
+    if (!is_user_logged_in()) {
+        wp_dequeue_style('dashicons');
+    }
+
+    winnica_dequeue_unused_front_page_styles();
 }, 100);
+
+// global-styles can be enqueued again after wp_enqueue_scripts by core. Remove
+// it once more immediately before styles are printed, without affecting other
+// templates or the block editor.
+add_action('wp_print_styles', 'winnica_dequeue_unused_front_page_styles', 100);
 
 add_action('send_headers', function (): void {
     if (is_admin() || is_user_logged_in() || is_404() || is_search() || headers_sent()) {
