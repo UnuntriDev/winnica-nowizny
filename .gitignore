@@ -32,6 +32,8 @@ setup/backups/*
 # Paczki wdrozeniowe z setup/build-release.sh. Kotwica na poczatku wzorca jest
 # istotna: assets/dist to zbudowany frontend i ma zostac pod kontrola wersji.
 /dist/
+/winnica-nowizny-theme.zip
+/winnica-nowizny-setup.zip
 
 # Review tooling artifacts
 .review-deps/
