@@ -269,12 +269,24 @@
    poprawke kontrastu w jednym pliku. */
 @media (max-width: 768px) {
   .hero .hero-overlay {
-    background: linear-gradient(
-      180deg,
-      rgba(26, 21, 16, 0.30) 0%,
-      rgba(26, 21, 16, 0.46) 34%,
-      rgba(26, 21, 16, 0.74) 72%,
-      rgba(26, 21, 16, 0.70) 100%
-    );
+    background:
+      radial-gradient(
+        ellipse 38% 18% at 50% 91%,
+        rgba(26, 21, 16, 0.54) 0%,
+        rgba(26, 21, 16, 0.28) 60%,
+        rgba(26, 21, 16, 0) 100%
+      ),
+      radial-gradient(
+        ellipse 72% 58% at 50% 46%,
+        rgba(26, 21, 16, 0.52) 0%,
+        rgba(26, 21, 16, 0.30) 58%,
+        rgba(26, 21, 16, 0) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(26, 21, 16, 0.10) 0%,
+        rgba(26, 21, 16, 0.25) 35%,
+        rgba(26, 21, 16, 0.52) 100%
+      );
   }
 }

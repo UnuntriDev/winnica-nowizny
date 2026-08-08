@@ -51,13 +51,13 @@
 
     {# tabindex: tor sie przewija, a Safari nie daje fokusu przewijanym
        kontenerom samo z siebie; aria-label juz go nazywa #}
-    <ul class="reviews-track reveal" data-reviews-track role="list" tabindex="0" aria-label="Opinie gości z Google">
+    <ul class="reviews-track reveal" data-reviews-track tabindex="0" aria-label="Opinie gości z Google">
       {% for i in 1..6 %}
         {% set text = post.meta('opinie_' ~ i ~ '_text') %}
         {% if text %}
           {% set author = post.meta('opinie_' ~ i ~ '_author') %}
           {% set date = post.meta('opinie_' ~ i ~ '_date') %}
-          <li class="review-slide" role="listitem">
+          <li class="review-slide">
             {# Karta zaczyna sie od cytatu. Naglowek z logo i rzedem gwiazdek
                spychal tresc na drugi plan i we wszystkich szesciu wygladal
                identycznie, bo niosl te sama informacje. #}

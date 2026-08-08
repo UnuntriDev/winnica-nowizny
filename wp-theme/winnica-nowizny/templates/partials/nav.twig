@@ -1,9 +1,9 @@
 <nav class="site-nav" id="siteNav" aria-label="Menu główne">
   <a href="{{ function('esc_url', function('home_url', '/')) }}" class="nav-logo">
     <div class="nav-logo-icon">
-      <img src="{{ function('esc_url', theme.link ~ '/assets/images/logo-nowizny-nav.webp') }}" alt="" width="232" height="180">
+      <img src="{{ function('esc_url', theme.link ~ '/assets/images/logo-nowizny-nav.webp') }}" alt="Winnica Nowizny" width="232" height="180">
     </div>
-    <span class="nav-brand">NOWIZNY</span>
+    <span class="nav-brand" aria-hidden="true">NOWIZNY</span>
   </a>
 
   <button class="nav-hamburger" id="navToggle" type="button" aria-label="Otwórz menu" aria-controls="navLinks" aria-expanded="false">
