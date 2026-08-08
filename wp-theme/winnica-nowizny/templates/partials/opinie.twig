@@ -1,7 +1,11 @@
 {# Opinie przepisane z profilu Google Winnicy Nowizny. Kazda jest prawdziwa i
    podpisana tak, jak podpisal ja autor: bez dopisywania nazwisk i miast.
    Zrodlo i pelne teksty: link "Zobacz wszystkie opinie" na dole sekcji. #}
-{% set profile_url = post.meta('opinie_url') | default('https://www.google.com/maps/place/?q=place_id:ChIJQz77EMr1PUcRwi-it-NhdWc') %}
+{% set profile_url = post.meta('opinie_url') %}
+{% set legacy_profile_url = 'https://www.google.com/maps/place/?q=place_id:ChIJQz77EMr1PUcRwi-it-NhdWc' %}
+{% if not profile_url or profile_url == legacy_profile_url %}
+  {% set profile_url = 'https://www.google.com/maps/search/?api=1&query=Winnica%20Nowizny&query_place_id=ChIJQz77EMr1PUcRwi-it-NhdWc' %}
+{% endif %}
 {% set rating = post.meta('opinie_rating') | default('5,0') %}
 {% set total = post.meta('opinie_count') | default('160') | trim %}
 

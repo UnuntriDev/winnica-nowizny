@@ -85,7 +85,7 @@ $WP post meta update $FRONT_ID opinie_title "Co mówią nasi goście"
 $WP post meta update $FRONT_ID opinie_rating "5,0"
 # Zaokrąglona w dół: "ponad 160" pozostaje prawdą, kiedy opinii przybywa.
 $WP post meta update $FRONT_ID opinie_count "160"
-$WP post meta update $FRONT_ID opinie_url "https://www.google.com/maps/place/?q=place_id:ChIJQz77EMr1PUcRwi-it-NhdWc"
+$WP post meta update $FRONT_ID opinie_url "https://www.google.com/maps/search/?api=1&query=Winnica%20Nowizny&query_place_id=ChIJQz77EMr1PUcRwi-it-NhdWc"
 $WP post meta update $FRONT_ID opinie_1_text "Winnicę Nowizny odwiedziliśmy już jakiś czas temu zupełnie przypadkowo, gdy zauważyliśmy drewniany drogowskaz przy drodze i zdecydowanie warto było zajechać :). Od tego miejsca zaczęło się nasze zainteresowanie polskim winem. Nigdy nie sądziliśmy, że u nas może powstawać tak smaczne wino, które w niczym nie ustępuje producentom z Włoch, Francji czy Hiszpanii…"
 $WP post meta update $FRONT_ID opinie_1_author "Radek S."
 $WP post meta update $FRONT_ID opinie_2_text "Polecam z całego serca!! Pierogi z dziczyzną top, ale pozostałe też nie odbiegają. Cisza spokój, przepyszne wino idealne do obiadu lub na prezent. Atrakcje dla każdego, degustacja, pyszne jedzenie, przestrzeń dla dzieci, park linowy, daniele. Atmosfera rodzinna, a właściciele do serca przyłóż, na pewno wrócimy ❤️"
