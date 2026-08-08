@@ -143,6 +143,7 @@
   border: 1px solid rgba(196, 180, 154, 0.14);
   border-radius: var(--radius-md);
   overflow: hidden;
+  transition: border-color var(--duration-mid) var(--ease-out);
 }
 
 .exp-card-image {
@@ -150,6 +151,27 @@
   background: var(--c-earth-mid);
   position: relative;
   overflow: hidden;
+}
+
+.exp-card-image img {
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .exp-card:hover {
+    border-color: rgba(196, 180, 154, 0.3);
+  }
+
+  .exp-card:hover .exp-card-image img {
+    transform: scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exp-card,
+  .exp-card-image img {
+    transition: none;
+  }
 }
 
 .exp-card-gradient {
