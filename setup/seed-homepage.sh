@@ -21,7 +21,7 @@ $WP post meta update $FRONT_ID hero_label "Pogórze Rożnowskie · od 2005"
 $WP post meta update $FRONT_ID hero_title "Winnica <br>Nowizny"
 $WP post meta update $FRONT_ID hero_subtitle "Gdzie pasja rodzi wyjątkowy smak, a widok zatrzymuje czas"
 # Główne CTA prowadzi bezpośrednio do formularza wizyty.
-$WP post meta update $FRONT_ID hero_cta_primary_text "Zarezerwuj wizytę"
+$WP post meta update $FRONT_ID hero_cta_primary_text "Odwiedź nas"
 $WP post meta update $FRONT_ID hero_cta_primary_url "#wizyta"
 $WP post meta update $FRONT_ID hero_cta_secondary_text "Poznaj nasze wina"
 $WP post meta update $FRONT_ID hero_cta_secondary_url "#wina"

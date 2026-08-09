@@ -27,13 +27,13 @@
     </div>
 
     {% set img3 = post.meta('galeria_img_3') %}
-    {% set img3_full = img3 ? function('wp_get_attachment_image_url', img3.ID, 'large') : theme.link ~ '/assets/images/galeria-pierogi.webp' %}
+    {% set img3_full = img3 ? function('wp_get_attachment_image_url', img3.ID, 'large') : theme.link ~ '/assets/images/galeria-pierogi-domowe.webp' %}
     <div class="gallery-item" data-gallery-item data-gallery-src="{{ function('esc_url', img3_full) }}" data-gallery-alt="Domowe pierogi z wędzoną śliwką">
       {% if img3 %}
         {{ function('wp_get_attachment_image', img3.ID, 'gallery-square', false, {'alt': 'Domowe pierogi z wędzoną śliwką', 'loading': 'lazy', 'decoding': 'async', 'sizes': '(max-width: 768px) calc(50vw - 28px), 33vw'}) | raw }}
       {% else %}
         {% set sizes3 = '(max-width: 768px) calc(50vw - 28px), 33vw' %}
-        <picture><source srcset="{{ theme.link }}/assets/images/galeria-pierogi-480.avif 480w, {{ theme.link }}/assets/images/galeria-pierogi.avif 800w" sizes="{{ sizes3 }}" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-pierogi.webp" srcset="{{ theme.link }}/assets/images/galeria-pierogi-480.webp 480w, {{ theme.link }}/assets/images/galeria-pierogi.webp 800w" sizes="{{ sizes3 }}" alt="Domowe pierogi z wędzoną śliwką" width="800" height="800" loading="lazy" decoding="async"></picture>
+        <picture><source srcset="{{ theme.link }}/assets/images/galeria-pierogi-domowe-480.avif 480w, {{ theme.link }}/assets/images/galeria-pierogi-domowe.avif 800w" sizes="{{ sizes3 }}" type="image/avif"><img src="{{ theme.link }}/assets/images/galeria-pierogi-domowe.webp" srcset="{{ theme.link }}/assets/images/galeria-pierogi-domowe-480.webp 480w, {{ theme.link }}/assets/images/galeria-pierogi-domowe.webp 800w" sizes="{{ sizes3 }}" alt="Domowe pierogi z wędzoną śliwką" width="800" height="800" loading="lazy" decoding="async"></picture>
       {% endif %}
     </div>
 

@@ -36,7 +36,7 @@ IMAGES = {
     "piwnica-1891.webp": ("f8cda327-130f-4a30-a650-1c5ab8951ef4.jpg", 1280, 960, (0.48, 0.5), 0),
     "galeria-wnetrze.webp": ("IMG_2957 (1).HEIC", 800, 1200, (0.5, 0.54), 0),
     "galeria-taras.webp": ("IMG_0025 (1).HEIC", 1400, 700, (0.5, 0.46), 0),
-    "galeria-pierogi.webp": ("IMG_3314 (1).HEIC", 800, 800, (0.5, 0.58), 0),
+    "galeria-pierogi-domowe.webp": ("IMG_0305 (2).HEIC", 800, 800, (0.5, 0.58), 0),
     "galeria-daniele.webp": ("Daniele przy winnicy.JPG", 800, 800, (0.5, 0.5), 0),
     "galeria-winogrona.webp": ("IMG_2366.HEIC", 800, 800, (0.5, 0.52), 0),
     "galeria-biesiada.webp": ("potrawy regionalne 1.JPG", 1400, 700, (0.5, 0.5), 0),
