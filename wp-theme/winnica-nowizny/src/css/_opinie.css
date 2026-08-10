@@ -4,11 +4,27 @@
 /* Dol lzejszy od gory: pod torem stoi juz tylko jednolinijkowy link, wiec
    osiemdziesiat pikseli oddechu bylo tam nadmiarem. */
 .reviews {
+  position: relative;
+  isolation: isolate;
   padding: var(--sp-8) var(--sp-6) var(--sp-7);
-  background: var(--c-parchment-warm);
+  background-color: var(--c-stone);
+}
+
+.reviews::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: multiply;
+  opacity: 0.04;
 }
 
 .reviews-inner {
+  position: relative;
+  z-index: 1;
   max-width: var(--max-w);
   margin: 0 auto;
 }
@@ -263,8 +279,8 @@
 }
 
 .review-more:hover {
-  color: var(--c-amber);
-  border-bottom-color: var(--c-amber);
+  color: var(--c-oak);
+  border-bottom-color: var(--c-oak);
 }
 
 .review-more[hidden] { display: none; }
@@ -300,12 +316,11 @@
   margin: var(--sp-4) 0 0;
 }
 
-/* btn-text jest pisany pod ciemne tla; tutaj ground jest jasny, wiec kolor
-   schodzi na ciemniejszy amber (5,4:1 zamiast 1,4:1). */
-.reviews-link,
-.reviews-link:hover { color: var(--c-amber-text); }
+/* btn-text jest pisany pod ciemne tla; na kamiennym tle uzywamy ciemniejszego
+   amberu, ktory zachowuje kontrast WCAG AA (5,03:1). */
+.reviews-link { color: var(--c-amber-text); }
 
-.reviews-link:hover { color: var(--c-amber); }
+.reviews-link:hover { color: var(--c-oak); }
 
 /* Ponizej 1024px trzy karty robia sie za waskie na czytelny akapit, wiec dwie. */
 @media (max-width: 1024px) {
