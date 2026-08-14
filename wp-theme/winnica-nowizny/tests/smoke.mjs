@@ -36,6 +36,31 @@ for (const entry of hours) {
   );
 }
 assert.match(homepage, /rel=["'][^"']*icon/, 'WordPress site icon should be rendered');
+assert.match(
+  homepage,
+  /<link\b[^>]*rel=["']icon["'][^>]*type=["']image\/png["'][^>]*site-icon\.png[^>]*>/i,
+  'PNG favicon fallback should be rendered alongside the WordPress site icon',
+);
+
+const titleTags = homepage.match(/<title\b[^>]*>[\s\S]*?<\/title>/gi) || [];
+assert.equal(titleTags.length, 1, 'homepage should render exactly one title element');
+assert.equal(
+  titleTags[0].replace(/<[^>]+>/g, '').trim(),
+  'Winnica Nowizny | Winnica w Małopolsce',
+  'homepage title should match the approved SEO title',
+);
+
+const descriptionTags = homepage.match(/<meta\b(?=[^>]*\bname=["']description["'])[^>]*>/gi) || [];
+assert.equal(descriptionTags.length, 1, 'homepage should render exactly one meta description');
+assert.ok(
+  descriptionTags[0].includes('Winnica Nowizny to rodzinna winnica w Małopolsce, w Połomiu Małym. Poznaj nasze wina, degustacje, regionalną kuchnię i zabytkową piwnicę.'),
+  'homepage meta description should match the approved SEO description',
+);
+assert.match(
+  homepage,
+  /Winnica Nowizny to rodzinna winnica w Małopolsce, położona na Pogórzu Rożnowskim\./,
+  'homepage should contain the approved natural non-brand SEO sentence',
+);
 
 // Exercise the rejected-submission path without creating a message or sending mail.
 // This is the regression test for the former attribute-injection path.

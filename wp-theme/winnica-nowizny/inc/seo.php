@@ -12,12 +12,13 @@ remove_action('wp_head', 'rel_canonical');
 
 add_filter('pre_get_document_title', 'winnica_seo_document_title');
 add_action('wp_head', 'winnica_seo_meta', 5);
+add_action('wp_head', 'winnica_seo_png_favicon_fallback', 6);
 add_action('wp_head', 'winnica_schema_organization', 20);
 add_action('wp_head', 'winnica_schema_breadcrumbs', 21);
 
 function winnica_seo_document_title(string $title): string {
     if (is_front_page()) {
-        return 'Winnica Nowizny';
+        return 'Winnica Nowizny | Winnica w Małopolsce';
     }
 
     if (is_404()) {
@@ -46,6 +47,14 @@ function winnica_seo_description(): string {
     }
 
     return 'Winnica Nowizny — rodzinna winnica i enoturystyka na Pogórzu Rożnowskim.';
+}
+
+function winnica_seo_meta_description(): string {
+    if (is_front_page()) {
+        return 'Winnica Nowizny to rodzinna winnica w Małopolsce, w Połomiu Małym. Poznaj nasze wina, degustacje, regionalną kuchnię i zabytkową piwnicę.';
+    }
+
+    return winnica_seo_description();
 }
 
 function winnica_seo_canonical_url(): string {
@@ -83,7 +92,7 @@ function winnica_seo_image(): array {
 
 function winnica_seo_meta(): void {
     $title       = wp_get_document_title();
-    $description = winnica_seo_description();
+    $description = winnica_seo_meta_description();
     $canonical   = winnica_seo_canonical_url();
     $image       = winnica_seo_image();
     $url         = $canonical ?: home_url('/');
@@ -108,6 +117,10 @@ function winnica_seo_meta(): void {
     echo '<meta name="twitter:title" content="' . esc_attr($title) . '">' . "\n";
     echo '<meta name="twitter:description" content="' . esc_attr($description) . '">' . "\n";
     echo '<meta name="twitter:image" content="' . esc_url($image['url']) . '">' . "\n";
+}
+
+function winnica_seo_png_favicon_fallback(): void {
+    echo '<link rel="icon" type="image/png" href="' . esc_url(get_theme_file_uri('assets/images/site-icon.png')) . '">' . "\n";
 }
 
 /**

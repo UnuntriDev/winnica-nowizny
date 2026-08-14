@@ -6,7 +6,7 @@
       </div>
       <h2 id="historia-title" class="reveal reveal-delay-1">{{ function('wp_kses_post', post.meta('historia_title') | default('Rodzinna pasja<br><em>zakwita w winorośli</em>')) | raw }}</h2>
       {% if post.meta('historia_text_1') %}
-        <p class="reveal reveal-delay-2">{{ post.meta('historia_text_1') }}</p>
+        <p class="reveal reveal-delay-2">Winnica Nowizny to rodzinna winnica w Małopolsce, położona na Pogórzu Rożnowskim. {{ post.meta('historia_text_1') }}</p>
       {% endif %}
       {% if post.meta('historia_text_2') %}
         <p class="reveal reveal-delay-2">{{ post.meta('historia_text_2') }}</p>
