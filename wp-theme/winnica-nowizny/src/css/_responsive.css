@@ -322,6 +322,64 @@
   .mobile-contact-bar a { font-size: var(--fs-label); letter-spacing: 0.4px; }
 }
 
+/* Telefony obrocone poziomo nie powinny dziedziczyc 700 px minimalnej
+   wysokosci z wersji portretowej. Kompozycja nadal ma co najmniej jeden ekran,
+   ale moze urosnac, gdy systemowe powiekszenie tekstu tego wymaga. */
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 932px) {
+  .hero {
+    height: auto;
+    min-height: 100vh;
+    padding: 76px var(--sp-3) var(--sp-3);
+  }
+
+  .hero-content {
+    width: min(100%, 720px);
+    padding-inline: var(--sp-2);
+    transform: none;
+  }
+
+  .hero-label {
+    margin-bottom: 8px;
+    font-size: var(--fs-label);
+    letter-spacing: 1.6px;
+    white-space: nowrap;
+  }
+
+  .hero h1 {
+    margin-bottom: 8px;
+    font-size: clamp(2.5rem, 10.5vh, 3.25rem);
+    line-height: 1;
+  }
+
+  .hero-subtitle {
+    max-width: 46ch;
+    margin: 0 auto var(--sp-2);
+    font-size: var(--fs-md);
+    line-height: 1.35;
+  }
+
+  .hero-buttons {
+    flex-direction: row;
+    gap: var(--sp-2);
+  }
+
+  .hero-buttons .btn-primary {
+    padding: 11px 24px;
+  }
+
+  .hero-buttons .btn-text {
+    font-size: var(--fs-sm);
+  }
+
+  .scroll-indicator { display: none; }
+}
+
+@supports (height: 100svh) {
+  @media (orientation: landscape) and (max-height: 500px) and (max-width: 932px) {
+    .hero { min-height: 100svh; }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .js.mobile-cta-ready .mobile-contact-bar,
   .js.mobile-cta-ready .mobile-contact-bar a { transition: none; }

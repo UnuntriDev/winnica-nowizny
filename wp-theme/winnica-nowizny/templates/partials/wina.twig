@@ -14,7 +14,7 @@
             {{ function('wp_get_attachment_image', wine.thumbnail.id, 'bottle', false, {
               'alt': 'Butelka wina ' ~ wine.title ~ ' z Winnicy Nowizny',
               'class': 'wine-bottle-img',
-              'sizes': '(max-width: 640px) 45vw, (max-width: 1023px) 30vw, 200px'
+              'sizes': '(max-width: 640px) 100px, (max-width: 1023px) 120px, 160px'
             }) | raw }}
           {% else %}
             <span class="wine-bottle-fallback" aria-hidden="true">{{ loop.index < 10 ? '0' ~ loop.index : loop.index }}</span>

@@ -13,8 +13,8 @@
       {% else %}
         {% set cellar_sizes = '(max-width: 768px) calc(100vw - 48px), 50vw' %}
         <picture>
-          <source srcset="{{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891-480.avif') }} 480w, {{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891-960.avif') }} 960w, {{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891.avif') }} 1280w" sizes="{{ cellar_sizes }}" type="image/avif">
-          <img src="{{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891.webp') }}" srcset="{{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891-480.webp') }} 480w, {{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891-960.webp') }} 960w, {{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891.webp') }} 1280w" sizes="{{ cellar_sizes }}" alt="Zabytkowa kamienna piwnica Winnicy Nowizny z 1891 roku" width="1280" height="1707" loading="lazy" decoding="async">
+          <source srcset="{{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891-480.avif') }} 480w, {{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891-640.avif') }} 640w, {{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891-960.avif') }} 960w, {{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891.avif') }} 1280w" sizes="{{ cellar_sizes }}" type="image/avif">
+          <img src="{{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891.webp') }}" srcset="{{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891-480.webp') }} 480w, {{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891-640.webp') }} 640w, {{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891-960.webp') }} 960w, {{ function('esc_url', theme.link ~ '/assets/images/piwnica-1891.webp') }} 1280w" sizes="{{ cellar_sizes }}" alt="Zabytkowa kamienna piwnica Winnicy Nowizny z 1891 roku" width="1280" height="1707" loading="lazy" decoding="async">
         </picture>
       {% endif %}
     </div>

@@ -17,6 +17,18 @@ ServerSignature Off
     Header always unset X-Powered-By
 </IfModule>
 
+# Zasoby z assets/dist maja hash tresci w nazwie nadawany przez Vite. Nowa
+# wersja pliku dostaje nowy URL, wiec mozna je bezpiecznie trzymac rok w cache.
+# Regula nie obejmuje obrazow i plikow motywu bez hasha, ktore moga zostac
+# podmienione pod ta sama nazwa.
+<IfModule mod_setenvif.c>
+    SetEnvIf Request_URI "^/wp-content/themes/winnica-nowizny/assets/dist/" winnica_dist_asset=1
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header set Cache-Control "public, max-age=31536000, immutable" env=winnica_dist_asset
+</IfModule>
+
 # Zrzuty bazy, logi i kopie plikow nie sa tresciami publicznymi. Trafiaja tu
 # przez przypadek, przy recznym zgrywaniu albo edytorze zostawiajacym .old.
 <FilesMatch "(?i)\.(log|sql|bak|old|dist)$">

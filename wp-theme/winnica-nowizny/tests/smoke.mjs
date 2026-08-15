@@ -22,6 +22,19 @@ const winery = schemaBlocks
   .flatMap(block => block['@graph'] || [block])
   .find(node => Array.isArray(node['@type']) ? node['@type'].includes('Winery') : node['@type'] === 'Winery');
 assert.ok(winery, 'schema should describe the winery');
+assert.deepEqual(
+  winery.geo,
+  { '@type': 'GeoCoordinates', latitude: 49.796594, longitude: 20.6073976 },
+  'schema should publish the confirmed winery coordinates',
+);
+const webpageSchema = schemaBlocks
+  .flatMap(block => block['@graph'] || [block])
+  .find(node => node['@type'] === 'WebPage');
+assert.equal(
+  webpageSchema?.description,
+  'Winnica Nowizny to rodzinna winnica w Małopolsce, w Połomiu Małym. Poznaj nasze wina, degustacje, regionalną kuchnię i zabytkową piwnicę.',
+  'WebPage schema and the approved meta description should stay in sync',
+);
 const hours = winery.openingHoursSpecification;
 assert.ok(Array.isArray(hours) && hours.length > 0, 'opening hours should be published in schema');
 const currentYear = String(new Date().getFullYear());
@@ -58,7 +71,7 @@ assert.ok(
 );
 assert.match(
   homepage,
-  /Winnica Nowizny to rodzinna winnica w Małopolsce, położona na Pogórzu Rożnowskim\./,
+  /Winnica Nowizny to rodzinna winnica w Małopolsce, położona w Połomiu Małym, w gminie Iwkowa, na Pogórzu Rożnowskim\./,
   'homepage should contain the approved natural non-brand SEO sentence',
 );
 

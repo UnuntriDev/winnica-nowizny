@@ -5,6 +5,20 @@
 
 defined('ABSPATH') || exit;
 
+/**
+ * Confirmed position of Winnica Nowizny used as the Customizer and Schema
+ * fallback. Keeping it in one function prevents the map and JSON-LD defaults
+ * from drifting apart.
+ *
+ * @return array{latitude: string, longitude: string}
+ */
+function winnica_default_geo_coordinates(): array {
+    return [
+        'latitude'  => '49.796594',
+        'longitude' => '20.6073976',
+    ];
+}
+
 add_action('customize_register', function (WP_Customize_Manager $wp_customize) {
 
     // ── Panel: Winnica ──
@@ -39,9 +53,10 @@ add_action('customize_register', function (WP_Customize_Manager $wp_customize) {
     }
 
     // GPS
-    $wp_customize->add_setting('winnica_gps_lat', ['default' => '', 'sanitize_callback' => 'sanitize_text_field']);
+    $geo_defaults = winnica_default_geo_coordinates();
+    $wp_customize->add_setting('winnica_gps_lat', ['default' => $geo_defaults['latitude'], 'sanitize_callback' => 'sanitize_text_field']);
     $wp_customize->add_control('winnica_gps_lat', ['label' => 'GPS Latitude', 'section' => 'winnica_contact', 'type' => 'text']);
-    $wp_customize->add_setting('winnica_gps_lng', ['default' => '', 'sanitize_callback' => 'sanitize_text_field']);
+    $wp_customize->add_setting('winnica_gps_lng', ['default' => $geo_defaults['longitude'], 'sanitize_callback' => 'sanitize_text_field']);
     $wp_customize->add_control('winnica_gps_lng', ['label' => 'GPS Longitude', 'section' => 'winnica_contact', 'type' => 'text']);
 
     // Godzin otwarcia tu nie ma celowo: widoczne godziny edytuje się na stronie

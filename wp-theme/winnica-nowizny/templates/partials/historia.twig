@@ -6,7 +6,7 @@
       </div>
       <h2 id="historia-title" class="reveal reveal-delay-1">{{ function('wp_kses_post', post.meta('historia_title') | default('Rodzinna pasja<br><em>zakwita w winorośli</em>')) | raw }}</h2>
       {% if post.meta('historia_text_1') %}
-        <p class="reveal reveal-delay-2">Winnica Nowizny to rodzinna winnica w Małopolsce, położona na Pogórzu Rożnowskim. {{ post.meta('historia_text_1') }}</p>
+        <p class="reveal reveal-delay-2">Winnica Nowizny to rodzinna winnica w Małopolsce, położona w Połomiu Małym, w gminie Iwkowa, na Pogórzu Rożnowskim. {{ post.meta('historia_text_1') }}</p>
       {% endif %}
       {% if post.meta('historia_text_2') %}
         <p class="reveal reveal-delay-2">{{ post.meta('historia_text_2') }}</p>
@@ -16,14 +16,18 @@
       {% endif %}
 
       <div class="historia-signature reveal reveal-delay-3">
-        <img
-          src="{{ function('esc_url', theme.link ~ '/assets/images/podpis-urszula-boguslaw-kaminscy.png') }}"
-          alt="Podpis Urszuli i Bogusława Kamińskich"
-          width="760"
-          height="119"
-          loading="lazy"
-          decoding="async"
-        >
+        <picture>
+          <source srcset="{{ function('esc_url', theme.link ~ '/assets/images/podpis-urszula-boguslaw-kaminscy-380.avif') }} 380w, {{ function('esc_url', theme.link ~ '/assets/images/podpis-urszula-boguslaw-kaminscy.avif') }} 760w" sizes="(max-width: 768px) 260px, 360px" type="image/avif">
+          <source srcset="{{ function('esc_url', theme.link ~ '/assets/images/podpis-urszula-boguslaw-kaminscy-380.webp') }} 380w, {{ function('esc_url', theme.link ~ '/assets/images/podpis-urszula-boguslaw-kaminscy.webp') }} 760w" sizes="(max-width: 768px) 260px, 360px" type="image/webp">
+          <img
+            src="{{ function('esc_url', theme.link ~ '/assets/images/podpis-urszula-boguslaw-kaminscy.png') }}"
+            alt="Podpis Urszuli i Bogusława Kamińskich"
+            width="760"
+            height="119"
+            loading="lazy"
+            decoding="async"
+          >
+        </picture>
       </div>
     </div>
     <div class="historia-visual reveal reveal-delay-2">
@@ -39,8 +43,8 @@
         {% else %}
           {% set historia_sizes = '(max-width: 768px) calc(100vw - 48px), (max-width: 1400px) 50vw, 650px' %}
           <picture>
-            <source srcset="{{ function('esc_url', theme.link ~ '/assets/images/historia-winnica-480.avif') }} 480w, {{ function('esc_url', theme.link ~ '/assets/images/historia-winnica.avif') }} 900w" sizes="{{ historia_sizes }}" type="image/avif">
-            <img src="{{ function('esc_url', theme.link ~ '/assets/images/historia-winnica.webp') }}" srcset="{{ function('esc_url', theme.link ~ '/assets/images/historia-winnica-480.webp') }} 480w, {{ function('esc_url', theme.link ~ '/assets/images/historia-winnica.webp') }} 900w" sizes="{{ historia_sizes }}" alt="Rzędy winorośli Winnicy Nowizny na tle Pogórza Rożnowskiego" width="900" height="1200" loading="lazy" decoding="async">
+            <source srcset="{{ function('esc_url', theme.link ~ '/assets/images/historia-winnica-480.avif') }} 480w, {{ function('esc_url', theme.link ~ '/assets/images/historia-winnica-640.avif') }} 640w, {{ function('esc_url', theme.link ~ '/assets/images/historia-winnica.avif') }} 900w" sizes="{{ historia_sizes }}" type="image/avif">
+            <img src="{{ function('esc_url', theme.link ~ '/assets/images/historia-winnica.webp') }}" srcset="{{ function('esc_url', theme.link ~ '/assets/images/historia-winnica-480.webp') }} 480w, {{ function('esc_url', theme.link ~ '/assets/images/historia-winnica-640.webp') }} 640w, {{ function('esc_url', theme.link ~ '/assets/images/historia-winnica.webp') }} 900w" sizes="{{ historia_sizes }}" alt="Rzędy winorośli Winnicy Nowizny na tle Pogórza Rożnowskiego" width="900" height="1200" loading="lazy" decoding="async">
           </picture>
         {% endif %}
       </div>
