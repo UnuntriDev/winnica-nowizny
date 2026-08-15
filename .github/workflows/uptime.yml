@@ -1,6 +1,8 @@
 name: Uptime
 
 on:
+  schedule:
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -14,6 +16,7 @@ jobs:
       - name: Check Winnica health endpoint
         run: |
           curl --fail --silent --show-error \
+            --user-agent 'Winnica-Monitor/1.0' \
             --max-time 20 \
             --retry 2 \
             https://winnicanowizny.pl/wp-json/winnica/v1/health \

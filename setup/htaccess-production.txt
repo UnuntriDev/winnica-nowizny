@@ -55,36 +55,11 @@ ServerSignature Off
 #     Require all denied
 # </FilesMatch>
 
-# ---------------------------------------------------------------------------
-# HSTS. ETAP POCZATKOWY JEST USTAWIANY PRZEZ MOTYW W inc/security.php.
-# ---------------------------------------------------------------------------
-#
-# Naglowek mowi przegladarce: przez najblizsze max-age sekund nie probuj tej
-# domeny po HTTP w ogole. To jest zobowiazanie nieodwracalne po stronie
-# przegladarki. Nie ma zdalnego wylacznika: skrocenie max-age dziala dopiero
-# przy kolejnej wizycie, a przegladarka, ktora zapamietala rok, przez rok nie
-# wejdzie na strone, jesli certyfikat wygasnie albo przekierowanie sie zepsuje.
-#
-# Dlatego kolejnosc jest taka, a nie odwrotna:
-#
-# 1. Certyfikat dziala, https://winnicanowizny.pl otwiera sie bez ostrzezenia,
-#    a http:// przekierowuje na https:// z kodem 301. Sprawdz oba warianty,
-#    z www i bez.
-# 2. Odkomentuj blok ponizej z max-age=300 (piec minut). Blad kosztuje wtedy
-#    piec minut, nie rok.
-# 3. Poczekaj tydzien normalnego dzialania strony. Sprawdz, czy odnowienie
-#    certyfikatu przez hosting przeszlo automatycznie.
-# 4. Podnies max-age do 31536000 (rok) i dodaj includeSubDomains, jesli zadna
-#    poddomena nie ma pracowac po HTTP.
-#
-# Preload zostawiamy poza gra. Wpis na liste preload jest wpisany na stale w
-# przegladarke i usuwa sie go miesiacami.
-#
-# Nie ustawiaj tutaj rownolegle max-age=300: motyw wysyla go juz dla HTTPS na
-# produkcji. Po okresie obserwacji zwiekszaj wartosc w inc/security.php, zeby
-# naglowek mial jedno zrodlo prawdy.
-#
-# Docelowo, po kroku 4, przenies te wartosc do inc/security.php:
-# <IfModule mod_headers.c>
-#     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
-# </IfModule>
+# HSTS jest ustawiany na poziomie hostingu, aby obejmowal takze odpowiedzi
+# serwera, ktore omijaja WordPressa. Wartosc 86400 jest bezpiecznym etapem
+# posrednim. Po okresie stabilnej pracy mozna zwiekszac ja stopniowo. Nie
+# dodawaj includeSubDomains ani preload bez osobnej weryfikacji subdomen.
+<IfModule mod_headers.c>
+    Header always set Strict-Transport-Security "max-age=86400"
+    Header always set Content-Security-Policy-Report-Only "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-src https://www.google.com https://maps.google.com; media-src 'self'; manifest-src 'self'"
+</IfModule>
